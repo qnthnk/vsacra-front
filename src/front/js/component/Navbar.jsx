@@ -15,10 +15,40 @@ const Navbar = () => {
                 <a class="nav-link active" aria-current="page" href="#">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Features</a>
+                <a class="nav-link" href="#">Lugares de ayuda</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Pricing</a>
+                <a class="nav-link" href="#">Embajadas</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Mensajeria</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Blog</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Gadgets</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Chatbot</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Contact List</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Requisitos migratorios</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Saldo paypal</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Preguntas Frecuentes</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Emergencia</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Contactar Ayuda</a>
               </li>
             </ul>
           </div>
