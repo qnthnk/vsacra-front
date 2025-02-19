@@ -2,9 +2,7 @@ import React from 'react'
 
 const ShareButton = () => {
   return (
-    <div>
-      
-    </div>
+    <div className="share"><button></button></div>
   )
 }
 
