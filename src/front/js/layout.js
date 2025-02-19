@@ -6,7 +6,7 @@ import Home from "./pages/Home.jsx"
 import Login from "./pages/Login.jsx"
 import Register from "./pages/Register.jsx"
 import Contact from "./pages/Contact.jsx"
-import ContactList from "./pages/Contactlist.jsx"
+import ContactList from "./pages/Contact_list.jsx"
 import injectContext from "./store/appContext";
 import Navbar from "./component/Navbar.jsx";
 import Footer from "./component/Footer.jsx";
