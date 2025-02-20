@@ -23,7 +23,7 @@ const Login = () => {
                   <label>¿No tienes una cuenta? <a href="/register">Regístrate</a></label>
                 </div>
                 <div className="mt-3">
-                  <label><a href="/register">Olvide mi contraseña</a></label>
+                  <label><a href="/">Olvide mi contraseña</a></label>
                 </div>
               </form>
             </div>

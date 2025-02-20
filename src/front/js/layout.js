@@ -23,6 +23,7 @@ import Home from "./pages/Home.jsx";
 import Navbar from "./component/Navbar.jsx";
 import Footer from "./component/Footer.jsx";
 import Login from "./pages/Login.jsx";
+import Register from "./pages/Register.jsx";
 
 //create your first component
 const Layout = () => {
@@ -40,6 +41,7 @@ const Layout = () => {
                     <Routes>
                         <Route path="/" element={<Home/>} />
                         <Route path="/login" element={<Login/>} />
+                        <Route path="/register" element={<Register/>} />
                         <Route path="/help-places" element={<HelpPlaces />} />
                         <Route path="/embassies" element={<Embassies />} />
                         <Route path="/chat" element={<Chat />} />
