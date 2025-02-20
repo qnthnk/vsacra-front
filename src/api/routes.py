@@ -2,9 +2,10 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User_principal
+from api.models import db, User_principal, General_data, Clinical_data, Contact_data, Additional_data, Family, Family_additional_data, Family_clinical_data, Family_contact_data, Family_general_data, Family_social_media, Administrator, Location, Social_media
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
+from werkzeug.security import generate_password_hash, check_password_hash
 
 api = Blueprint('api', __name__)
 
@@ -20,3 +21,101 @@ def handle_hello():
     }
 
     return jsonify(response_body), 200
+
+@api.route('/signup', methods = ['POST'])
+def sign_up():
+    data = request.json
+    first_name = data.get('first_name')
+    first_last_name = data.get('first_last_name')
+    second_last_name = data.get('second_last_name')
+    nationality = data.get('nationality')
+    gender = data.get('gender')
+    birthdate = data.get('birthdate')
+    blood_type = data.get('blood_type')
+    allergy = data.get('allergy')
+    disease = data.get('disease')
+    email = data.get('email')
+    password = data.get('password')
+    phone_number = data.get('phone_number')
+    facebook = data.get('facebook')
+    instagram = data.get('instagram')
+    x = data.get('x')
+    city = data.get('city')
+    street = data.get('street')
+    home_country = data.get('home_country')
+    country_of_residence = data.get('country_of_residence')
+    country_of_destination = data.get('country_of_residence')
+
+    user_exists = User_principal.query.join(General_data).filter_by(email=email).first() 
+
+    if user_exists is None:
+        password_hash = generate_password_hash(password)
+
+        new_user = User_principal()  
+
+        try:
+            db.session.add(new_user)  
+            db.session.commit()
+
+            new_general_data = General_data(
+                first_name = first_name,
+                first_last_name = first_last_name,
+                second_last_name = second_last_name,
+                nacionality = nationality,
+                gender = gender,
+                birthdate = birthdate,
+                email = email,
+                password = password_hash,
+                user_principal_id = new_user.id 
+            )
+
+            new_clinical_data = Clinical_data(
+                blood_type = blood_type,
+                allergy = allergy,
+                disease = disease,
+                user_principal_id = new_user.id
+            )
+
+            new_contact_data = Contact_data(
+                phone_number = phone_number,
+                user_principal_id = new_user.id
+            )
+
+            db.session.add(new_contact_data)
+        
+
+            new_social_media = Social_media(
+                facebook = facebook,
+                instagram = instagram,
+                x = x,
+                contact_data_id = new_contact_data.id 
+            )
+
+            new_additional_data = Additional_data(
+                city = city,
+                street = street,
+                home_country = home_country,
+                country_of_residence = country_of_residence,
+                country_of_destination = country_of_destination,
+                user_principal_id = new_user.id
+            )
+
+
+            db.session.add(new_general_data)
+            db.session.add(new_clinical_data)
+            db.session.add(new_social_media)
+            db.session.add(new_additional_data)
+            db.session.commit()
+            
+        except Exception as error:
+            db.session.rollback()
+            return jsonify({"message": "An error has ocurred."}), 500
+
+        return jsonify({
+            "user": new_user.serialize(),
+            "message": "You have registered! Redirecting to log-in page" 
+        }), 200
+    else:
+        return jsonify({"message": "Email already in use. Try using another one."}), 400
+    
+
