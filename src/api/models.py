@@ -52,7 +52,7 @@ class General_data(db.Model):
     second_last_name = db.Column(db.String(80), unique=False, nullable=False)
     nacionality = db.Column(db.String(80), unique=False, nullable=False)
     gender = db.Column(db.String(15), unique=False, nullable=False)
-    birthdate = db.Column(db.Date, nullable=True)
+    birthdate = db.Column(db.Date, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(250), unique=False, nullable=False)
     user_principal_id = db.Column(db.Integer, db.ForeignKey('user_principal.id'))
@@ -141,9 +141,6 @@ class Location(db.Model):
     latitude = db.Column(db.Float, nullable=True)  
     longitude = db.Column(db.Float, nullable=True) 
     user_principal_id = db.Column(db.Integer, db.ForeignKey('user_principal.id'))
-
-    def __repr__(self):
-        return f'<YourModel {self.name}>'
 
     def serialize(self):
         return {
