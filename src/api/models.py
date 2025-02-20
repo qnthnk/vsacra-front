@@ -132,7 +132,9 @@ class Additional_data(db.Model):
             "id": self.id,
             "city": self.city,
             "street": self.street,
-            "country": self.country,
+            "home_country": self.home_country,
+            "country_of_residence": self.country_of_residence,
+            "country_of_destination": self.country_of_destination,
         }
     
 class Location(db.Model):
