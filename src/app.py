@@ -1,46 +1,67 @@
-from flask import Flask, request, jsonify
-from flask_cors import CORS
 import os
-from dotenv import load_dotenv
-from transformers import GPT2LMHeadModel, GPT2Tokenizer
+from flask import Flask, request, jsonify, url_for, send_from_directory
+from flask_migrate import Migrate
+from flask_swagger import swagger
+from api.utils import APIException, generate_sitemap
+from api.models import db
+from api.routes import api
+from api.admin import setup_admin
+from api.commands import setup_commands
 
-# Cargar la clave API desde un archivo .env
-load_dotenv()
+# from models import Person
 
-# Inicia la aplicación Flask
+ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"
+static_file_dir = os.path.join(os.path.dirname(
+    os.path.realpath(__file__)), '../public/')
+
 app = Flask(__name__)
-CORS(app, resources={r"/api/*": {"origins": "*"}})
+app.url_map.strict_slashes = False
 
-# Cargar el modelo GPT-2 y el tokenizador de Hugging Face
-model_name = "gpt2"  # Usamos el modelo GPT-2 de Hugging Face
-model = GPT2LMHeadModel.from_pretrained(model_name)
-tokenizer = GPT2Tokenizer.from_pretrained(model_name)
+# database condiguration
+db_url = os.getenv("DATABASE_URL")
+if db_url is not None:
+    app.config['SQLALCHEMY_DATABASE_URI'] = db_url.replace(
+        "postgres://", "postgresql://")
+else:
+    app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:////tmp/test.db"
 
-@app.route("/api/chat", methods=["POST"])
-def chat():
-    data = request.json
-    user_message = data.get("message", "")
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+MIGRATE = Migrate(app, db, compare_type=True)
+db.init_app(app)
 
-    if not user_message:
-        return jsonify({"response": "Mensaje vacío"}), 400
+# add the admin
+setup_admin(app)
 
-    try:
-        # Codificar el mensaje del usuario
-        input_ids = tokenizer.encode(user_message, return_tensors="pt")
+# add the admin
+setup_commands(app)
 
-        # Generar la respuesta usando GPT-2
-        output = model.generate(input_ids, max_length=150, num_return_sequences=1)
+# Add all endpoints form the API with a "api" prefix
+app.register_blueprint(api, url_prefix='/api')
 
-        # Decodificar la respuesta generada
-        generated_text = tokenizer.decode(output[0], skip_special_tokens=True)
+# Handle/serialize errors like a JSON object
 
-        # Devolver la respuesta
-        return jsonify({"response": generated_text.strip()})
-    
-    except Exception as e:
-        print("Error en Hugging Face:", str(e))
-        return jsonify({"response": "Error con la IA"}), 500
+@app.errorhandler(APIException)
+def handle_invalid_usage(error):
+    return jsonify(error.to_dict()), error.status_code
 
-if __name__ == "__main__":
+# generate sitemap with all your endpoints
+
+@app.route('/')
+def sitemap():
+    if ENV == "development":
+        return generate_sitemap(app)
+    return send_from_directory(static_file_dir, 'index.html')
+
+# any other endpoint will try to serve it like a static file
+@app.route('/<path:path>', methods=['GET'])
+def serve_any_other_file(path):
+    if not os.path.isfile(os.path.join(static_file_dir, path)):
+        path = 'index.html'
+    response = send_from_directory(static_file_dir, path)
+    response.cache_control.max_age = 0  # avoid cache memory
+    return response
+        
+# this only runs if `$ python src/main.py` is executed
+if __name__ == '__main__':
     PORT = int(os.environ.get('PORT', 3001))
     app.run(host='0.0.0.0', port=PORT, debug=True)
