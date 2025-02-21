@@ -16,9 +16,23 @@ const getState = ({ getStore, getActions, setStore }) => {
             ]
         },
         actions: {
+            
             // Use getActions to call a function within a fuction
-            exampleFunction: () => {
-                getActions().changeColor(0, "green");
+            register: async (dataToSend) => {
+                console.log("datos cuando se hace clic en registro",dataToSend)
+                try {
+                    const resp = await fetch('https://sturdy-eureka-g4xjxvg4vwj529qqq-3001.app.github.dev/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(dataToSend)
+                    })
+                   
+                    
+                } catch (error) {
+                    console.log("Error de registro", error)
+                }
             },
 
             getMessage: async () => {
@@ -48,6 +62,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 setStore({ demo: demo });
             }
         }
-    }
     };
-    export default getState;
+};
+
+export default getState;
