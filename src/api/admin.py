@@ -1,7 +1,7 @@
   
 import os
 from flask_admin import Admin
-from .models import db, User_principal, User, General_data, Clinical_data, Contact_data, Additional_data, Location, Social_media, Family, Family_additional_data, Family_clinical_data, Family_contact_data, Family_general_data, Family_social_media, Administrator
+from .models import db, User_principal, User, General_data, Clinical_data,  Additional_data, Location,  Family, Family_additional_data, Family_clinical_data, Family_general_data,  Administrator
 from flask_admin.contrib.sqla import ModelView
 
 def setup_admin(app):
@@ -14,16 +14,12 @@ def setup_admin(app):
     admin.add_view(ModelView(User_principal, db.session))
     admin.add_view(ModelView(General_data, db.session))
     admin.add_view(ModelView(Clinical_data, db.session))
-    admin.add_view(ModelView(Contact_data, db.session))
     admin.add_view(ModelView(Additional_data, db.session))
-    admin.add_view(ModelView(Social_media, db.session))
     admin.add_view(ModelView(Location, db.session))
     admin.add_view(ModelView(Family, db.session))
     admin.add_view(ModelView(Family_additional_data, db.session))
     admin.add_view(ModelView(Family_clinical_data, db.session))
-    admin.add_view(ModelView(Family_contact_data, db.session))
     admin.add_view(ModelView(Family_general_data, db.session))
-    admin.add_view(ModelView(Family_social_media, db.session))
     admin.add_view(ModelView(Administrator, db.session))
 
     # You can duplicate that line to add mew models
