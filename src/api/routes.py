@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User_principal, General_data, Clinical_data, Contact_data, Additional_data, Family, Family_additional_data, Family_clinical_data, Family_contact_data, Family_general_data, Family_social_media, Administrator, Location, Social_media
+from api.models import db, User_principal, General_data, Clinical_data, Additional_data, Family, Family_additional_data, Family_clinical_data, Family_general_data, Administrator, Location
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -41,10 +41,11 @@ def sign_up():
     instagram = data.get('instagram')
     x = data.get('x')
     city = data.get('city')
-    street = data.get('street')
+    address = data.get('address')
     home_country = data.get('home_country')
     country_of_residence = data.get('country_of_residence')
     country_of_destination = data.get('country_of_residence')
+    zip_code = data.get('zip_code')
 
     user_exists = User_principal.query.join(General_data).filter_by(email=email).first() 
 
@@ -66,6 +67,10 @@ def sign_up():
                 birthdate = birthdate,
                 email = email,
                 password = password_hash,
+                phone_number = phone_number,
+                facebook = facebook,
+                instagram = instagram,
+                x = x,
                 user_principal_id = new_user.id 
             )
 
@@ -76,34 +81,19 @@ def sign_up():
                 user_principal_id = new_user.id
             )
 
-            new_contact_data = Contact_data(
-                phone_number = phone_number,
-                user_principal_id = new_user.id
-            )
-
-            db.session.add(new_contact_data)
-        
-
-            new_social_media = Social_media(
-                facebook = facebook,
-                instagram = instagram,
-                x = x,
-                contact_data_id = new_contact_data.id 
-            )
-
             new_additional_data = Additional_data(
                 city = city,
-                street = street,
+                address = address,
                 home_country = home_country,
                 country_of_residence = country_of_residence,
                 country_of_destination = country_of_destination,
+                zip_code = zip_code,
                 user_principal_id = new_user.id
             )
 
 
             db.session.add(new_general_data)
             db.session.add(new_clinical_data)
-            db.session.add(new_social_media)
             db.session.add(new_additional_data)
             db.session.commit()
             
