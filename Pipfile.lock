@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "40857848e643a43b4064082a2997b32da9105f62067b77bce5697ce92ab510db"
+            "sha256": "dc6db811defdfcdd1d045b0b2a7675925e61eea685d647476c9a8a563c115706"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -220,11 +220,11 @@
         },
         "flask-jwt-extended": {
             "hashes": [
-                "sha256:63a28fc9731bcc6c4b8815b6f954b5904caa534fc2ae9b93b1d3ef12930dca95",
-                "sha256:9215d05a9413d3855764bcd67035e75819d23af2fafb6b55197eb5a3313fdfb2"
+                "sha256:52f35bf0985354d7fb7b876e2eb0e0b141aaff865a22ff6cc33d9a18aa987978",
+                "sha256:8085d6757505b6f3291a2638c84d207e8f0ad0de662d1f46aa2f77e658a0c976"
             ],
             "index": "pypi",
-            "version": "==4.6.0"
+            "version": "==4.7.1"
         },
         "flask-migrate": {
             "hashes": [
@@ -371,11 +371,11 @@
         },
         "huggingface-hub": {
             "hashes": [
-                "sha256:64034c852be270cac16c5743fe1f659b14515a9de6342d6f42cbb2ede191fc80",
-                "sha256:c02daa0b6bafbdacb1320fdfd1dc7151d0940825c88c4ef89837fdb1f6ea0afe"
+                "sha256:352f69caf16566c7b6de84b54a822f6238e17ddd8ae3da4f8f2272aea5b198d5",
+                "sha256:9524eae42077b8ff4fc459ceb7a514eca1c1232b775276b009709fe2a084f250"
             ],
             "markers": "python_full_version >= '3.8.0'",
-            "version": "==0.29.0"
+            "version": "==0.29.1"
         },
         "idna": {
             "hashes": [
@@ -750,11 +750,11 @@
         },
         "openai": {
             "hashes": [
-                "sha256:1f38b27b5a40814c2b7d8759ec78110df58c4a614c25f182809ca52b080ff4d4",
-                "sha256:aeabeec984a7d2957b4928ceaa339e2ead19c61cfcf35ae62b7c363368d26360"
+                "sha256:20f85cde9e95e9fbb416e3cb5a6d3119c0b28308afd6e3cc47bf100623dac623",
+                "sha256:2861053538704d61340da56e2f176853d19f1dc5704bc306b7597155f850d57a"
             ],
             "index": "pypi",
-            "version": "==1.63.2"
+            "version": "==1.64.0"
         },
         "packaging": {
             "hashes": [
