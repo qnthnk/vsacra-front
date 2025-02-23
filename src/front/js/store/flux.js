@@ -21,7 +21,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             register: async (dataToSend) => {
                 console.log("datos cuando se hace clic en registro", dataToSend)
                 try {
-                    const resp = await fetch('https://sturdy-eureka-g4xjxvg4vwj529qqq-3001.app.github.dev/', {
+                    const resp = await fetch(process.env.BACKEND_URL + "/api/signup", {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
