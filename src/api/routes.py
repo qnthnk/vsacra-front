@@ -6,12 +6,14 @@ from api.models import db, User_principal, General_data, Clinical_data, Addition
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from werkzeug.security import generate_password_hash, check_password_hash
-
+from flask_jwt_extended import create_access_token
+from flask_jwt_extended import jwt_required, get_jwt_identity, get_jwt
 api = Blueprint('api', __name__)
 
 # Allow CORS requests to this API
 CORS(api)
 
+delete_tokens = set()
 
 @api.route('/hello', methods=['POST', 'GET'])
 def handle_hello():
@@ -108,4 +110,113 @@ def sign_up():
     else:
         return jsonify({"message": "Email already in use. Try using another one."}), 400
     
+@api.route('/login', methods = ['POST'])
+def login():
+    data = request.json
+    email = data.get('email')
+    password = data.get('password')
+    user_exists = User_principal.query.join(General_data).filter(General_data.email == email).first()
 
+
+    if user_exists:
+        valid_password = check_password_hash(user_exists.general_data.password, password) 
+        if valid_password:
+            access_token = create_access_token(identity=user_exists.general_data.email)
+            return jsonify({"token": access_token}), 200  
+        else:
+            return jsonify({"message": "Invalid password."}), 401 
+    else:
+        return jsonify({"message": "Invalid user."}), 404
+    
+@api.route('/example', methods=['GET'])
+@jwt_required()
+def private():
+    jti = get_jwt()["jti"]
+    if jti in delete_tokens:
+        return jsonify({"msg": "Token has been revoked."}), 401  
+
+    email = get_jwt_identity()
+    user_exists = User_principal.query.join(General_data).filter(General_data.email == email).first()
+    return jsonify(user_exists.serialize()), 200
+
+@api.route('/signup/family', methods = ['POST'])
+def sign_up_family():
+    data = request.json
+    first_name = data.get('first_name')
+    first_last_name = data.get('first_last_name')
+    second_last_name = data.get('second_last_name')
+    nationality = data.get('nationality')
+    gender = data.get('gender')
+    birthdate = data.get('birthdate')
+    blood_type = data.get('blood_type')
+    allergy = data.get('allergy')
+    disease = data.get('disease')
+    email = data.get('email')
+    password = data.get('password')
+    phone_number = data.get('phone_number')
+    facebook = data.get('facebook')
+    instagram = data.get('instagram')
+    x = data.get('x')
+    city = data.get('city')
+    address = data.get('address')
+    country = data.get('country')
+    zip_code = data.get('zip_code')
+
+    user_exists = User_principal.query.join(General_data).filter_by(email=email).first() 
+
+    if user_exists is None:
+        password_hash = generate_password_hash(password)
+
+        new_user = User_principal()  
+
+        try:
+            db.session.add(new_user)  
+            db.session.commit()
+
+            new_general_data = General_data(
+                first_name = first_name,
+                first_last_name = first_last_name,
+                second_last_name = second_last_name,
+                nacionality = nationality,
+                gender = gender,
+                birthdate = birthdate,
+                email = email,
+                password = password_hash,
+                phone_number = phone_number,
+                facebook = facebook,
+                instagram = instagram,
+                x = x,
+                user_principal_id = new_user.id 
+            )
+
+            new_clinical_data = Clinical_data(
+                blood_type = blood_type,
+                allergy = allergy,
+                disease = disease,
+                user_principal_id = new_user.id
+            )
+
+            new_additional_data = Additional_data(
+                city = city,
+                address = address,
+                country = country,
+                zip_code = zip_code,
+                user_principal_id = new_user.id
+            )
+
+
+            db.session.add(new_general_data)
+            db.session.add(new_clinical_data)
+            db.session.add(new_additional_data)
+            db.session.commit()
+            
+        except Exception as error:
+            db.session.rollback()
+            return jsonify({"message": "An error has ocurred."}), 500
+
+        return jsonify({
+            "user": new_user.serialize(),
+            "message": "You have registered! Redirecting to log-in page" 
+        }), 200
+    else:
+        return jsonify({"message": "Email already in use. Try using another one."}), 400
