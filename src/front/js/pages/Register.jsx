@@ -102,6 +102,11 @@ const Register = () => {
               <input type="text" name="second_last_name" placeholder='Nombre(s)' value={formData.general_data.second_last_name} onChange={handleChange} />
             </div>
             <div>
+              <label>Contraseña</label>
+              <input type="password" name="password" placeholder='Nombre(s)' value={formData.general_data.password} onChange={handleChange} />
+            </div>
+
+            <div>
               <label>Pais de Nacimiento</label>
               <input type="text" name="home_country" placeholder='Añadir Select' value={formData.aditional_data.home_country} onChange={handleChange} />
             </div>
@@ -142,7 +147,7 @@ const Register = () => {
             <h3>DATOS DE CONTACTO</h3>
             <div>
               <label>Teléfono</label>
-              <input type="number" name="telefono" placeholder='Teléfono' value={formData.general_data.phone_number} onChange={handleChange} />
+              <input type="number" name="phone_number" placeholder='Teléfono' value={formData.general_data.phone_number} onChange={handleChange} />
             </div>
             <div>
               <label>Correo Electrónico</label>
