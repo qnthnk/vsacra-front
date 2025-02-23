@@ -103,6 +103,7 @@ class Additional_data(db.Model):
     home_country = db.Column(db.String(80), unique=False, nullable=False)
     country_of_residence = db.Column(db.String(80), unique=False, nullable=False)
     country_of_destination = db.Column(db.String(80), unique=False, nullable=False)
+    state = db.Column(db.String(80), unique=False, nullable=False)
     zip_code = db.Column(db.Integer, unique=False, nullable=False)
     user_principal_id = db.Column(db.Integer, db.ForeignKey('user_principal.id'))
 
@@ -202,6 +203,7 @@ class Family_additional_data(db.Model):
     city = db.Column(db.String(80), unique=False, nullable=False)
     address = db.Column(db.String(80), unique=False, nullable=False)
     country = db.Column(db.String(80), unique=False, nullable=False)
+    state = db.Column(db.String(80), unique=False, nullable=False)
     zip_code = db.Column(db.Integer, unique=False, nullable=False)
     family_id = db.Column(db.Integer, db.ForeignKey('family.id'))
 

@@ -43,6 +43,7 @@ def sign_up():
     instagram = data.get('instagram')
     x = data.get('x')
     city = data.get('city')
+    state = data.get('state')
     address = data.get('address')
     home_country = data.get('home_country')
     country_of_residence = data.get('country_of_residence')
@@ -87,6 +88,7 @@ def sign_up():
                 city = city,
                 address = address,
                 home_country = home_country,
+                state = state,
                 country_of_residence = country_of_residence,
                 country_of_destination = country_of_destination,
                 zip_code = zip_code,
@@ -159,21 +161,22 @@ def sign_up_family():
     x = data.get('x')
     city = data.get('city')
     address = data.get('address')
+    state = data.get('state')
     country = data.get('country')
     zip_code = data.get('zip_code')
 
-    user_exists = User_principal.query.join(General_data).filter_by(email=email).first() 
+    user_exists = Family.query.join(Family_general_data).filter_by(email=email).first() 
 
     if user_exists is None:
         password_hash = generate_password_hash(password)
 
-        new_user = User_principal()  
+        new_family = Family()  
 
         try:
-            db.session.add(new_user)  
+            db.session.add(new_family)  
             db.session.commit()
 
-            new_general_data = General_data(
+            new_family_general_data = Family_general_data(
                 first_name = first_name,
                 first_last_name = first_last_name,
                 second_last_name = second_last_name,
@@ -186,28 +189,29 @@ def sign_up_family():
                 facebook = facebook,
                 instagram = instagram,
                 x = x,
-                user_principal_id = new_user.id 
+                family_id = new_family.id
             )
 
-            new_clinical_data = Clinical_data(
+            new_family_clinical_data = Family_clinical_data(
                 blood_type = blood_type,
                 allergy = allergy,
                 disease = disease,
-                user_principal_id = new_user.id
+                family_id = new_family.id
             )
 
-            new_additional_data = Additional_data(
+            new_family_additional_data = Family_additional_data(
                 city = city,
                 address = address,
                 country = country,
+                state = state,
                 zip_code = zip_code,
-                user_principal_id = new_user.id
+                family_id = new_family.id
             )
 
 
-            db.session.add(new_general_data)
-            db.session.add(new_clinical_data)
-            db.session.add(new_additional_data)
+            db.session.add(new_family_general_data)
+            db.session.add(new_family_clinical_data)
+            db.session.add(new_family_additional_data)
             db.session.commit()
             
         except Exception as error:
@@ -215,8 +219,26 @@ def sign_up_family():
             return jsonify({"message": "An error has ocurred."}), 500
 
         return jsonify({
-            "user": new_user.serialize(),
+            "user": new_family.serialize(),                                   
             "message": "You have registered! Redirecting to log-in page" 
         }), 200
     else:
         return jsonify({"message": "Email already in use. Try using another one."}), 400
+    
+@api.route('/login/family', methods = ['POST'])
+def login_family():
+    data = request.json
+    email = data.get('email')
+    password = data.get('password')
+    user_exists = Family.query.join(Family_general_data).filter(Family_general_data.email == email).first()
+
+
+    if user_exists:
+        valid_password = check_password_hash(user_exists.general_data.password, password) 
+        if valid_password:
+            access_token = create_access_token(identity=user_exists.general_data.email)
+            return jsonify({"token": access_token}), 200  
+        else:
+            return jsonify({"message": "Invalid password."}), 401 
+    else:
+        return jsonify({"message": "Invalid user."}), 404
