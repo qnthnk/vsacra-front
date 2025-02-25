@@ -32,7 +32,7 @@ const Register = () => {
     aditional_data:
     {
       city: '',
-      state: '', //pendiente al back
+      state: '',
       address: '',
       home_country: '',
       country_of_residence: '',
@@ -90,8 +90,8 @@ const Register = () => {
       aditional_data: {
         ...formData.aditional_data,
         country_of_residence: e.target.value,
-        state: "", // Resetea el estado al cambiar de país
-        city: "", // Resetea la ciudad al cambiar de país
+        state: "",
+        city: "",
       },
     });
   };
@@ -184,63 +184,63 @@ const Register = () => {
               <input type="number" name="zip_code" placeholder='Código Postal' value={formData.aditional_data.zip_code} onChange={handleChange} />
             </div>
             <div>
-            <label>País</label>
-        <select name="country_of_residence" value={formData.aditional_data.country_of_residence} onChange={handleCountryChange}>
-          <option value="">Seleccione un país</option>
-          {countriesData.countries.map((country, index) => (
-            <option key={index} value={country.name}>
-              {country.name}
-            </option>
-          ))}
-        </select>
+              <label>País</label>
+              <select name="country_of_residence" value={formData.aditional_data.country_of_residence} onChange={handleCountryChange}>
+                <option value="">Seleccione un país</option>
+                {countriesData.countries.map((country, index) => (
+                  <option key={index} value={country.name}>
+                    {country.name}
+                  </option>
+                ))}
+              </select>
             </div>
             <div>
-            <label>Estado</label>
-        <select name="state" value={formData.aditional_data.state} onChange={handleStateChange} disabled={!formData.aditional_data.country_of_residence}>
-          <option value="">Seleccione un estado</option>
-          {statesData.states
-    .filter((state) => {
-      // Encuentra el país seleccionado en countries.json
-      const selectedCountry = countriesData.countries.find(
-        (country) => country.name === formData.aditional_data.country_of_residence
-      );
-      
-      // Compara el id del país con el id_country del estado
-      return selectedCountry && state.id_country === selectedCountry.id;
-    })
-    .map((state, index) => (
-      <option key={index} value={state.name}>
-        {state.name}
-      </option>
-    ))}
-</select>
-            </div>
-            <div>
-            <label>Ciudad</label>
-        <select name="city" value={formData.aditional_data.city} onChange={handleChange} disabled={!formData.aditional_data.state}>
-          <option value="">Seleccione una ciudad</option>
-          {citiesData.cities
-    .filter((city) => {
-      // Encuentra el estado seleccionado en states.json
-      const selectedState = statesData.states.find(
-        (state) => state.name === formData.aditional_data.state
-      );
+              <label>Estado</label>
+              <select name="state" value={formData.aditional_data.state} onChange={handleStateChange} disabled={!formData.aditional_data.country_of_residence}>
+                <option value="">Seleccione un estado</option>
+                {statesData.states
+                  .filter((state) => {
+                    // Encuentra el país seleccionado en countries.json
+                    const selectedCountry = countriesData.countries.find(
+                      (country) => country.name === formData.aditional_data.country_of_residence
+                    );
 
-      // Compara el id del estado con el id_state de la ciudad
-      return selectedState && city.id_state === selectedState.id;
-    })
-    .map((city, index) => (
-      <option key={index} value={city.name}>
-        {city.name}
-      </option>
-    ))}
-</select>
+                    // Compara el id del país con el id_country del estado
+                    return selectedCountry && state.id_country === selectedCountry.id;
+                  })
+                  .map((state, index) => (
+                    <option key={index} value={state.name}>
+                      {state.name}
+                    </option>
+                  ))}
+              </select>
+            </div>
+            <div>
+              <label>Ciudad</label>
+              <select name="city" value={formData.aditional_data.city} onChange={handleChange} disabled={!formData.aditional_data.state}>
+                <option value="">Seleccione una ciudad</option>
+                {citiesData.cities
+                  .filter((city) => {
+                    // Encuentra el estado seleccionado en states.json
+                    const selectedState = statesData.states.find(
+                      (state) => state.name === formData.aditional_data.state
+                    );
+
+                    // Compara el id del estado con el id_state de la ciudad
+                    return selectedState && city.id_state === selectedState.id;
+                  })
+                  .map((city, index) => (
+                    <option key={index} value={city.name}>
+                      {city.name}
+                    </option>
+                  ))}
+              </select>
             </div>
             <h3>DATOS DE CONTACTO</h3>
             <div>
               <label>Teléfono</label>
               <input type="number" name="phone_number" placeholder='Teléfono' value={formData.general_data.phone_number} onChange={handleChange} />
-           
+
             </div>
             <div>
               <label>Correo Electrónico</label>
