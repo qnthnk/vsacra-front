@@ -14,6 +14,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     initial: "white"
                 }
             ]
+            
         },
         actions: {
 
@@ -28,7 +29,11 @@ const getState = ({ getStore, getActions, setStore }) => {
                         },
                         body: JSON.stringify(dataToSend)
                     })
-
+                    if (!resp.ok) {
+                        throw new Error('valio v...')
+                    } else {
+                        alert('funciono')
+                    }
 
                 } catch (error) {
                     console.log("Error de registro", error)
