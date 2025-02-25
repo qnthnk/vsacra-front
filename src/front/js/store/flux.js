@@ -13,7 +13,9 @@ const getState = ({ getStore, getActions, setStore }) => {
                     background: "white",
                     initial: "white"
                 }
-            ]
+            ],
+            chatMessages: []
+
         },
         actions: {
 
@@ -60,9 +62,33 @@ const getState = ({ getStore, getActions, setStore }) => {
 
                 //reset the global store
                 setStore({ demo: demo });
-            }
-        }
-    };
-};
+            },
+            sendMessage: async (message) => {
+                if (!message.trim()) return;
 
+                const store = getStore();
+                const newMessage = { user: "Usuario", text: message };
+                setStore({ chatMessages: [...store.chatMessages, newMessage] });
+
+                try {
+                    const response = await fetch("http://localhost:5000/api/chatbot", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ message })
+                    });
+
+                    const data = await response.json();
+                    if (response.ok) {
+                        setStore({ chatMessages: [...store.chatMessages, newMessage, { user: "Chatbot", text: data.response }] });
+                    } else {
+                        console.error("Error en el chatbot:", data.error);
+                    }
+                } catch (error) {
+                    console.error("Error en la conexión con el servidor:", error);
+                }
+            
+        }
+    },
+};
+}
 export default getState;
