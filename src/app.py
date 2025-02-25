@@ -16,7 +16,9 @@ static_file_dir = os.path.join(os.path.dirname(
     os.path.realpath(__file__)), '../public/')
 
 app = Flask(__name__)
+CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True,allow_headers=["Content-Type", "Authorization"])
 app.url_map.strict_slashes = False
+
 
 # database condiguration
 db_url = os.getenv("DATABASE_URL")

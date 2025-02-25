@@ -38,12 +38,12 @@ const Register = () => {
       country_of_residence: '',
       country_of_destination: '',
       zip_code: ''
-    },
-    location:
-    {
-      latitude: '',
-      longitude: ''
     }
+    // location:
+    // {
+    //   latitude: '',
+    //   longitude: ''
+    // }
   });
 
   const handleChange = (e) => {
@@ -107,6 +107,7 @@ const Register = () => {
       },
     });
   };
+  
 
   return (
     <div>
