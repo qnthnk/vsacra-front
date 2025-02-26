@@ -13,8 +13,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                     background: "white",
                     initial: "white"
                 }
-            ],
-            chatMessages: []
 
         },
         actions: {
@@ -30,7 +28,11 @@ const getState = ({ getStore, getActions, setStore }) => {
                         },
                         body: JSON.stringify(dataToSend)
                     })
-
+                    if (!resp.ok) {
+                        throw new Error('valio v...')
+                    } else {
+                        alert('funciono')
+                    }
 
                 } catch (error) {
                     console.log("Error de registro", error)
