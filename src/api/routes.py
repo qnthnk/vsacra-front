@@ -7,9 +7,19 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import jwt_required, get_jwt_identity, get_jwt
 api = Blueprint('api', __name__)
+from openai import OpenAI
+import os
+import re
+
 
 # Allow CORS requests to this API
 CORS(api)
+
+client = OpenAI(
+    api_key=os.environ.get("OPENAI_API_KEY"),
+    organization=os.environ.get("ORGANIZATION_ID")
+)
+
 
 delete_tokens = set()
 
@@ -312,3 +322,66 @@ def private_admin():
     email = get_jwt_identity()
     user_exists = Administrator.query.filter_by(email=email).first() 
     return jsonify(user_exists.serialize()), 200
+
+def procesar_apies(apies_input, prompt):
+    try:
+        Location.info(f"Enviando solicitud a OpenAI para APIES {apies_input}...")
+
+        completion = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[
+                {"role": "system", "content": "Eres un especialista en ubicaciones que va a ayudar a encontrar locaciones con direcciones exactas."},
+                {"role": "user", "content": prompt}
+            ]
+        )
+
+        respuesta = completion.choices[0].message.content
+        Location.info(f"Respuesta obtenida para APIES {apies_input}")
+
+        matches = re.findall(r'ID-(\d+):\s*(redflag|normal)', respuesta)
+
+        return matches  
+
+    except Exception as e:
+        Location.error(f"Error al procesar el APIES {apies_input}: {e}")
+        return None   
+    
+@api.route('/api/clasificar', methods=['POST'])
+def darUBicacion():
+    data = request.json
+    apies_input = data.get("apies_input")
+    prompt = data.get("prompt")
+
+    if not apies_input or not prompt:
+        return jsonify({"error": "Faltan parámetros"}), 400
+
+    resultado = procesar_apies(apies_input, prompt)
+
+    if resultado is None:
+        return jsonify({"error": "Error procesando la solicitud"}), 500
+
+    return jsonify({"resultado": resultado}), 200
+
+@api.route('/api/chatbot', methods=['POST'])
+def chatbot():
+    data = request.json
+    message = data.get("message")
+
+    if not message:
+        return jsonify({"error": "Falta el mensaje"}), 400
+
+    try:
+        # Enviar pregunta a OpenAI
+        completion = client.chat.completions.create(
+            model="gpt-4o-mini",
+            messages=[
+                {"role": "system", "content": "Eres un chatbot útil que responde preguntas de manera clara."},
+                {"role": "user", "content": message}
+            ]
+        )
+
+        response = completion.choices[0].message.content
+        return jsonify({"response": response}), 200
+
+    except Exception as e:
+        return jsonify({"error": f"Error en el chatbot: {str(e)}"}), 500
