@@ -61,7 +61,7 @@ def sign_up():
 
     user_exists = User_principal.query.filter_by(email=email).first() 
     if user_exists is None:
-        password_hash = generate_password_hash(password)
+        # password_hash = generate_password_hash(password)
 
         new_user = User_principal(
                 first_name = first_name,

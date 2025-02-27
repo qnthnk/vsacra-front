@@ -148,9 +148,9 @@ const Register = () => {
                   <option key={index} value={country.name}>{country.name}</option>
                 ))}
               </select>
-            </div>
+            </div> */}
 
-            <div>
+            {/* <div>
               <select name="country_of_destination" value={formData.country_of_destination} onChange={handleChange}>
                 <option value="">País de destino</option>
                 {countriesData.countries && countriesData.countries.map((country, index) => (
