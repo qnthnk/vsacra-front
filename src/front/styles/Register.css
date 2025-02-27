@@ -1,0 +1,43 @@
+.register{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: 20px;
+}
+
+@media (max-width: 768px) {
+	.register {
+		padding: 10px;
+	}
+}
+
+@media (max-width: 480px) {
+	.register {
+		padding: 5px;
+	}
+}
+
+.form{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: 5%;
+	width: 80%;
+	background-color: #e8f7fd;
+	font-family: sans-serif;
+	
+}
+
+@media (max-width: 768px) {
+	.form {
+		padding: 3%;
+	}
+}
+
+@media (max-width: 480px) {
+	.form {
+		padding: 1%;
+	}
+}
