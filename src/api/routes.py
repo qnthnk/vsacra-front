@@ -36,20 +36,20 @@ def handle_hello():
 def sign_up():
     data = request.json
     first_name = data.get('first_name')
-    # first_last_name = data.get('first_last_name')
-    # second_last_name = data.get('second_last_name')
-    # nationality = data.get('nationality')
-    # gender = data.get('gender')
-    # birthdate = data.get('birthdate')
-    # blood_type = data.get('blood_type')
-    # allergy = data.get('allergy')
-    # disease = data.get('disease')
+    first_last_name = data.get('first_last_name')
+    second_last_name = data.get('second_last_name')
+    nationality = data.get('nationality')
+    gender = data.get('gender')
+    birthdate = data.get('birthdate')
+    blood_type = data.get('blood_type')
+    allergy = data.get('allergy')
+    disease = data.get('disease')
     email = data.get('email')
     password = data.get('password')
-    # phone_number = data.get('phone_number')
-    # facebook = data.get('facebook')
-    # instagram = data.get('instagram')
-    # x = data.get('x')
+    phone_number = data.get('phone_number')
+    facebook = data.get('facebook')
+    instagram = data.get('instagram')
+    x = data.get('x')
     # city = data.get('city')
     # state = data.get('state')
     # address = data.get('address')
@@ -65,20 +65,20 @@ def sign_up():
 
         new_user = User_principal(
                 first_name = first_name,
-                # first_last_name = first_last_name,
-                # second_last_name = second_last_name,
-                # nacionality = nationality,
-                # gender = gender,
-                # birthdate = birthdate,
+                first_last_name = first_last_name,
+                second_last_name = second_last_name,
+                nacionality = nationality,
+                gender = gender,
+                birthdate = birthdate,
                 email = email,
                 password = password_hash,
-                # phone_number = phone_number,
-                # facebook = facebook,
-                # instagram = instagram,
-                # x = x,
-                # blood_type = blood_type,
-                # allergy = allergy,
-                # disease = disease,
+                phone_number = phone_number,
+                facebook = facebook,
+                instagram = instagram,
+                x = x,
+                blood_type = blood_type,
+                allergy = allergy,
+                disease = disease,
                 # city = city,
                 # address = address,
                 # home_country = home_country,
@@ -89,14 +89,14 @@ def sign_up():
                 # migrant_or_family = migrant_or_family
         )  
 
-        try:
-            db.session.add(new_user)  
-            db.session.commit()
+        # try:
+        db.session.add(new_user)  
+        db.session.commit()
 
             
-        except Exception as error:
-            db.session.rollback()
-            return jsonify({"message": "An error has ocurred."}), 500
+        # except Exception as error:
+        #     db.session.rollback()
+        #     return jsonify({"message": "An error has ocurred."}), 500
 
         return jsonify({
             "user": new_user.serialize(),
