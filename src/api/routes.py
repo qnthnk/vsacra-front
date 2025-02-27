@@ -45,7 +45,7 @@ def sign_up():
     # allergy = data.get('allergy')
     # disease = data.get('disease')
     email = data.get('email')
-    password = data.get('password')
+    # password = data.get('password')
     # phone_number = data.get('phone_number')
     # facebook = data.get('facebook')
     # instagram = data.get('instagram')
@@ -61,7 +61,7 @@ def sign_up():
 
     user_exists = User_principal.query.filter_by(email=email).first() 
     if user_exists is None:
-        password_hash = generate_password_hash(password)
+        # password_hash = generate_password_hash(password)
 
         new_user = User_principal(
                 first_name = first_name,
@@ -70,8 +70,8 @@ def sign_up():
                 # nacionality = nationality,
                 # gender = gender,
                 # birthdate = birthdate,
-                email = email,
-                password = password_hash,
+                email = email
+               # password = password_hash,
                 # phone_number = phone_number,
                 # facebook = facebook,
                 # instagram = instagram,

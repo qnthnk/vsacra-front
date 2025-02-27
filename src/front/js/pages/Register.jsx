@@ -12,29 +12,29 @@ const Register = () => {
    
     
       first_name: '',
-      first_last_name: '',
-      second_last_name: '',
-      nacionality: '',
-      gender: '',
-      birthdate: '',
-      email: '',
-      password: '',
-      phone_number: '',
-      facebook: '',
-      instagram: '',
-      x: '',
-      blood_type: '',
-      allergy: '',
-      disease: '',
-      city: '',
-      state: '',
-      address: '',
-      home_country: '',
-      country_of_residence: '',
-      country_of_destination: '',
-      zip_code: '',
-      latitude: '',
-      longitude: ''
+      // first_last_name: '',
+      // second_last_name: '',
+      // nacionality: '',
+      // gender: '',
+      // birthdate: '',
+      email: ''
+      // password: ''
+      // phone_number: '',
+      // facebook: '',
+      // instagram: '',
+      // x: '',
+      // blood_type: '',
+      // allergy: '',
+      // disease: '',
+      // city: '',
+      // state: '',
+      // address: '',
+      // home_country: '',
+      // country_of_residence: '',
+      // country_of_destination: '',
+      // zip_code: '',
+      // latitude: '',
+      // longitude: ''
     
   });
 
@@ -85,28 +85,28 @@ const Register = () => {
           <div>
             <div>
               <h3>DATOS GENERALES</h3>
-              <input type="text" name="first_name" placeholder='Apellido Paterno' value={formData.first_name} onChange={handleChange} />
+              <input type="text" name="first_name" placeholder='Nombre' value={formData.first_name} onChange={handleChange} />
+            </div>
+            {/* <div>
+              <input type="text" name="first_last_name" placeholder='Apellido Paterno' value={formData.first_last_name} onChange={handleChange} />
             </div>
             <div>
-              <input type="text" name="first_last_name" placeholder='Apellido Materno' value={formData.first_last_name} onChange={handleChange} />
-            </div>
-            <div>
-              <input type="text" name="second_last_name" placeholder='Nombre(s)' value={formData.second_last_name} onChange={handleChange} />
-            </div>
-            <div>
+              <input type="text" name="second_last_name" placeholder='Apellido Materno' value={formData.second_last_name} onChange={handleChange} />
+            </div> */}
+            {/* <div>
               <input type="password" name="password" placeholder='Crear contraseña' value={formData.password} onChange={handleChange} />
-            </div>
+            </div> */}
 
-            <div>
+            {/* <div>
               <select name="home_country" value={formData.home_country} onChange={handleChange}>
                 <option value="">País de nacimiento</option>
                 {countriesData.countries && countriesData.countries.map((country, index) => (
                   <option key={index} value={country.name}>{country.name}</option>
                 ))}
               </select>
-            </div>
+            </div> */}
 
-            <div>
+            {/* <div>
               <select name="country_of_destination" value={formData.country_of_destination} onChange={handleChange}>
                 <option value="">País de destino</option>
                 {countriesData.countries && countriesData.countries.map((country, index) => (
@@ -195,11 +195,11 @@ const Register = () => {
             <div>
               <input type="number" name="phone_number" placeholder='Teléfono' value={formData.phone_number} onChange={handleChange} />
 
-            </div>
+            </div> */}
             <div>
               <input type="email" name="email" placeholder='Email' value={formData.email} onChange={handleChange} />
             </div>
-            <div>
+            {/* <div>
               <input type="text" name="facebook" placeholder='Facebook' value={formData.facebook} onChange={handleChange} />
             </div>
             <div>
@@ -217,7 +217,7 @@ const Register = () => {
             </div>
             <div>
               <input type="text" name="disease" placeholder='Enfermedades Crónicas' value={formData.disease} onChange={handleChange} />
-            </div>
+            </div> */}
           </div>
           <button type="submit" className="btn btn-primary" onClick={handleSubmit}>Registrarse</button>
         </div>
