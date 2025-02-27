@@ -36,28 +36,28 @@ def handle_hello():
 def sign_up():
     data = request.json
     first_name = data.get('first_name')
-    first_last_name = data.get('first_last_name')
-    second_last_name = data.get('second_last_name')
-    nationality = data.get('nationality')
-    gender = data.get('gender')
-    birthdate = data.get('birthdate')
-    blood_type = data.get('blood_type')
-    allergy = data.get('allergy')
-    disease = data.get('disease')
+    # first_last_name = data.get('first_last_name')
+    # second_last_name = data.get('second_last_name')
+    # nationality = data.get('nationality')
+    # gender = data.get('gender')
+    # birthdate = data.get('birthdate')
+    # blood_type = data.get('blood_type')
+    # allergy = data.get('allergy')
+    # disease = data.get('disease')
     email = data.get('email')
     password = data.get('password')
-    phone_number = data.get('phone_number')
-    facebook = data.get('facebook')
-    instagram = data.get('instagram')
-    x = data.get('x')
-    city = data.get('city')
-    state = data.get('state')
-    address = data.get('address')
-    home_country = data.get('home_country')
-    country_of_residence = data.get('country_of_residence')
-    country_of_destination = data.get('country_of_residence')
-    zip_code = data.get('zip_code')
-    migrant_or_family = data.get('migrant_or_family')
+    # phone_number = data.get('phone_number')
+    # facebook = data.get('facebook')
+    # instagram = data.get('instagram')
+    # x = data.get('x')
+    # city = data.get('city')
+    # state = data.get('state')
+    # address = data.get('address')
+    # home_country = data.get('home_country')
+    # country_of_residence = data.get('country_of_residence')
+    # country_of_destination = data.get('country_of_residence')
+    # zip_code = data.get('zip_code')
+    # migrant_or_family = data.get('migrant_or_family')
 
     user_exists = User_principal.query.filter_by(email=email).first() 
     if user_exists is None:
@@ -65,28 +65,28 @@ def sign_up():
 
         new_user = User_principal(
                 first_name = first_name,
-                first_last_name = first_last_name,
-                second_last_name = second_last_name,
-                nacionality = nationality,
-                gender = gender,
-                birthdate = birthdate,
+                # first_last_name = first_last_name,
+                # second_last_name = second_last_name,
+                # nacionality = nationality,
+                # gender = gender,
+                # birthdate = birthdate,
                 email = email,
                 password = password_hash,
-                phone_number = phone_number,
-                facebook = facebook,
-                instagram = instagram,
-                x = x,
-                blood_type = blood_type,
-                allergy = allergy,
-                disease = disease,
-                city = city,
-                address = address,
-                home_country = home_country,
-                state = state,
-                country_of_residence = country_of_residence,
-                country_of_destination = country_of_destination,
-                zip_code = zip_code,
-                migrant_or_family = migrant_or_family
+                # phone_number = phone_number,
+                # facebook = facebook,
+                # instagram = instagram,
+                # x = x,
+                # blood_type = blood_type,
+                # allergy = allergy,
+                # disease = disease,
+                # city = city,
+                # address = address,
+                # home_country = home_country,
+                # state = state,
+                # country_of_residence = country_of_residence,
+                # country_of_destination = country_of_destination,
+                # zip_code = zip_code,
+                # migrant_or_family = migrant_or_family
         )  
 
         try:
