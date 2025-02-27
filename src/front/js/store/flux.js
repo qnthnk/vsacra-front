@@ -2,17 +2,6 @@ const getState = ({ getStore, getActions, setStore }) => {
     return {
         store: {
             message: null,
-            demo: [
-                {
-                    title: "FIRST",
-                    background: "white",
-                    initial: "white"
-                },
-                {
-                    title: "SECOND",
-                    background: "white",
-                    initial: "white"
-                }
 
         },
         actions: {
@@ -88,9 +77,9 @@ const getState = ({ getStore, getActions, setStore }) => {
                 } catch (error) {
                     console.error("Error en la conexión con el servidor:", error);
                 }
-            
-        }
-    },
-};
+
+            }
+        },
+    };
 }
 export default getState;
