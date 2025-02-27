@@ -23,148 +23,31 @@ class User(db.Model):
 class User_principal(db.Model):
     __tablename__ = 'user_principal'
     id = db.Column(db.Integer, primary_key=True)
-    general_data = db.relationship('General_data', backref='user_principal', uselist=False)
-    clinical_data = db.relationship('Clinical_data', backref='user_principal', uselist=False)
-    additional_data = db.relationship('Additional_data', backref='user_principal', uselist=False)
-    location = db.relationship('Location', backref='user_principal', uselist=False)
-    family_id = db.Column(db.Integer, db.ForeignKey('family.id'))
-    administrator_id = db.Column(db.Integer, db.ForeignKey('administrator.id'))
-    
-
-    def __repr__(self):
-        return f'<User_principal {self.id}>'
-
-    def serialize(self):
-        return {
-            "id": self.id,
-            "general_data": self.general_data.serialize() if self.general_data else None,
-            "clinical_data": self.clinical_data.serialize() if self.clinical_data else None,
-            "additional_data": self.additional_data.serialize() if self.additional_data else None,
-        }
-
-class General_data(db.Model):
-    __tablename__ = 'general_data'
-    id = db.Column(db.Integer, primary_key=True)
     first_name = db.Column(db.String(80), unique=False, nullable=False)
     first_last_name = db.Column(db.String(80), unique=False, nullable=False)
     second_last_name = db.Column(db.String(80), unique=False, nullable=False)
     nacionality = db.Column(db.String(80), unique=False, nullable=False)
     gender = db.Column(db.String(15), unique=False, nullable=False)
-    birthdate = db.Column(db.Date, nullable=False)
+    birthdate = db.Column(db.String(80), unique=False, nullable=True)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(250), unique=False, nullable=False)
-    phone_number = db.Column(db.Integer, unique=False, nullable=False)
-    user_principal_id = db.Column(db.Integer, db.ForeignKey('user_principal.id'))
+    phone_number = db.Column(db.String(80), unique=False, nullable=False)
     facebook = db.Column(db.String(80), unique=False, nullable=True)
     instagram = db.Column(db.String(80), unique=False, nullable=True)
     x = db.Column(db.String(80), unique=False, nullable=True)
-    user_principal_id = db.Column(db.Integer, db.ForeignKey('user_principal.id'))
-
-    def __repr__(self):
-        return f'<General_data {self.id}>'
-
-    def serialize(self):
-        return {
-            "id": self.id,
-            "first_name": self.first_name,
-            "first_last_name": self.first_last_name,
-            "second_last_name": self.second_last_name,
-            "nacionality": self.nacionality,
-            "gender": self.gender,
-            "birthdate": self.birthdate.isoformat() if self.birthdate else None,
-            "facebook": self.facebook,
-            "instagram": self.instagram,
-            "x": self.x
-
-        }
-
-class Clinical_data(db.Model):
-    __tablename__ = 'clinical_data'
-    id = db.Column(db.Integer, primary_key=True)
     blood_type = db.Column(db.String(5), unique=False, nullable=True)
     allergy = db.Column(db.String(80), unique=False, nullable=True)
     disease = db.Column(db.String(80), unique=False, nullable=True)
-    user_principal_id = db.Column(db.Integer, db.ForeignKey('user_principal.id'))
-
-    def serialize(self):
-        return {
-            "id": self.id,
-            "blood_type": self.blood_type,
-            "allergy": self.allergy,
-            "disease": self.disease,
-        }
-
-
-class Additional_data(db.Model):
-    __tablename__ = 'additional_data'
-    id = db.Column(db.Integer, primary_key=True)
     city = db.Column(db.String(80), unique=False, nullable=False)
     address = db.Column(db.String(80), unique=False, nullable=False)
     home_country = db.Column(db.String(80), unique=False, nullable=False)
     country_of_residence = db.Column(db.String(80), unique=False, nullable=False)
     country_of_destination = db.Column(db.String(80), unique=False, nullable=False)
     state = db.Column(db.String(80), unique=False, nullable=False)
-    zip_code = db.Column(db.Integer, unique=False, nullable=False)
-    user_principal_id = db.Column(db.Integer, db.ForeignKey('user_principal.id'))
-
-    def serialize(self):
-        return {
-            "id": self.id,
-            "city": self.city,
-            "address": self.address,
-            "home_country": self.home_country,
-            "country_of_residence": self.country_of_residence,
-            "country_of_destination": self.country_of_destination,
-            "zip_code": self.zip_code
-        }
-    
-class Location(db.Model):
-    __tablename__ = 'coordinate'
-    id = db.Column(db.Integer, primary_key=True)
-    latitude = db.Column(db.String(80), nullable=True)  
-    longitude = db.Column(db.String(80), nullable=True) 
-    user_principal_id = db.Column(db.Integer, db.ForeignKey('user_principal.id'))
-
-    def serialize(self):
-        return {
-            "id": self.id,
-            "name": self.name,
-            "latitude": self.latitude,
-            "longitude": self.longitude,
-        }
-    
-class Family(db.Model):
-    __tablename__ = 'family'
-    id = db.Column(db.Integer, primary_key=True)
-    general_data = db.relationship('Family_general_data', backref='family', uselist=False)
-    clinical_data = db.relationship('Family_clinical_data', backref='family', uselist=False)
-    additional_data = db.relationship('Family_additional_data', backref='family', uselist=False)
-    user_principal = db.relationship('User_principal', backref='family', uselist=False)
-
-    def serialize(self):
-        return {
-            "id": self.id,
-            "general_data": self.general_data.serialize() if self.general_data else None,
-            "clinical_data": self.clinical_data.serialize() if self.clinical_data else None,
-            "additional_data": self.additional_data.serialize() if self.additional_data else None,
-        }
-
-class Family_general_data(db.Model):
-    __tablename__ = 'family_general_data'
-    id = db.Column(db.Integer, primary_key=True)
-    first_name = db.Column(db.String(80), unique=False, nullable=False)
-    first_last_name = db.Column(db.String(80), unique=False, nullable=False)
-    second_last_name = db.Column(db.String(80), unique=False, nullable=False)
-    nacionality = db.Column(db.String(80), unique=False, nullable=False)
-    gender = db.Column(db.String(15), unique=False, nullable=False)
-    birthdate = db.Column(db.Date, nullable=True)
-    email = db.Column(db.String(120), unique=True, nullable=False)
-    password = db.Column(db.String(250), unique=False, nullable=False)
-    phone_number = db.Column(db.Integer, unique=False, nullable=False)
-    facebook = db.Column(db.String(80), unique=False, nullable=True)
-    instagram = db.Column(db.String(80), unique=False, nullable=True)
-    x = db.Column(db.String(80), unique=False, nullable=True)
-    family_id = db.Column(db.Integer, db.ForeignKey('family.id'))
+    zip_code = db.Column(db.String(80), unique=False, nullable=False)
+    administrator_id = db.Column(db.Integer, db.ForeignKey('administrator.id'), nullable=True)
+    locations = db.relationship('Location', backref='user_principal', lazy=True)
+    migrant_or_family = db.Column(db.Boolean(), unique=False, nullable=True)
 
     def serialize(self):
         return {
@@ -174,59 +57,49 @@ class Family_general_data(db.Model):
             "second_last_name": self.second_last_name,
             "nacionality": self.nacionality,
             "gender": self.gender,
-            "birthdate": self.birthdate.isoformat() if self.birthdate else None,
+            "birthdate": self.birthdate,
+            "email": self.email,
+            "phone_number": self.phone_number,
             "facebook": self.facebook,
             "instagram": self.instagram,
-            "x": self.x
-        }
-
-class Family_clinical_data(db.Model):
-    __tablename__ = 'family_clinical_data'
-    id = db.Column(db.Integer, primary_key=True)
-    blood_type = db.Column(db.String(5), unique=False, nullable=True)
-    allergy = db.Column(db.String(80), unique=False, nullable=True)
-    disease = db.Column(db.String(80), unique=False, nullable=True)
-    family_id = db.Column(db.Integer, db.ForeignKey('family.id'))
-
-    def serialize(self):
-        return {
-            "id": self.id,
+            "x": self.x,
             "blood_type": self.blood_type,
             "allergy": self.allergy,
             "disease": self.disease,
+            "city": self.city,
+            "address": self.address,
+            "home_country": self.home_country,
+            "country_of_residence": self.country_of_residence,
+            "country_of_destination": self.country_of_destination,
+            "state": self.state,
+            "zip_code": self.zip_code,
         }
 
-
-class Family_additional_data(db.Model):
-    __tablename__ = 'family_additional_data'
+class Location(db.Model):
+    __tablename__ = 'coordinate'
     id = db.Column(db.Integer, primary_key=True)
-    city = db.Column(db.String(80), unique=False, nullable=False)
-    address = db.Column(db.String(80), unique=False, nullable=False)
-    country = db.Column(db.String(80), unique=False, nullable=False)
-    state = db.Column(db.String(80), unique=False, nullable=False)
-    zip_code = db.Column(db.Integer, unique=False, nullable=False)
-    family_id = db.Column(db.Integer, db.ForeignKey('family.id'))
+    latitude = db.Column(db.String(80), nullable=True)
+    longitude = db.Column(db.String(80), nullable=True)
+    user_principal_id = db.Column(db.Integer, db.ForeignKey('user_principal.id'))
 
     def serialize(self):
         return {
             "id": self.id,
-            "city": self.city,
-            "address": self.address,
-            "country": self.country,
-            "zip_code": self.zip_code
+            "latitude": self.latitude,
+            "longitude": self.longitude,
         }
-    
+
 class Administrator(db.Model):
     __tablename__ = 'administrator'
     id = db.Column(db.Integer, primary_key=True)
     organization_name = db.Column(db.String(80), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(250), nullable=False)
-    user_principal = db.relationship('User_principal', backref='administrator', uselist=False)
-    
+    user_principal = db.relationship('User_principal', backref='administrator', lazy=True)
+
     def serialize(self):
         return {
             "id": self.id,
             "organization_name": self.organization_name,
-            "email": self.email
+            "email": self.email,
         }
