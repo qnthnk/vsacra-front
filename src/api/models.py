@@ -26,7 +26,7 @@ class User_principal(db.Model):
     first_name = db.Column(db.String(80), unique=False, nullable=False)
     first_last_name = db.Column(db.String(80), unique=False, nullable=False)
     second_last_name = db.Column(db.String(80), unique=False, nullable=False)
-    nacionality = db.Column(db.String(80), unique=False, nullable=False)
+    nacionality = db.Column(db.String(80), unique=False, nullable=True)
     gender = db.Column(db.String(15), unique=False, nullable=False)
     birthdate = db.Column(db.String(80), unique=False, nullable=True)
     email = db.Column(db.String(120), unique=True, nullable=False)
@@ -38,16 +38,16 @@ class User_principal(db.Model):
     blood_type = db.Column(db.String(5), unique=False, nullable=True)
     allergy = db.Column(db.String(80), unique=False, nullable=True)
     disease = db.Column(db.String(80), unique=False, nullable=True)
-    city = db.Column(db.String(80), unique=False, nullable=False)
-    address = db.Column(db.String(80), unique=False, nullable=False)
-    home_country = db.Column(db.String(80), unique=False, nullable=False)
-    country_of_residence = db.Column(db.String(80), unique=False, nullable=False)
-    country_of_destination = db.Column(db.String(80), unique=False, nullable=False)
-    state = db.Column(db.String(80), unique=False, nullable=False)
-    zip_code = db.Column(db.String(80), unique=False, nullable=False)
+    # city = db.Column(db.String(80), unique=False, nullable=False)
+    # address = db.Column(db.String(80), unique=False, nullable=False)
+    # home_country = db.Column(db.String(80), unique=False, nullable=False)
+    # country_of_residence = db.Column(db.String(80), unique=False, nullable=False)
+    # country_of_destination = db.Column(db.String(80), unique=False, nullable=False)
+    # state = db.Column(db.String(80), unique=False, nullable=False)
+    # zip_code = db.Column(db.String(80), unique=False, nullable=False)
     administrator_id = db.Column(db.Integer, db.ForeignKey('administrator.id'), nullable=True)
     locations = db.relationship('Location', backref='user_principal', lazy=True)
-    migrant_or_family = db.Column(db.Boolean(), unique=False, nullable=True)
+    # migrant_or_family = db.Column(db.Boolean(), unique=False, nullable=True)
 
     def serialize(self):
         return {
@@ -66,13 +66,13 @@ class User_principal(db.Model):
             "blood_type": self.blood_type,
             "allergy": self.allergy,
             "disease": self.disease,
-            "city": self.city,
-            "address": self.address,
-            "home_country": self.home_country,
-            "country_of_residence": self.country_of_residence,
-            "country_of_destination": self.country_of_destination,
-            "state": self.state,
-            "zip_code": self.zip_code,
+            # "city": self.city,
+            # "address": self.address,
+            # "home_country": self.home_country,
+            # "country_of_residence": self.country_of_residence,
+            # "country_of_destination": self.country_of_destination,
+            # "state": self.state,
+            # "zip_code": self.zip_code,
         }
 
 class Location(db.Model):
