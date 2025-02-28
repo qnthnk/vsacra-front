@@ -14,7 +14,7 @@ const Register = () => {
     first_name: '',
     first_last_name: '',
     second_last_name: '',
-    nacionality: '',
+    nationality: '',
     gender: '',
     birthdate: '',
     email: '',
@@ -125,10 +125,10 @@ const Register = () => {
               <input type="text" name="disease" placeholder='Enfermedades Crónicas' value={formData.disease} onChange={handleChange} />
             </div>
             <div>
-              <select name="nacionality" value={formData.nacionality} onChange={handleChange}>
+              <select name="nationality" value={formData.nationality} onChange={handleChange}>
                 <option value="">Nacionalidad</option>
-                {countriesData.countries.map((nationality, index) => (
-                  <option key={index} value={nationality.name}>{nationality.name}</option>
+                {countriesData.countries.map((nacionality, index) => (
+                  <option key={index} value={nacionality.name}>{nacionality.name}</option>
                 ))}
               </select>
             </div>

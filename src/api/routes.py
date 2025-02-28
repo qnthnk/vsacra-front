@@ -38,7 +38,7 @@ def sign_up():
     first_name = data.get('first_name')
     first_last_name = data.get('first_last_name')
     second_last_name = data.get('second_last_name')
-    nationality = data.get('nationality')
+    # nationality = data.get('nationality')
     gender = data.get('gender')
     birthdate = data.get('birthdate')
     blood_type = data.get('blood_type')
@@ -67,7 +67,7 @@ def sign_up():
                 first_name = first_name,
                 first_last_name = first_last_name,
                 second_last_name = second_last_name,
-                nacionality = nationality,
+                nationality = nationality,
                 gender = gender,
                 birthdate = birthdate,
                 email = email,
