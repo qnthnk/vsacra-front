@@ -88,16 +88,42 @@ const Register = () => {
               <input type="text" name="first_name" placeholder='Nombre' value={formData.first_name} onChange={handleChange} />
             </div>
             <div>
-              <input type="email" name="email" placeholder='Email' value={formData.email} onChange={handleChange} />
-            </div>
-            <div>
               <input type="text" name="first_last_name" placeholder='Apellido 1' value={formData.first_last_name} onChange={handleChange} />
             </div>
             <div>
               <input type="text" name="second_last_name" placeholder='Apellido 2' value={formData.second_last_name} onChange={handleChange} />
             </div>
             <div>
+            <input type="text" name="nationality" placeholder='Nacionalidad' value={formData.nationality} onChange={handleChange} />
+
+              {/* <select name="nationality" value={formData.nationality} onChange={handleChange}>
+                <option value="">Nacionalidad</option>
+                {countriesData.countries.map((nationality, index) => (
+                  <option key={index} value={nationality.name}>{nationality.name}</option>
+                ))}
+              </select> */}
+            </div>
+            <div>
+              <select name="gender" value={formData.gender} onChange={handleChange}>
+                <option value="">Género</option>
+                <option value="male">Masculino</option>
+                <option value="female">Femenino</option>
+                <option value="other">Otro</option>
+              </select>
+            </div>
+            <div>
+              <label>Fecha de nacimiento</label>
+              <input type="date" name="birthdate" placeholder='añadir date' value={formData.birthdate} onChange={handleChange} />
+            </div>
+            <div>
+              <input type="email" name="email" placeholder='Email' value={formData.email} onChange={handleChange} />
+            </div>
+            
+            <div>
               <input type="password" name="password" placeholder='Crear contraseña' value={formData.password} onChange={handleChange} />
+            </div>
+            <div>
+              <input type="text" name="phone_number" placeholder='Teléfono' value={formData.phone_number} onChange={handleChange} />
             </div>
             <div>
               <input type="text" name="facebook" placeholder='Facebook' value={formData.facebook} onChange={handleChange} />
@@ -109,13 +135,6 @@ const Register = () => {
               <input type="text" name="x" placeholder='Twitter o X' value={formData.x} onChange={handleChange} />
             </div>
             <div>
-              <input type="number" name="phone_number" placeholder='Teléfono' value={formData.phone_number} onChange={handleChange} />
-            </div>
-            <div>
-              <label>Fecha de nacimiento</label>
-              <input type="date" name="birthdate" placeholder='añadir date' value={formData.birthdate} onChange={handleChange} />
-            </div>
-            <div>
               <input type="text" name="blood_type" placeholder='Tipo de sangre' value={formData.blood_type} onChange={handleChange} />
             </div>
             <div>
@@ -124,96 +143,10 @@ const Register = () => {
             <div>
               <input type="text" name="disease" placeholder='Enfermedades Crónicas' value={formData.disease} onChange={handleChange} />
             </div>
-             
             <div>
-              <select name="nationality" value={formData.nationality} onChange={handleChange}>
-                <option value="">Nacionalidad</option>
-                {countriesData.countries.map((nationality, index) => (
-                  <option key={index} value={nationality.name}>{nationality.name}</option>
-                ))}
-              </select>
-            </div>
-            <div>
-              <select name="gender" value={formData.gender} onChange={handleChange}>
-                <option value="">Género</option>
-                <option value="male">Masculino</option>
-                <option value="female">Femenino</option>
-                <option value="other">Otro</option>
-              </select>
-            </div>
-           
-            <div>
-              <select name="home_country" value={formData.home_country} onChange={handleChange}>
-                <option value="">País de nacimiento</option>
-                {countriesData.countries && countriesData.countries.map((country, index) => (
-                  <option key={index} value={country.name}>{country.name}</option>
-                ))}
-              </select>
-            </div> 
+            <input type="text" name="city" placeholder='Ciudad' value={formData.city} onChange={handleChange} />
 
-             <div>
-              <select name="country_of_destination" value={formData.country_of_destination} onChange={handleChange}>
-                <option value="">País de destino</option>
-                {countriesData.countries && countriesData.countries.map((country, index) => (
-                  <option key={index} value={country.name}>{country.name}</option>
-                ))}
-              </select>
-            </div>
-            <div>
-              <select name="nationality" value={formData.nationality} onChange={handleChange}>
-                <option value="">Nacionalidad</option>
-                {countriesData.countries.map((nationality, index) => (
-                  <option key={index} value={nationality.name}>{nationality.name}</option>
-                ))}
-              </select>
-            </div>
-            <div>
-              <select name="gender" value={formData.gender} onChange={handleChange}>
-                <option value="">Género</option>
-                <option value="male">Masculino</option>
-                <option value="female">Femenino</option>
-                <option value="other">Otro</option>
-              </select>
-            </div>
-            <h3>DATOS ADICIONALES</h3>
-            <div>
-              <input type="text" name="address" placeholder='Dirección completa' value={formData.address} onChange={handleChange} />
-            </div>
-            <div>
-              <input type="number" name="zip_code" placeholder='Código Postal' value={formData.zip_code} onChange={handleChange} />
-            </div>
-            <div>
-              <select name="country_of_residence" value={formData.country_of_residence} onChange={handleCountryChange}>
-                <option value="">País de residencia</option>
-                {countriesData.countries && countriesData.countries.map((country, index) => (
-                  <option key={index} value={country.name}>
-                    {country.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div>
-              <select name="state" value={formData.state} onChange={handleStateChange} disabled={!formData.country_of_residence}>
-                <option value="">Estado</option>
-                {statesData.states
-                  .filter((state) => {
-                    // Encuentra el país seleccionado en countries.json
-                    const selectedCountry = countriesData.countries.find(
-                      (country) => country.name === formData.country_of_residence
-                    );
-
-                    // Compara el id del país con el id_country del estado
-                    return selectedCountry ? state.id_country === selectedCountry.id : false;
-                  })
-                  .map((state, index) => (
-                    <option key={index} value={state.name}>
-                      {state.name}
-                    </option>
-                  ))}
-              </select>
-            </div>
-            <div>
-              <select name="city" value={formData.city} onChange={handleChange} disabled={!formData.state}>
+              {/* <select name="city" value={formData.city} onChange={handleChange} disabled={!formData.state}>
                 <option value="">Ciudad</option>
                 {citiesData.cities
                   .filter((city) => {
@@ -230,11 +163,70 @@ const Register = () => {
                       {city.name}
                     </option>
                   ))}
-              </select>
+              </select> */}
             </div>
-            
-            <h3>DATOS CLÍNICOS</h3>
-            
+            <div>
+            <input type="text" name="state" placeholder='Estado' value={formData.state} onChange={handleChange} />
+
+              {/* <select name="state" value={formData.state} onChange={handleStateChange} disabled={!formData.country_of_residence}>
+                <option value="">Estado</option>
+                {statesData.states
+                  .filter((state) => {
+                    // Encuentra el país seleccionado en countries.json
+                    const selectedCountry = countriesData.countries.find(
+                      (country) => country.name === formData.country_of_residence
+                    );
+
+                    // Compara el id del país con el id_country del estado
+                    return selectedCountry ? state.id_country === selectedCountry.id : false;
+                  })
+                  .map((state, index) => (
+                    <option key={index} value={state.name}>
+                      {state.name}
+                    </option>
+                  ))}
+              </select> */}
+            </div>
+            <div>
+              <input type="text" name="address" placeholder='Dirección completa' value={formData.address} onChange={handleChange} />
+            </div>
+            <div>
+            <input type="text" name="home_country" placeholder='Pais de Nacimiento' value={formData.home_country} onChange={handleChange} />
+
+              {/* <select name="home_country" value={formData.home_country} onChange={handleChange}>
+                <option value="">País de nacimiento</option>
+                {countriesData.countries && countriesData.countries.map((country, index) => (
+                  <option key={index} value={country.name}>{country.name}</option>
+                ))}
+              </select> */}
+            </div> 
+            <div>
+            <input type="text" name="country_of_residence" placeholder='Pais de Residencia' value={formData.country_of_residence} onChange={handleChange} />
+
+              {/* <select name="country_of_residence" value={formData.country_of_residence} onChange={handleCountryChange}>
+                <option value="">País de residencia</option>
+                {countriesData.countries && countriesData.countries.map((country, index) => (
+                  <option key={index} value={country.name}>
+                    {country.name}
+                  </option>
+                ))}
+              </select> */}
+            </div>
+
+             <div>
+             <input type="text" name="country_of_destination" placeholder='Pais de Destino' value={formData.country_of_destination} onChange={handleChange} />
+
+              {/* <select name="country_of_destination" value={formData.country_of_destination} onChange={handleChange}>
+                <option value="">País de destino</option>
+                {countriesData.countries && countriesData.countries.map((country, index) => (
+                  <option key={index} value={country.name}>{country.name}</option>
+                ))}
+              </select> */}
+            </div>
+      
+            <div>
+              <input type="text" name="zip_code" placeholder='Código Postal' value={formData.zip_code} onChange={handleChange} />
+            </div>
           </div>
           <button type="submit" className="btn btn-primary" onClick={handleSubmit}>Registrarse</button>
         </div>
