@@ -50,18 +50,18 @@ def sign_up():
     facebook = data.get('facebook')
     instagram = data.get('instagram')
     x = data.get('x')
-    # city = data.get('city')
-    # state = data.get('state')
-    # address = data.get('address')
-    # home_country = data.get('home_country')
-    # country_of_residence = data.get('country_of_residence')
-    # country_of_destination = data.get('country_of_residence')
-    # zip_code = data.get('zip_code')
+    city = data.get('city')
+    state = data.get('state')
+    address = data.get('address')
+    home_country = data.get('home_country')
+    country_of_residence = data.get('country_of_residence')
+    country_of_destination = data.get('country_of_residence')
+    zip_code = data.get('zip_code')
     # migrant_or_family = data.get('migrant_or_family')
 
     user_exists = User_principal.query.filter_by(email=email).first() 
     if user_exists is None:
-        # password_hash = generate_password_hash(password)
+        password_hash = generate_password_hash(password)
 
         new_user = User_principal(
                 first_name = first_name,
@@ -79,13 +79,13 @@ def sign_up():
                 blood_type = blood_type,
                 allergy = allergy,
                 disease = disease,
-                # city = city,
-                # address = address,
-                # home_country = home_country,
-                # state = state,
-                # country_of_residence = country_of_residence,
-                # country_of_destination = country_of_destination,
-                # zip_code = zip_code,
+                city = city,
+                address = address,
+                home_country = home_country,
+                state = state,
+                country_of_residence = country_of_residence,
+                country_of_destination = country_of_destination,
+                zip_code = zip_code,
                 # migrant_or_family = migrant_or_family
         )  
 

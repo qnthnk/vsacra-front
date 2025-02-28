@@ -124,11 +124,12 @@ const Register = () => {
             <div>
               <input type="text" name="disease" placeholder='Enfermedades Crónicas' value={formData.disease} onChange={handleChange} />
             </div>
+             
             <div>
               <select name="nationality" value={formData.nationality} onChange={handleChange}>
                 <option value="">Nacionalidad</option>
-                {countriesData.countries.map((nacionality, index) => (
-                  <option key={index} value={nacionality.name}>{nacionality.name}</option>
+                {countriesData.countries.map((nationality, index) => (
+                  <option key={index} value={nationality.name}>{nationality.name}</option>
                 ))}
               </select>
             </div>
@@ -140,7 +141,7 @@ const Register = () => {
                 <option value="other">Otro</option>
               </select>
             </div>
-            {/* 
+           
             <div>
               <select name="home_country" value={formData.home_country} onChange={handleChange}>
                 <option value="">País de nacimiento</option>
@@ -148,9 +149,9 @@ const Register = () => {
                   <option key={index} value={country.name}>{country.name}</option>
                 ))}
               </select>
-            </div> */}
+            </div> 
 
-            {/* <div>
+             <div>
               <select name="country_of_destination" value={formData.country_of_destination} onChange={handleChange}>
                 <option value="">País de destino</option>
                 {countriesData.countries && countriesData.countries.map((country, index) => (
@@ -159,7 +160,7 @@ const Register = () => {
               </select>
             </div>
             <div>
-              <select name="nacionality" value={formData.nacionality} onChange={handleChange}>
+              <select name="nationality" value={formData.nationality} onChange={handleChange}>
                 <option value="">Nacionalidad</option>
                 {countriesData.countries.map((nationality, index) => (
                   <option key={index} value={nationality.name}>{nationality.name}</option>
@@ -233,7 +234,7 @@ const Register = () => {
             </div>
             
             <h3>DATOS CLÍNICOS</h3>
-            */}
+            
           </div>
           <button type="submit" className="btn btn-primary" onClick={handleSubmit}>Registrarse</button>
         </div>
