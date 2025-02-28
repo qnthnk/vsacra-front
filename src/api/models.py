@@ -22,11 +22,11 @@ class User(db.Model):
 
 class User_principal(db.Model):
     __tablename__ = 'user_principal'
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.String, primary_key=True)
     first_name = db.Column(db.String(80), unique=False, nullable=False)
     first_last_name = db.Column(db.String(80), unique=False, nullable=False)
     second_last_name = db.Column(db.String(80), unique=False, nullable=False)
-    nacionality = db.Column(db.String(80), unique=False, nullable=False)
+    nationality = db.Column(db.String(80), unique=False, nullable=True)
     gender = db.Column(db.String(15), unique=False, nullable=False)
     birthdate = db.Column(db.String(80), unique=False, nullable=True)
     email = db.Column(db.String(120), unique=True, nullable=False)
@@ -47,7 +47,7 @@ class User_principal(db.Model):
     zip_code = db.Column(db.String(80), unique=False, nullable=False)
     administrator_id = db.Column(db.Integer, db.ForeignKey('administrator.id'), nullable=True)
     locations = db.relationship('Location', backref='user_principal', lazy=True)
-    migrant_or_family = db.Column(db.Boolean(), unique=False, nullable=True)
+    # migrant_or_family = db.Column(db.Boolean(), unique=False, nullable=True)
 
     def serialize(self):
         return {
@@ -55,7 +55,7 @@ class User_principal(db.Model):
             "first_name": self.first_name,
             "first_last_name": self.first_last_name,
             "second_last_name": self.second_last_name,
-            "nacionality": self.nacionality,
+            "nationality": self.nationality,
             "gender": self.gender,
             "birthdate": self.birthdate,
             "email": self.email,

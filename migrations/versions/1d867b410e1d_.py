@@ -32,7 +32,7 @@ def upgrade():
     sa.Column('first_name', sa.String(length=80), nullable=False),
     sa.Column('first_last_name', sa.String(length=80), nullable=False),
     sa.Column('second_last_name', sa.String(length=80), nullable=False),
-    sa.Column('nacionality', sa.String(length=80), nullable=False),
+    sa.Column('nationality', sa.String(length=80), nullable=False),
     sa.Column('gender', sa.String(length=15), nullable=False),
     sa.Column('birthdate', sa.String(length=80), nullable=True),
     sa.Column('email', sa.String(length=120), nullable=False),

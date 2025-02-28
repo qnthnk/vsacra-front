@@ -38,7 +38,7 @@ def sign_up():
     first_name = data.get('first_name')
     first_last_name = data.get('first_last_name')
     second_last_name = data.get('second_last_name')
-    nationality = data.get('nationality')
+    # nationality = data.get('nationality')
     gender = data.get('gender')
     birthdate = data.get('birthdate')
     blood_type = data.get('blood_type')
@@ -57,7 +57,7 @@ def sign_up():
     country_of_residence = data.get('country_of_residence')
     country_of_destination = data.get('country_of_residence')
     zip_code = data.get('zip_code')
-    migrant_or_family = data.get('migrant_or_family')
+    # migrant_or_family = data.get('migrant_or_family')
 
     user_exists = User_principal.query.filter_by(email=email).first() 
     if user_exists is None:
@@ -67,7 +67,7 @@ def sign_up():
                 first_name = first_name,
                 first_last_name = first_last_name,
                 second_last_name = second_last_name,
-                nacionality = nationality,
+                nationality = nationality,
                 gender = gender,
                 birthdate = birthdate,
                 email = email,
@@ -86,17 +86,17 @@ def sign_up():
                 country_of_residence = country_of_residence,
                 country_of_destination = country_of_destination,
                 zip_code = zip_code,
-                migrant_or_family = migrant_or_family
+                # migrant_or_family = migrant_or_family
         )  
 
-        try:
-            db.session.add(new_user)  
-            db.session.commit()
+        # try:
+        db.session.add(new_user)  
+        db.session.commit()
 
             
-        except Exception as error:
-            db.session.rollback()
-            return jsonify({"message": "An error has ocurred."}), 500
+        # except Exception as error:
+        #     db.session.rollback()
+        #     return jsonify({"message": "An error has ocurred."}), 500
 
         return jsonify({
             "user": new_user.serialize(),
