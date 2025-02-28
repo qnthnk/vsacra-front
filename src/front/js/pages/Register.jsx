@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Context } from '../store/appContext';
 import countriesData from './../../../../countries.json';
 import statesData from './../../../../states.json';
@@ -74,6 +74,54 @@ const Register = () => {
       city: '' // Reset city when state changes
     });
   };
+
+  useEffect(() => {
+    if (!navigator.geolocation) {
+      setError("La geolocalización no es soportada por este navegador.");
+      return;
+    }
+
+    const getLocation = () => {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          setFormData((prevData) => ({
+            ...prevData,
+            latitude: latitude,
+            longitude: longitude
+          }));
+          console.log("Ubicación obtenida:", { latitude, longitude });
+        },
+        (error) => {
+          setError("Error al obtener la ubicación: ", error);
+        }
+      );
+    };
+
+    getLocation();
+  }, []);
+
+  useEffect(() => {
+      if (!navigator.geolocation) {
+        setError("La geolocalización no es soportada por este navegador.");
+        return;
+      }
+  
+      const getLocation = () => {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const { latitude, longitude } = position.coords;
+            setLocation({ latitud: latitude, longitud: longitude });
+            console.log("ubiv", location);
+          },
+          (error) => {
+            setError("Error al obtener la ubicación: ", error);
+          }
+        );
+      };
+  
+      getLocation();
+    }, []);
 
 
   return (
