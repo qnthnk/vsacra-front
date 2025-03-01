@@ -1,6 +1,6 @@
 
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User_principal,  Administrator, Location
+from api.models import db, User
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -38,7 +38,7 @@ def sign_up():
     first_name = data.get('first_name')
     first_last_name = data.get('first_last_name')
     second_last_name = data.get('second_last_name')
-    # nationality = data.get('nationality')
+    nationality = data.get('nationality')
     gender = data.get('gender')
     birthdate = data.get('birthdate')
     blood_type = data.get('blood_type')
@@ -59,11 +59,11 @@ def sign_up():
     zip_code = data.get('zip_code')
     # migrant_or_family = data.get('migrant_or_family')
 
-    user_exists = User_principal.query.filter_by(email=email).first() 
+    user_exists = User.query.filter_by(email=email).first() 
     if user_exists is None:
         password_hash = generate_password_hash(password)
 
-        new_user = User_principal(
+        new_user = User(
                 first_name = first_name,
                 first_last_name = first_last_name,
                 second_last_name = second_last_name,
@@ -110,7 +110,7 @@ def login():
     data = request.json
     email = data.get('email')
     password = data.get('password')
-    user_exists = User_principal.query.filter_by(email=email).first() 
+    user_exists = User.query.filter_by(email=email).first() 
 
 
     if user_exists:
@@ -131,70 +131,70 @@ def private():
         return jsonify({"msg": "Token has been revoked."}), 401  
 
     email = get_jwt_identity()
-    user_exists = User_principal.query.filter_by(email=email).first() 
+    user_exists = User.query.filter_by(email=email).first() 
     return jsonify(user_exists.serialize()), 200
 
-@api.route('/signup/admin', methods = ['POST'])
-def sign_up_admin():
-    data = request.json
-    email = data.get('email')
-    password = data.get('password')
-    organization_name = data.get('organization_name')
+# @api.route('/signup/admin', methods = ['POST'])
+# def sign_up_admin():
+#     data = request.json
+#     email = data.get('email')
+#     password = data.get('password')
+#     organization_name = data.get('organization_name')
 
-    user_exists = Administrator.query.filter_by(email=email).first() 
+#     user_exists = Administrator.query.filter_by(email=email).first() 
 
-    if user_exists is None:
-        password_hash = generate_password_hash(password)
+#     if user_exists is None:
+#         password_hash = generate_password_hash(password)
 
-        new_admin = Administrator(
-                email = email,
-                password = password_hash,
-                organization_name = organization_name
-            )  
+#         new_admin = Administrator(
+#                 email = email,
+#                 password = password_hash,
+#                 organization_name = organization_name
+#             )  
 
-        try:
-            db.session.add(new_admin)  
-            db.session.commit()
+#         try:
+#             db.session.add(new_admin)  
+#             db.session.commit()
             
-        except Exception as error:
-            db.session.rollback()
-            return jsonify({"message": "An error has ocurred."}), 500
+#         except Exception as error:
+#             db.session.rollback()
+#             return jsonify({"message": "An error has ocurred."}), 500
 
-        return jsonify({
-            "user": new_admin.serialize(),
-            "message": "You have registered! Redirecting to log-in page" 
-        }), 200
-    else:
-        return jsonify({"message": "Email already in use. Try using another one."}), 400
+#         return jsonify({
+#             "user": new_admin.serialize(),
+#             "message": "You have registered! Redirecting to log-in page" 
+#         }), 200
+#     else:
+#         return jsonify({"message": "Email already in use. Try using another one."}), 400
     
-@api.route('/login/admin', methods = ['POST'])
-def login_admin():
-    data = request.json
-    email = data.get('email')
-    password = data.get('password')
-    user_exists = Administrator.query.filter_by(email=email).first() 
+# @api.route('/login/admin', methods = ['POST'])
+# def login_admin():
+#     data = request.json
+#     email = data.get('email')
+#     password = data.get('password')
+#     user_exists = Administrator.query.filter_by(email=email).first() 
 
 
-    if user_exists:
-        valid_password = check_password_hash(user_exists.password, password) 
-        if valid_password:
-            access_token = create_access_token(identity=user_exists.email)
-            return jsonify({"token": access_token}), 200  
-        else:
-            return jsonify({"message": "Invalid password."}), 401 
-    else:
-        return jsonify({"message": "Invalid user."}), 404
+#     if user_exists:
+#         valid_password = check_password_hash(user_exists.password, password) 
+#         if valid_password:
+#             access_token = create_access_token(identity=user_exists.email)
+#             return jsonify({"token": access_token}), 200  
+#         else:
+#             return jsonify({"message": "Invalid password."}), 401 
+#     else:
+#         return jsonify({"message": "Invalid user."}), 404
     
-@api.route('/example/admin', methods=['GET'])
-@jwt_required()
-def private_admin():
-    jti = get_jwt()["jti"]
-    if jti in delete_tokens:
-        return jsonify({"msg": "Token has been revoked."}), 401  
+# @api.route('/example/admin', methods=['GET'])
+# @jwt_required()
+# def private_admin():
+#     jti = get_jwt()["jti"]
+#     if jti in delete_tokens:
+#         return jsonify({"msg": "Token has been revoked."}), 401  
 
-    email = get_jwt_identity()
-    user_exists = Administrator.query.filter_by(email=email).first() 
-    return jsonify(user_exists.serialize()), 200
+#     email = get_jwt_identity()
+#     user_exists = Administrator.query.filter_by(email=email).first() 
+#     return jsonify(user_exists.serialize()), 200
 
 def procesar_apies(apies_input, prompt):
     try:
