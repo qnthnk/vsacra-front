@@ -1,14 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
+import { Context } from '../store/appContext';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const { store, actions } = useContext(Context);
 
   const validatePassword = (password) => {
     const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,15}$/;
     return regex.test(password);
   };
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -18,9 +21,17 @@ const Login = () => {
       return;
     }
 
-    setError(""); 
-    console.log("Iniciando sesión con:", { email, password });
-    
+    setError("");
+
+    let payload = {
+      password: password,
+      email: email
+    }
+
+    actions.login(payload)
+
+    console.log("Iniciando sesión con:", { email });
+
   };
 
   return (
@@ -29,21 +40,21 @@ const Login = () => {
         <form onSubmit={handleSubmit} className="col-4">
           <div className="mb-3">
             <label htmlFor="email" className="form-label">Correo Electrónico</label>
-            <input 
-              type="email" 
-              name="email" 
-              className="form-control" 
-              value={email} 
+            <input
+              type="email"
+              name="email"
+              className="form-control"
+              value={email}
               onChange={(e) => setEmail(e.target.value)}
-              required 
+              required
             />
           </div>
 
           <div className="mb-3">
             <label htmlFor="password" className="form-label">Contraseña</label>
-            <input 
-              type="password" 
-              name="password" 
+            <input
+              type="password"
+              name="password"
               className="form-control"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -56,7 +67,7 @@ const Login = () => {
           <button type="submit" className='btn btn-primary'>Iniciar sesión</button>
 
           <div className="mt-3">
-            <label>¿No tienes una cuenta? <a href="/register">Regístrate</a></label>
+            <label>¿No tienes una cuenta? <a href="/signup">Regístrate</a></label>
           </div>
           <div className="mt-3">
             <label><a href="/recover-password">Olvidé mi contraseña</a></label>

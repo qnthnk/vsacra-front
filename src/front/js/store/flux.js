@@ -27,6 +27,26 @@ const getState = ({ getStore, getActions, setStore }) => {
                     console.log("Error de registro", error)
                 }
             },
+            login: async (payload) => {
+                console.log("datos cuando se hace clic en registro", payload)
+                try {
+                    const resp = await fetch(process.env.BACKEND_URL + "api/login", {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(payload)
+                    })
+                    if (!resp.ok) {
+                        throw new Error('valio v...')
+                    } else {
+                        alert('funciono')
+                    }
+
+                } catch (error) {
+                    console.log("Error al iniciar sesión:", error)
+                }
+            },
 
             getMessage: async () => {
                 try {
