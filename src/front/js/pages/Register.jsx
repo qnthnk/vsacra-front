@@ -92,8 +92,8 @@ const Register = () => {
       if (!formData.country_of_destination.trim()) newErrors.country_of_destination = genericLegend;
       if (!formData.password) {
         newErrors.password = genericLegend;
-      } else if (formData.password.length < 8) {
-        newErrors.password = "Por su seguridad, debe tener al menos 8 caracteres.";
+      } else if (formData.password.length > 8) {
+        newErrors.password = "Por su seguridad, la contraseña debe tener ser mayor a 8 caracteres.";
       }
     }
 
