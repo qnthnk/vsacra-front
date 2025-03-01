@@ -5,12 +5,10 @@ import statesData from './../../../../states.json';
 import citiesData from './../../../../cities.json';
 import './../../styles/Register.css';
 
-
 const Register = () => {
   const { store, actions } = useContext(Context);
+  const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
-
-
     first_name: '',
     first_last_name: '',
     second_last_name: '',
@@ -38,6 +36,56 @@ const Register = () => {
 
   });
 
+  const [errors, setErrors] = useState({});
+
+  const validateForm = () => {
+    let newErrors = {};
+    let genericLegend = "Completa este campo para continuar."
+    if (!formData.first_name.trim()) newErrors.first_name = genericLegend;
+    if (!formData.first_last_name.trim()) newErrors.first_last_name = genericLegend;
+    if (!formData.nationality.trim()) newErrors.nationality = genericLegend;
+    if (!formData.gender) newErrors.gender = genericLegend;
+    if (!formData.birthdate) {
+      newErrors.birthdate = genericLegend;
+    } else {
+      let birthDate = new Date(formData.birthdate);
+      let today = new Date();
+      if (birthDate > today) newErrors.birthdate = "Seleccione una fecha válida.";
+    }
+    if (!formData.email.trim()) {
+      newErrors.email = genericLegend;
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = "Formato de email inválido.";
+    }
+    if (!formData.password) {
+      newErrors.password = genericLegend;
+    } else if (formData.password.length < 8) {
+      newErrors.password = "Por su seguridad, debe tener al menos 8 caracteres.";
+    }
+    if (!formData.phone_number.trim()) {
+      newErrors.phone_number = genericLegend;
+    } else if (!/^\d+$/.test(formData.phone_number)) {
+      newErrors.phone_number = "Solo debe contener números.";
+    }
+    if (!formData.blood_type.trim()) newErrors.blood_type = genericLegend;
+    if (!formData.allergy.trim()) newErrors.allergy = genericLegend;
+    if (!formData.disease.trim()) newErrors.disease = genericLegend;
+    if (!formData.city.trim()) newErrors.city = genericLegend;
+    if (!formData.state.trim()) newErrors.state = genericLegend;
+    if (!formData.address.trim()) newErrors.address = genericLegend;
+    if (!formData.home_country.trim()) newErrors.home_country = genericLegend;
+    if (!formData.country_of_residence.trim()) newErrors.country_of_residence = genericLegend;
+    if (!formData.country_of_destination.trim()) newErrors.country_of_destination = genericLegend;
+    if (!formData.zip_code.trim()) {
+      newErrors.zip_code = genericLegend;
+    } else if (!/^\d{4,6}$/.test(formData.zip_code)) {
+      newErrors.zip_code = "Debe contener al menos 4 dígitos.";
+    }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -47,9 +95,24 @@ const Register = () => {
     console.log("este mero", formData[name]);
   };
 
+  const handleNext = () => {
+    setStep(step + 1);
+  };
+
+  const handleBack = () => {
+    setStep(step - 1);
+  };
+
   const handleSubmit = () => {
 
     let dataToSend = formData;
+    if (validateForm()) {
+      actions.register(formData);
+      console.log("Formulario enviado:", formData);
+    } else {
+      alert("Por favor complete los campos faltantes. Para continuar, revise su solicitud")
+      console.log("Errores en el formulario:", errors);
+    }
     actions.register(dataToSend);
 
 
@@ -101,185 +164,168 @@ const Register = () => {
     getLocation();
   }, []);
 
-  useEffect(() => {
-      if (!navigator.geolocation) {
-        setError("La geolocalización no es soportada por este navegador.");
-        return;
-      }
-  
-      const getLocation = () => {
-        navigator.geolocation.getCurrentPosition(
-          (position) => {
-            const { latitude, longitude } = position.coords;
-            setLocation({ latitud: latitude, longitud: longitude });
-            console.log("ubiv", location);
-          },
-          (error) => {
-            setError("Error al obtener la ubicación: ", error);
-          }
-        );
-      };
-  
-      getLocation();
-    }, []);
-
 
   return (
     <div>
-      <div className="card register">
+      <div className="register">
         <h2>Bienvenid@ a tu migrante app</h2>
         <h3>Completa el siguiente formulario para inscribirte</h3>
-        <div className='card form'>
-          <div>
+        <div className='form'>
+          {step === 1 && (
             <div>
-              <h3>DATOS</h3>
-              <input type="text" name="first_name" placeholder='Nombre' value={formData.first_name} onChange={handleChange} />
+              <h3 className='labels'>Datos Generales</h3>
+            <div className='tags'>
+              <input className='inputs' type="text" name="first_name" placeholder='Nombre' value={formData.first_name} onChange={handleChange} />
+              {errors.first_name && <p className="error">{errors.first_name}</p>}
             </div>
-            <div>
-              <input type="text" name="first_last_name" placeholder='Apellido 1' value={formData.first_last_name} onChange={handleChange} />
+            <div className='tags'>
+              <input className='inputs' type="text" name="first_last_name" placeholder='Apellido 1' value={formData.first_last_name} onChange={handleChange} />
+              {errors.first_last_name && <p className="error">{errors.first_last_name}</p>}
             </div>
-            <div>
-              <input type="text" name="second_last_name" placeholder='Apellido 2' value={formData.second_last_name} onChange={handleChange} />
+            <div className='tags'>
+              <input className='inputs' type="text" name="second_last_name" placeholder='Apellido 2' value={formData.second_last_name} onChange={handleChange} />
             </div>
-            <div>
-            <input type="text" name="nationality" placeholder='Nacionalidad' value={formData.nationality} onChange={handleChange} />
-
-              {/* <select name="nationality" value={formData.nationality} onChange={handleChange}>
-                <option value="">Nacionalidad</option>
-                {countriesData.countries.map((nationality, index) => (
-                  <option key={index} value={nationality.name}>{nationality.name}</option>
-                ))}
-              </select> */}
+            <div className='tags'>
+              <input className='inputs' type="text" name="nationality" placeholder='Nacionalidad' value={formData.nationality} onChange={handleChange} />
+              {errors.nationality && <p className="error">{errors.nationality}</p>}
             </div>
-            <div>
-              <select name="gender" value={formData.gender} onChange={handleChange}>
+            <div className='tags'>
+              <select className='inputs' name="gender" value={formData.gender} onChange={handleChange}>
                 <option value="">Género</option>
                 <option value="male">Masculino</option>
                 <option value="female">Femenino</option>
                 <option value="other">Otro</option>
               </select>
+              {errors.gender && <p className="error">{errors.gender}</p>}
             </div>
-            <div>
+            <div className='tags'>
               <label>Fecha de nacimiento</label>
-              <input type="date" name="birthdate" placeholder='añadir date' value={formData.birthdate} onChange={handleChange} />
+              <input className='inputs' type="date" name="birthdate" placeholder='añadir date' value={formData.birthdate} onChange={handleChange} />
+              {errors.birthdate && <p className="error">{errors.birthdate}</p>}
             </div>
-            <div>
-              <input type="email" name="email" placeholder='Email' value={formData.email} onChange={handleChange} />
+            <div className='tags'>
+              <input className='inputs' type="text" name="home_country" placeholder='Pais de Nacimiento' value={formData.home_country} onChange={handleChange} />
+              {errors.home_country && <p className="error">{errors.home_country}</p>}
+            </div>
+
+<button className='button' onClick={handleNext}>Siguiente</button>
             </div>
             
+          )}
+          {step === 2 && (
             <div>
-              <input type="password" name="password" placeholder='Crear contraseña' value={formData.password} onChange={handleChange} />
+              <h3 className='labels'>Dirección</h3>
+              <div className='tags'>
+              <input className='inputs' type="text" name="address" placeholder='Dirección completa' value={formData.address} onChange={handleChange} />
+              {errors.address && <p className="error">{errors.address}</p>}
             </div>
-            <div>
-              <input type="text" name="phone_number" placeholder='Teléfono' value={formData.phone_number} onChange={handleChange} />
+            <div className='tags'>
+              <input className='inputs' type="text" name="zip_code" placeholder='Código Postal' value={formData.zip_code} onChange={handleChange} />
+              {errors.zip_code && <p className="error">{errors.zip_code}</p>}
             </div>
-            <div>
-              <input type="text" name="facebook" placeholder='Facebook' value={formData.facebook} onChange={handleChange} />
+            <div className='tags'>
+              <input className='inputs' type="text" name="country_of_residence" placeholder='Pais de Residencia' value={formData.country_of_residence} onChange={handleChange} />
+              {errors.country_of_residence && <p className="error">{errors.country_of_residence}</p>}
             </div>
-            <div>
-              <input type="text" name="instagram" placeholder='Instagram' value={formData.instagram} onChange={handleChange} />
+            <div className='tags'>
+              <input className='inputs' type="text" name="state" placeholder='Estado' value={formData.state} onChange={handleChange} />
+              {errors.state && <p className="error">{errors.state}</p>}
             </div>
-            <div>
-              <input type="text" name="x" placeholder='Twitter o X' value={formData.x} onChange={handleChange} />
+              <div className='tags'>
+              <input className='inputs' type="text" name="city" placeholder='Ciudad' value={formData.city} onChange={handleChange} />
+              {errors.city && <p className="error">{errors.city}</p>}
             </div>
-            <div>
-              <input type="text" name="blood_type" placeholder='Tipo de sangre' value={formData.blood_type} onChange={handleChange} />
-            </div>
-            <div>
-              <input type="text" name="allergy" placeholder='Alergias' value={formData.allergy} onChange={handleChange} />
-            </div>
-            <div>
-              <input type="text" name="disease" placeholder='Enfermedades Crónicas' value={formData.disease} onChange={handleChange} />
-            </div>
-            <div>
-            <input type="text" name="city" placeholder='Ciudad' value={formData.city} onChange={handleChange} />
+            
+            
+            
+           
+            
+             
 
-              {/* <select name="city" value={formData.city} onChange={handleChange} disabled={!formData.state}>
-                <option value="">Ciudad</option>
-                {citiesData.cities
-                  .filter((city) => {
-                    // Encuentra el estado seleccionado en states.json
-                    const selectedState = statesData.states.find(
-                      (state) => state.name === formData.state
-                    );
-
-                    // Compara el id del estado con el id_state de la ciudad
-                    return selectedState && city.id_state === selectedState.id;
-                  })
-                  .map((city, index) => (
-                    <option key={index} value={city.name}>
-                      {city.name}
-                    </option>
-                  ))}
-              </select> */}
+<button className='button' onClick={handleBack}>Atrás</button>
+            <button  className='button' onClick={handleNext}>Siguiente</button>
             </div>
+          )}
+           {step === 3 && (
             <div>
-            <input type="text" name="state" placeholder='Estado' value={formData.state} onChange={handleChange} />
-
-              {/* <select name="state" value={formData.state} onChange={handleStateChange} disabled={!formData.country_of_residence}>
-                <option value="">Estado</option>
-                {statesData.states
-                  .filter((state) => {
-                    // Encuentra el país seleccionado en countries.json
-                    const selectedCountry = countriesData.countries.find(
-                      (country) => country.name === formData.country_of_residence
-                    );
-
-                    // Compara el id del país con el id_country del estado
-                    return selectedCountry ? state.id_country === selectedCountry.id : false;
-                  })
-                  .map((state, index) => (
-                    <option key={index} value={state.name}>
-                      {state.name}
-                    </option>
-                  ))}
-              </select> */}
+              <h3 className='labels'>Datos de Contacto</h3>
+              <div className='tags'>
+              <input className='inputs' type="email" name="email" placeholder='Email' value={formData.email} onChange={handleChange} />
+              {errors.email && <p className="error">{errors.email}</p>}
             </div>
-            <div>
-              <input type="text" name="address" placeholder='Dirección completa' value={formData.address} onChange={handleChange} />
+           
+            <div className='tags'>
+              <input className='inputs' type="text" name="phone_number" placeholder='Teléfono' value={formData.phone_number} onChange={handleChange} />
+              {errors.phone_number && <p className="error">{errors.phone_number}</p>}
             </div>
-            <div>
-            <input type="text" name="home_country" placeholder='Pais de Nacimiento' value={formData.home_country} onChange={handleChange} />
-
-              {/* <select name="home_country" value={formData.home_country} onChange={handleChange}>
-                <option value="">País de nacimiento</option>
-                {countriesData.countries && countriesData.countries.map((country, index) => (
-                  <option key={index} value={country.name}>{country.name}</option>
-                ))}
-              </select> */}
-            </div> 
-            <div>
-            <input type="text" name="country_of_residence" placeholder='Pais de Residencia' value={formData.country_of_residence} onChange={handleChange} />
-
-              {/* <select name="country_of_residence" value={formData.country_of_residence} onChange={handleCountryChange}>
-                <option value="">País de residencia</option>
-                {countriesData.countries && countriesData.countries.map((country, index) => (
-                  <option key={index} value={country.name}>
-                    {country.name}
-                  </option>
-                ))}
-              </select> */}
+            <div className='tags'>
+              <input className='inputs' type="text" name="facebook" placeholder='Facebook' value={formData.facebook} onChange={handleChange} />
+            </div>
+            <div className='tags'>
+              <input className='inputs' type="text" name="instagram" placeholder='Instagram' value={formData.instagram} onChange={handleChange} />
+            </div>
+            <div className='tags'>
+              <input className='inputs' type="text" name="x" placeholder='Twitter o X' value={formData.x} onChange={handleChange} />
             </div>
 
-             <div>
-             <input type="text" name="country_of_destination" placeholder='Pais de Destino' value={formData.country_of_destination} onChange={handleChange} />
-
-              {/* <select name="country_of_destination" value={formData.country_of_destination} onChange={handleChange}>
-                <option value="">País de destino</option>
-                {countriesData.countries && countriesData.countries.map((country, index) => (
-                  <option key={index} value={country.name}>{country.name}</option>
-                ))}
-              </select> */}
+<button className='button' onClick={handleBack}>Atrás</button>
+            <button className='button' onClick={handleNext}>Siguiente</button>
             </div>
-      
+          )}
+          {step === 4 && (
             <div>
-              <input type="text" name="zip_code" placeholder='Código Postal' value={formData.zip_code} onChange={handleChange} />
+              <h3 className='labels'>Datos clínicos</h3>
+              
+              <div className='tags'>
+              <input className='inputs' type="text" name="blood_type" placeholder='Tipo de sangre' value={formData.blood_type} onChange={handleChange} />
+              {errors.blood_type && <p className="error">{errors.blood_type}</p>}
             </div>
+            <div className='tags'>
+              <input className='inputs' type="text" name="allergy" placeholder='Alergias' value={formData.allergy} onChange={handleChange} />
+              {errors.allergy && <p className="error">{errors.allergy}</p>}
+            </div>
+            <div className='tags'>
+              <input className='inputs' type="text" name="disease" placeholder='Enfermedades Crónicas' value={formData.disease} onChange={handleChange} />
+              {errors.disease && <p className="error">{errors.disease}</p>}
+            </div>
+           
+
+            
+
+            <button className='button' onClick={handleBack}>Atrás</button>
+            <button className='button' onClick={handleNext}>Siguiente</button>
+
+            </div>
+          )}
+
+{step === 5 && (
+            <div>
+              <h3 className='labels'>Finalizar registro</h3>
+              <div className='tags'>
+              <input className='inputs' type="text" name="country_of_destination" placeholder='Pais de Destino' value={formData.country_of_destination} onChange={handleChange} />
+              {errors.country_of_destination && <p className="error">{errors.country_of_destination}</p>}
+            </div>
+            
+            <div className='tags'>
+              <input className='inputs' type="password" name="password" placeholder='Crear contraseña' value={formData.password} onChange={handleChange} />
+              {errors.password && <p className="error">{errors.password}</p>}
+            </div>
+
+            
+
+<button className='button' onClick={handleBack}>Atrás</button>
+<button type="submit" className="btn btn-primary" onClick={handleSubmit}>Registrarse</button>
+
+            </div>
+          )}
+          <div>
+            
+            
+            
           </div>
-          <button type="submit" className="btn btn-primary" onClick={handleSubmit}>Registrarse</button>
         </div>
       </div>
-    // </div >
+    </div>
   );
 };
 
