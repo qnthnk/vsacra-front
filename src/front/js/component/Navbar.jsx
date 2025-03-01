@@ -5,6 +5,8 @@ const Navbar = () => {
     <div>
       <nav className="navbar bg-dark border-bottom border-body" data-bs-theme="dark">
         <div className="container-fluid">
+        <h1>ENCARGADO DANNY</h1>
+        <h1>DO NOT TOUCH JUEPUTA</h1>
           <a className="navbar-brand" href="/">Home</a>
           <a className="navbar-brand" href="/login">Login</a>
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -13,19 +15,7 @@ const Navbar = () => {
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav">
               <li className="nav-item">
-                <a className="nav-link" href="/help-places">Lugares de ayuda</a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="/embassies">Embajadas</a>
-              </li>
-              <li className="nav-item">
                 <a className="nav-link" href="/chat">Mensajeria</a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="/blog">Blog</a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="/gadgets">Gadgets</a>
               </li>
               <li className="nav-item">
                 <a className="nav-link" href="/chatbot">Chatbot</a>
@@ -34,31 +24,19 @@ const Navbar = () => {
                 <a className="nav-link" href="/contact-list">Contact List</a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="/immigration-requirements">Requisitos migratorios</a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="/paypal-balance">Saldo paypal</a>
-              </li>
-              <li className="nav-item">
                 <a className="nav-link" href="/freq-asked-questions">Preguntas Frecuentes</a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="/emergency">Emergencia</a>
               </li>
               <li className="nav-item">
                 <a className="nav-link" href="/help">Contactar Ayuda</a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="/admin-console">Consola manejo de datos</a>
+                <a className="nav-link" href="/admin-console">Consola manejo de datos(ADMIN)</a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="/stats-and-reports">Estadisticas y reportes</a>
+                <a className="nav-link" href="/stats-and-reports">Estadisticas y reportes(ADMIN)</a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="/dashboard-edition">Panel edicion dashboard</a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="/location-view">Vista ubicacion</a>
+                <a className="nav-link" href="/location-view">Vista ubicacion(RENAME PD)</a>
               </li>
             </ul>
           </div>

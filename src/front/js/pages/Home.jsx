@@ -37,6 +37,7 @@ const Home = () => {
     <div className="d-flex justify-content-center align-items-center vh-100">
 
       <div>
+        <h1>NOTAS. BOTON DE EMERGENCIA ES DE ALI</h1>
         <h2>Ubicación del Usuario</h2>
         {error && <p style={{ color: "red" }}>{error}</p>}
         {location ? (
@@ -50,56 +51,29 @@ const Home = () => {
         )}
       </div>
       <ul className="list-group w-auto">
-        <li className="list-group-item list-group-item-action d-flex justify-content-center align-items-center" aria-current="true">
-          <Link to="/signup">Registro</Link>
-        </li>
-        <li className="list-group-item list-group-item-action d-flex justify-content-center align-items-center" aria-current="true">
-          <Link to="/help-places">Lugares de ayuda</Link>
+        <li className="list-group-item list-group-item-action d-flex justify-content-center align-items-center">
+          <Link to="/chat">Mensajería (EDUARDO)</Link>
         </li>
         <li className="list-group-item list-group-item-action d-flex justify-content-center align-items-center">
-          <Link to="/embassies">Embajadas</Link>
+          <Link to="/chatbot">Chatbot (DANNY)</Link>
         </li>
         <li className="list-group-item list-group-item-action d-flex justify-content-center align-items-center">
-          <Link to="/chat">Mensajería</Link>
+          <Link to="/contact-list">Contact List (RUBEN)</Link>
         </li>
         <li className="list-group-item list-group-item-action d-flex justify-content-center align-items-center">
-          <Link to="/blog">Blog</Link>
+          <Link to="/freq-asked-questions">Preguntas Frecuentes (EDUARDO)</Link>
         </li>
         <li className="list-group-item list-group-item-action d-flex justify-content-center align-items-center">
-          <Link to="/gadgets">Gadgets</Link>
+          <Link to="/help">Contactar Ayuda (EDUARDO)</Link>
         </li>
         <li className="list-group-item list-group-item-action d-flex justify-content-center align-items-center">
-          <Link to="/chatbot">Chatbot</Link>
+          <Link to="/stats-and-reports">Estadísticas y reportes(ADMIN) (RUBEN)</Link>
         </li>
         <li className="list-group-item list-group-item-action d-flex justify-content-center align-items-center">
-          <Link to="/contact-list">Contact List</Link>
+          <Link to="/location-view">Vista de ubicación(RENAME PD) (DANNY Y ALI)</Link>
         </li>
         <li className="list-group-item list-group-item-action d-flex justify-content-center align-items-center">
-          <Link to="/immigration-requirements">Requisitos migratorios</Link>
-        </li>
-        <li className="list-group-item list-group-item-action d-flex justify-content-center align-items-center">
-          <Link to="/paypal-balance">Saldo Paypal</Link>
-        </li>
-        <li className="list-group-item list-group-item-action d-flex justify-content-center align-items-center">
-          <Link to="/freq-asked-questions">Preguntas Frecuentes</Link>
-        </li>
-        <li className="list-group-item list-group-item-action d-flex justify-content-center align-items-center">
-          <Link to="/emergency">Emergencia</Link>
-        </li>
-        <li className="list-group-item list-group-item-action d-flex justify-content-center align-items-center">
-          <Link to="/stats-and-reports">Estadísticas y reportes</Link>
-        </li>
-        <li className="list-group-item list-group-item-action d-flex justify-content-center align-items-center">
-          <Link to="/help">Contactar Ayuda</Link>
-        </li>
-        <li className="list-group-item list-group-item-action d-flex justify-content-center align-items-center">
-          <Link to="/location-view">Vista de ubicación</Link>
-        </li>
-        <li className="list-group-item list-group-item-action d-flex justify-content-center align-items-center">
-          <Link to="/admin-console">Consola de manejo de datos</Link>
-        </li>
-        <li className="list-group-item list-group-item-action d-flex justify-content-center align-items-center">
-          <Link to="/dashboard-edition">Panel de edición de dashboard de usuarios</Link>
+          <Link to="/admin-console">Consola de manejo de datos(ADMIN)</Link>
         </li>
       </ul>
     </div>

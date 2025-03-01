@@ -184,6 +184,8 @@ const Register = () => {
   return (
     <div>
       <div className="register">
+      <h1>ENCARGADO RUBEN</h1>
+      <h1>DO NOT TOUCH JUEPUTA</h1>
         <h2>Bienvenid@ a tu migrante app</h2>
         <h3>Completa el siguiente formulario para inscribirte</h3>
         <div className='form'>
