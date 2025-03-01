@@ -5,23 +5,23 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  const validatePassword = (password) => {
-    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d]{8,15}$/;
-    return regex.test(password);
-  };
+  
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    if (!validatePassword(password)) {
-      setError("La contraseña debe tener entre 8 y 15 caracteres, incluir al menos una mayúscula, una minúscula y un número.");
+    // Add form submission logic here
+    if (!email || !password) {
+      setError('Por favor, complete todos los campos.');
       return;
     }
 
-    setError(""); 
-    console.log("Iniciando sesión con:", { email, password });
-    
-  };
+    // Reset error message
+    setError('');
+
+    // Simulate form submission
+    console.log('Form submitted', { email, password });
+
+    };
 
   return (
     <div className='container mt-5'>
