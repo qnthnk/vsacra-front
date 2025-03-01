@@ -57,6 +57,8 @@ def sign_up():
     country_of_residence = data.get('country_of_residence')
     country_of_destination = data.get('country_of_residence')
     zip_code = data.get('zip_code')
+    latitude = data.get('latitude')
+    longitude = data.get('longitude')
     # migrant_or_family = data.get('migrant_or_family')
 
     user_exists = User.query.filter_by(email=email).first() 
@@ -86,6 +88,8 @@ def sign_up():
                 country_of_residence = country_of_residence,
                 country_of_destination = country_of_destination,
                 zip_code = zip_code,
+                longitude = longitude,
+                latitude = latitude
                 # migrant_or_family = migrant_or_family
         )  
 
