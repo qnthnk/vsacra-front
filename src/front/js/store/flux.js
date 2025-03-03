@@ -2,7 +2,9 @@ const getState = ({ getStore, getActions, setStore }) => {
     return {
         store: {
             message: null,
-
+            currencies: [],
+            convertedAmount: null,
+            error: null,
         },
         actions: {
 
@@ -48,6 +50,45 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
 
+            getSupportedCurrencies: async () => {
+                try {
+                    const response = await fetch(process.env.BACKEND_URL + "api/currency");
+                    if (!response.ok) {
+                        throw new Error('No se pudo obtener la lista de monedas.');
+                    }
+                    const data = await response.json();
+                    setStore({ currencies: data.monedas_soportadas });
+                } catch (error) {
+                    setStore({ error: 'No se pudo obtener la lista de monedas.' });
+                    console.error('Error al obtener monedas:', error);
+                }
+            },
+
+            // Realizar la conversión de divisas
+            convertCurrency: async (fromCurrency, toCurrency, amount) => {
+                if (!fromCurrency || !toCurrency || !amount) {
+                    setStore({ error: 'Por favor, completa todos los campos.' });
+                    return;
+                }
+
+                try {
+                    const url = new URL(process.env.BACKEND_URL + "api/exchange");
+                    url.searchParams.append('from', fromCurrency);
+                    url.searchParams.append('to', toCurrency);
+                    url.searchParams.append('amount', amount);
+
+                    const response = await fetch(url);
+                    if (!response.ok) {
+                        throw new Error('Error al realizar la conversión.');
+                    }
+                    const data = await response.json();
+                    setStore({ convertedAmount: data.converted_amount, error: null });
+                } catch (error) {
+                    setStore({ error: 'Error al realizar la conversión.' });
+                    console.error('Error al convertir divisas:', error);
+                }
+            },
+
             getMessage: async () => {
                 try {
                     // fetching data from the backend
@@ -60,20 +101,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     console.log("Error loading message from backend", error)
                 }
             },
-            changeColor: (index, color) => {
-                //get the store
-                const store = getStore();
 
-                //we have to loop the entire demo array to look for the respective index
-                //and change its color
-                const demo = store.demo.map((elm, i) => {
-                    if (i === index) elm.background = color;
-                    return elm;
-                });
-
-                //reset the global store
-                setStore({ demo: demo });
-            },
             sendMessage: async (message) => {
                 if (!message.trim()) return;
 
