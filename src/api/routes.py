@@ -10,6 +10,7 @@ api = Blueprint('api', __name__)
 from openai import OpenAI
 import os
 import re
+import requests
 
 
 # Allow CORS requests to this API
@@ -19,6 +20,10 @@ client = OpenAI(
     api_key=os.environ.get("OPENAI_API_KEY"),
     organization=os.environ.get("ORGANIZATION_ID")
 )
+
+CONVERTER_API_KEY = '43af89a58a6d8fd938bdd176d46766df'  # Reemplaza con tu API Key
+BASE_URL = 'http://api.exchangeratesapi.io/v1/latest?access_key=43af89a58a6d8fd938bdd176d46766df'
+OPENWEATHERMAP_API_KEY='ed02cde83099f9cbe127ffb1fb52be6d'
 
 
 delete_tokens = set()
@@ -262,3 +267,95 @@ def chatbot():
 
     except Exception as e:
         return jsonify({"error": f"Error en el chatbot: {str(e)}"}), 500
+
+@api.route('/exchange', methods=['GET'])
+def converter():
+    # Parámetros de la solicitud
+    from_currency = request.args.get('from')  # Moneda de origen (obligatorio)
+    to_currency = request.args.get('to')      # Moneda de destino (obligatorio)
+    amount = float(request.args.get('amount', 1.0))  # Cantidad a convertir (por defecto: 1.0)
+
+    if not from_currency or not to_currency:
+        return jsonify({'error': 'Debes proporcionar las monedas de origen (from) y destino (to)'}), 400
+
+    try:
+        # Obtener las tasas de cambio actuales
+        response = requests.get(BASE_URL)
+        data = response.json()
+
+        # Verificar si la solicitud fue exitosa
+        if not data.get('success', False):
+            return jsonify({'error': 'No se pudo obtener las tasas de cambio'}), 500
+
+        # Obtener las tasas de cambio
+        rates = data.get('rates', {})
+        if from_currency not in rates or to_currency not in rates:
+            return jsonify({'error': 'Una o ambas monedas no son válidas'}), 400
+
+        # Realizar la conversión
+        from_rate = rates[from_currency]
+        to_rate = rates[to_currency]
+        converted_amount = (amount / from_rate) * to_rate
+
+        # Devolver el resultado
+        return jsonify({
+            'from': from_currency,
+            'to': to_currency,
+            'amount': amount,
+            'converted_amount': round(converted_amount, 2)
+        }), 200
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+
+# Ruta para obtener todas las monedas soportadas
+@api.route('/currency', methods=['GET'])
+def currency():
+    try:
+        # Obtener las tasas de cambio actuales
+        response = requests.get(BASE_URL)
+        data = response.json()
+
+        # Verificar si la solicitud fue exitosa
+        if not data.get('success', False):
+            return jsonify({'error': 'No se pudo obtener las tasas de cambio'}), 500
+
+        # Devolver la lista de monedas soportadas
+        return jsonify({
+            'monedas_soportadas': list(data.get('rates', {}).keys())
+        }), 200
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
+    
+@api.route('/weather', methods=['GET'])
+def obtener_clima():
+    try:
+        # Obtener latitud y longitud de los parámetros de la solicitud
+        lat = request.args.get('lat')
+        lon = request.args.get('lon')
+
+        # Validar que se proporcionen latitud y longitud
+        if not lat or not lon:
+            return jsonify({'error': 'Debes proporcionar latitud (lat) y longitud (lon).'}), 400
+
+        # Hacer la solicitud a la API de OpenWeatherMap
+        url = f'https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={OPENWEATHERMAP_API_KEY}&units=metric'
+        response = requests.get(url)
+
+        # Verificar si la solicitud fue exitosa
+        if response.status_code != 200:
+            return jsonify({'error': 'No se pudo obtener el clima.'}), 500
+
+        # Devolver los datos del clima
+        data = response.json()
+        return jsonify({
+            'ciudad': data['name'],
+            'temperatura': data['main']['temp'],
+            'humedad': data['main']['humidity'],
+            'clima': data['weather'][0]['description'],
+            'viento': data['wind']['speed']
+        }), 200
+
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
