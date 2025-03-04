@@ -5,6 +5,8 @@ const getState = ({ getStore, getActions, setStore }) => {
             currencies: [],
             convertedAmount: null,
             error: null,
+            weather: null,
+            loading: false,
         },
         actions: {
 
@@ -64,7 +66,6 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
 
-            // Realizar la conversión de divisas
             convertCurrency: async (fromCurrency, toCurrency, amount) => {
                 if (!fromCurrency || !toCurrency || !amount) {
                     setStore({ error: 'Por favor, completa todos los campos.' });
@@ -91,11 +92,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 
             getMessage: async () => {
                 try {
-                    // fetching data from the backend
+
                     const resp = await fetch(process.env.BACKEND_URL + "/api/hello")
                     const data = await resp.json()
                     setStore({ message: data.message })
-                    // don't forget to return something, that is how the async resolves
+
                     return data;
                 } catch (error) {
                     console.log("Error loading message from backend", error)
@@ -110,7 +111,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 setStore({ chatMessages: [...store.chatMessages, newMessage] });
 
                 try {
-                    const response = await fetch("http://localhost:5000/api/chatbot", {
+                    const response = await fetch(process.env.BACKEND_URL + "api/chatbot", {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({ message })
@@ -126,7 +127,31 @@ const getState = ({ getStore, getActions, setStore }) => {
                     console.error("Error en la conexión con el servidor:", error);
                 }
 
-            }
+            },
+            getWeather: async (latitude, longitude) => {
+                const store = getStore();
+                setStore({ loading: true, error: null });
+
+                try {
+                    const url = `${process.env.BACKEND_URL}api/weather?lat=${latitude}&lon=${longitude}`;
+                    console.log("URL de la solicitud:", url);
+
+                    const response = await fetch(url);
+
+                    const responseText = await response.text();
+                    console.log("Respuesta del backend:", responseText);
+
+                    if (!response.ok) {
+                        throw new Error('No se pudo obtener el clima.');
+                    }
+
+                    const data = JSON.parse(responseText);
+                    setStore({ weather: data, loading: false });
+                } catch (error) {
+                    setStore({ error: 'Error al obtener el clima.', loading: false });
+                    console.error(error);
+                }
+            },
         },
     };
 }

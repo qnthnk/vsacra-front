@@ -1,5 +1,7 @@
 import React from 'react'
 import CurrencyConverter from './CurrencyConverter.jsx'
+import Weather from './Weather.jsx'
+import Calculator from './Calculator.jsx'
 
 const Footer = () => {
   return (
@@ -8,13 +10,13 @@ const Footer = () => {
 
         <div className='d-flex justify-content-center align-items-between'>
           <div className=''>
-            <p className='text-white'>Gadget 01</p>
+            <p className='text-white'></p>
           </div>
-          <div className=''>
-            <p className='text-white'>Gadget 02</p>
+          <div className='mb-2'>
+            <Calculator />
           </div>
-          <div className=''>
-            <p className='text-white'>Gadget 03</p>
+          <div className='mb-2'>
+            <Weather />
           </div>
           <div className='mb-2'>
             <CurrencyConverter />
