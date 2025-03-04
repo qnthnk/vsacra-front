@@ -27,39 +27,39 @@ import Register from "./pages/Register.jsx";
 
 //create your first component
 const Layout = () => {
-    //the basename is used when your project is published in a subdirectory and not in the root of the domain
-    // you can set the basename on the .env file located at the root of this project, E.g: BASENAME=/react-hello-webapp/
     const basename = process.env.BASENAME || "";
 
     if (!process.env.BACKEND_URL || process.env.BACKEND_URL == "") return <BackendURL />;
 
     return (
-        <div>
+        <div style={{ display: "flex", flexDirection: "column", height: "100vh", paddingBottom: "40px", paddingTop:"40px"}}>
             <BrowserRouter basename={basename}>
                 <ScrollToTop>
-                    <Navbar />
-                    <Routes>
-                        <Route path="/" element={<Home />} />
-                        <Route path="/login" element={<Login />} />
-                        <Route path="/signup" element={<Register />} />
-                        <Route path="/help-places" element={<HelpPlaces />} />
-                        <Route path="/embassies" element={<Embassies />} />
-                        <Route path="/chat" element={<Chat />} />
-                        <Route path="/blog" element={<Blog />} />
-                        <Route path="/gadgets" element={<Gadgets />} />
-                        <Route path="/chatbot" element={<ChatBot />} />
-                        <Route path="/contact-list" element={<ContactList />} />
-                        <Route path="/immigration-requirements" element={<ImmigrationRequirements />} />
-                        <Route path="/paypal-balance" element={<PaypalBalance />} />
-                        <Route path="/freq-asked-questions" element={<FreqAskedQuestions />} />
-                        <Route path="/emergency" element={<Emergency />} />
-                        <Route path="/stats-and-reports" element={<StatsAndReports />} />
-                        <Route path="/help" element={<Help />} />
-                        <Route path="/location-view" element={<LocationView />} />
-                        <Route path="/admin-console" element={<AdminConsole />} />
-                        <Route path="/dashboard-edition" element={<DashboardEdition />} />
-                    </Routes>
-                    <Footer />
+                    <Navbar style={{ position: "sticky", top: 0, zIndex: 1000 }} />
+                    <div style={{ flex: 1, overflowY: "auto" }}>
+                        <Routes>
+                            <Route path="/" element={<Home />} />
+                            <Route path="/login" element={<Login />} />
+                            <Route path="/signup" element={<Register />} />
+                            <Route path="/help-places" element={<HelpPlaces />} />
+                            <Route path="/embassies" element={<Embassies />} />
+                            <Route path="/chat" element={<Chat />} />
+                            <Route path="/blog" element={<Blog />} />
+                            <Route path="/gadgets" element={<Gadgets />} />
+                            <Route path="/chatbot" element={<ChatBot />} />
+                            <Route path="/contact-list" element={<ContactList />} />
+                            <Route path="/immigration-requirements" element={<ImmigrationRequirements />} />
+                            <Route path="/paypal-balance" element={<PaypalBalance />} />
+                            <Route path="/freq-asked-questions" element={<FreqAskedQuestions />} />
+                            <Route path="/emergency" element={<Emergency />} />
+                            <Route path="/stats-and-reports" element={<StatsAndReports />} />
+                            <Route path="/help" element={<Help />} />
+                            <Route path="/location-view" element={<LocationView />} />
+                            <Route path="/admin-console" element={<AdminConsole />} />
+                            <Route path="/dashboard-edition" element={<DashboardEdition />} />
+                        </Routes>
+                    </div>
+                    <Footer style={{ position: "sticky", bottom: 0, zIndex: 1000 }} />
                 </ScrollToTop>
             </BrowserRouter>
         </div>

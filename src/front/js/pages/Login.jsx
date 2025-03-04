@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Context } from '../store/appContext';
+import './../../styles/Login.css';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -33,46 +34,47 @@ const Login = () => {
     };
   
     return (
-      <div className='container mt-5'>
-        <div className='form-container'>
-          <form onSubmit={handleSubmit} className="col-4">
-            <div className="mb-3">
-              <label htmlFor="email" className="form-label">Correo Electrónico</label>
+      <>
+      <div className='login'>
+        <div className='form'>
+            
+              <label htmlFor="email" className="labels">Correo Electrónico</label>
+              <div className='tags'>
               <input
                 type="email"
                 name="email"
-                className="form-control"
+                className="inputs"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
               />
             </div>
-  
-            <div className="mb-3">
-              <label htmlFor="password" className="form-label">Contraseña</label>
+              <label htmlFor="password" className="labels">Contraseña</label>
+              <div className='tags'>
               <input
                 type="password"
                 name="password"
-                className="form-control"
+                className="inputs "
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
               />
             </div>
-  
             {error && <div className="alert alert-danger">{error}</div>}
+            <br/>
+            <br/>
   
-            <button type="submit" className='btn btn-primary'>Iniciar sesión</button>
+            <button type="submit" className='button' onClick={handleSubmit}>Iniciar sesión</button>
   
-            <div className="mt-3">
-              <label>¿No tienes una cuenta? <a href="/signup">Regístrate</a></label>
-            </div>
-            <div className="mt-3">
-              <label><a href="/recover-password">Olvidé mi contraseña</a></label>
-            </div>
-          </form>
+              <label className="labels-subt">¿No tienes una cuenta? 
+                <div style={{width:"50%"}}>
+                <a className="labels-link" href="/signup">Regístrate</a>
+                <a className="labels-link" href="/recover-password">Olvidé mi contraseña</a>
+                </div>
+                </label>
         </div>
       </div>
+      </>
     );
   };
 
