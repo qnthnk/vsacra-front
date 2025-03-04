@@ -1,7 +1,207 @@
-/*
-    home.css: This website contains selectors only used in home.css
+.home {
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background-color: #F2F2F2;
+}
 
-    All pages share the styles on index.css but you should create 
-    one more css for each page that will contain the selected used 
-    on that page only (the ones not reused in other pages).
-*/
+
+
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10%;
+    margin: 10%;
+    width: 100%;
+    max-width: 600px;
+
+    font-family: sans-serif;
+    border-radius: 25px;
+
+    padding: 10px;
+    box-shadow: 15px 15px 15px #0a0a0aae;
+}
+
+.tags {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 5%;
+    margin-bottom: 15px;
+    min-width: 350px;
+    background-color: #BFBFBF;
+    font-family: sans-serif;
+    border-radius: 15px;
+    padding: 5px;
+    box-shadow: 15px 15px 15px #0a0a0aae;
+}
+
+.inputs {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 5%;
+
+    width: 100%;
+    background-color: #fdfdfd;
+    font-family: sans-serif;
+    border-radius: 15px;
+    padding: 10px;
+    box-shadow: 5px 5px 5px #0a0a0aae;
+}
+
+.labels {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 5%;
+    color: aliceblue;
+    font-weight: bold;
+    font-size: x-large;
+
+    width: 100%;
+    background-color: #456EBF;
+    font-family: sans-serif;
+    border-color: #BFBFBF;
+
+    padding: 10px;
+
+}
+
+.labels-subt {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 5%;
+    color: aliceblue;
+    font-weight: bold;
+    font-size: xx-large;
+
+    width: 100%;
+    background-color: #456EBF;
+    font-family: sans-serif;
+    border-color: #BFBFBF;
+    font-size: large;
+
+    padding: 10px;
+
+}
+
+.labels-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 5%;
+    color: rgba(220, 240, 0, 0.925);
+    font-weight: bold;
+    font-size: xx-large;
+
+    width: 100%;
+    background-color: #456EBF;
+    font-family: sans-serif;
+    border-color: #BFBFBF;
+    font-size: large;
+
+    padding: 10px;
+
+}
+
+.buttons {
+    appearance: button;
+	background-color: #060000;
+	border: solid transparent;
+	border-radius: 16px;
+	border-width: 0 0 4px;
+	box-sizing: border-box;
+	color: #FFFFFF;
+	cursor: pointer;
+	display: inline-block;
+	font-family: din-round,sans-serif;
+	font-size: 15px;
+	font-weight: 600;
+	letter-spacing: .8px;
+	line-height: 20px;
+	margin: 0;
+	outline: none;
+    overflow: visible;
+    white-space: normal;
+    word-break: break-all;
+	padding: 13px 16px;
+    text-align: center;
+    text-decoration: none;
+	text-transform: uppercase;
+	touch-action: manipulation;
+	transform: translateZ(0);
+	transition: filter .2s;
+	user-select: none;
+	-webkit-user-select: none;
+	vertical-align: middle;
+	white-space: nowrap;
+	width: 220px;
+	box-shadow: 5px 5px 5px #0a0a0aae;
+}
+
+.buttons:after {
+    background-clip: padding-box;
+    background-color: #838282;
+    border: solid transparent;
+    border-radius: 16px;
+    border-width: 0 0 4px;
+    bottom: -4px;
+    content: "";
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: -1;
+    box-shadow: 5px 5px 5px #0a0a0aae;
+
+}
+
+.buttons,
+.buttons:focus {
+    user-select: auto;
+}
+
+.buttons:hover:not(:disabled) {
+    filter: brightness(1.3);
+    -webkit-filter: brightness(1.3);
+}
+
+.buttons:disabled {
+    cursor: auto;
+}
+
+.buttons:active {
+    border-width: 4px 0 0;
+    background: none;
+}
+
+.error {
+    color: rgba(249, 0, 0, 0.717);
+    font-weight: bolder;
+    margin: 10px;
+
+}
+
+@media (max-width: 768px) {
+    .form {
+        padding: 3%;
+    }
+}
+
+@media (max-width: 480px) {
+    .form {
+        padding: 1%;
+    }
+}
