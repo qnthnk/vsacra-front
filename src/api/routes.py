@@ -12,7 +12,7 @@ import os
 import re
 import requests
 
-mail = Mail()
+# mail = Mail()
 
 # Allow CORS requests to this API
 CORS(api)

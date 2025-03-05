@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import { CiCalculator2 } from "react-icons/ci";
+import "../../styles/Footer.css"
 
 const Calculator = () => {
     const [showModal, setShowModal] = useState(false);

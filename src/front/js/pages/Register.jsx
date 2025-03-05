@@ -182,139 +182,98 @@ const Register = () => {
 
 
   return (
-    <div>
-      <div className="register">
-      <h1>ENCARGADO RUBEN</h1>
-      <h1>DO NOT TOUCH JUEPUTA</h1>
-        <h2>Bienvenid@ a tu migrante app</h2>
-        <h3>Completa el siguiente formulario para inscribirte</h3>
-        <div className='form'>
+    <div className='backpage'>
+      <br/>
+      <br/>
+        <h3 className='heading'>Completa el siguiente formulario para inscribirte</h3>
+
+      <div className="container">
+        <div className='forms'>
           {step === 1 && (
             <div>
-              <h3 className='labels'>Datos Generales</h3>
-              <div className='tags'>
+              <h3 className='heading'>Datos Generales</h3>
                 <input className='inputs' type="text" name="first_name" placeholder='Nombre' value={formData.first_name} onChange={handleChange} />
                 {errors.first_name && <p className="error">{errors.first_name}</p>}
-              </div>
-              <div className='tags'>
                 <input className='inputs' type="text" name="first_last_name" placeholder='Apellido 1' value={formData.first_last_name} onChange={handleChange} />
                 {errors.first_last_name && <p className="error">{errors.first_last_name}</p>}
-              </div>
-              <div className='tags'>
                 <input className='inputs' type="text" name="second_last_name" placeholder='Apellido 2' value={formData.second_last_name} onChange={handleChange} />
-              </div>
-              <div className='tags'>
                 <input className='inputs' type="text" name="nationality" placeholder='Nacionalidad' value={formData.nationality} onChange={handleChange} />
                 {errors.nationality && <p className="error">{errors.nationality}</p>}
-              </div>
-              <div className='tags'>
-                <select className='inputs' name="gender" value={formData.gender} onChange={handleChange}>
+                <select className='inputs' name="gender"  value={formData.gender} onChange={handleChange}>
               <button className='button' onClick={() => { const isValid = validateForm(step); if (isValid) handleNext(); }}>Siguiente</button>
+              <option >Seleccione una opción</option>
                   <option value="male">Masculino</option>
                   <option value="female">Femenino</option>
                   <option value="other">Otro</option>
                 </select>
                 {errors.gender && <p className="error">{errors.gender}</p>}
-              </div>
-              <div className='tags'>
                 <label>Fecha de nacimiento</label>
                 <input className='inputs' type="date" name="birthdate" placeholder='añadir date' value={formData.birthdate} onChange={handleChange} />
                 {errors.birthdate && <p className="error">{errors.birthdate}</p>}
-              </div>
-              <div className='tags'>
                 <input className='inputs' type="text" name="home_country" placeholder='Pais de Nacimiento' value={formData.home_country} onChange={handleChange} />
                 {errors.home_country && <p className="error">{errors.home_country}</p>}
-              </div>
-              <button className='button' onClick={() => { const isValid = validateForm(step); if (isValid) handleNext(); }}>Siguiente</button>
+              <button className='login-button' onClick={() => { const isValid = validateForm(step); if (isValid) handleNext(); }}>Siguiente</button>
             </div>
           )}
           {step === 2 && (
             <div>
-              <h3 className='labels'>Dirección</h3>
-              <div className='tags'>
+              <h3 className='heading'>Dirección</h3>
                 <input className='inputs' type="text" name="address" placeholder='Dirección completa' value={formData.address} onChange={handleChange} />
                 {errors.address && <p className="error">{errors.address}</p>}
-              </div>
-              <div className='tags'>
                 <input className='inputs' type="text" name="zip_code" placeholder='Código Postal' value={formData.zip_code} onChange={handleChange} />
                 {errors.zip_code && <p className="error">{errors.zip_code}</p>}
-              </div>
-              <div className='tags'>
                 <input className='inputs' type="text" name="country_of_residence" placeholder='Pais de Residencia' value={formData.country_of_residence} onChange={handleChange} />
                 {errors.country_of_residence && <p className="error">{errors.country_of_residence}</p>}
-              </div>
-              <div className='tags'>
                 <input className='inputs' type="text" name="state" placeholder='Estado' value={formData.state} onChange={handleChange} />
                 {errors.state && <p className="error">{errors.state}</p>}
-              </div>
-              <div className='tags'>
                 <input className='inputs' type="text" name="city" placeholder='Ciudad' value={formData.city} onChange={handleChange} />
                 {errors.city && <p className="error">{errors.city}</p>}
-              </div>
-              <button className='button' onClick={handleBack}>Atrás</button>
-              <button className='button' onClick={() => { const isValid = validateForm(step); if (isValid) handleNext(); }}>Siguiente</button>
+              <button className='login-button' onClick={handleBack}>Atrás</button>
+              <button className='login-button' onClick={() => { const isValid = validateForm(step); if (isValid) handleNext(); }}>Siguiente</button>
             </div>
           )}
           {step === 3 && (
             <div>
-              <h3 className='labels'>Datos de Contacto</h3>
-              <div className='tags'>
+              <h3 className='heading'>Datos de Contacto</h3>
                 <input className='inputs' type="email" name="email" placeholder='Email' value={formData.email} onChange={handleChange} />
                 {errors.email && <p className="error">{errors.email}</p>}
-              </div>
-              <div className='tags'>
                 <input className='inputs' type="text" name="phone_number" placeholder='Teléfono' value={formData.phone_number} onChange={handleChange} />
                 {errors.phone_number && <p className="error">{errors.phone_number}</p>}
-              </div>
-              <div className='tags'>
                 <input className='inputs' type="text" name="facebook" placeholder='Facebook' value={formData.facebook} onChange={handleChange} />
-              </div>
-              <div className='tags'>
                 <input className='inputs' type="text" name="instagram" placeholder='Instagram' value={formData.instagram} onChange={handleChange} />
-              </div>
-              <div className='tags'>
                 <input className='inputs' type="text" name="x" placeholder='Twitter o X' value={formData.x} onChange={handleChange} />
-              </div>
-              <button className='button' onClick={handleBack}>Atrás</button>
-              <button className='button' onClick={() => { const isValid = validateForm(step); if (isValid) handleNext(); }}>Siguiente</button>
+              <button className='login-button' onClick={handleBack}>Atrás</button>
+              <button className='login-button' onClick={() => { const isValid = validateForm(step); if (isValid) handleNext(); }}>Siguiente</button>
             </div>
           )}
           {step === 4 && (
             <div>
-              <h3 className='labels'>Datos clínicos</h3>
-              <div className='tags'>
+              <h3 className='heading'>Datos clínicos</h3>
                 <input className='inputs' type="text" name="blood_type" placeholder='Tipo de sangre' value={formData.blood_type} onChange={handleChange} />
                 {errors.blood_type && <p className="error">{errors.blood_type}</p>}
-              </div>
-              <div className='tags'>
                 <input className='inputs' type="text" name="allergy" placeholder='Alergias' value={formData.allergy} onChange={handleChange} />
                 {errors.allergy && <p className="error">{errors.allergy}</p>}
-              </div>
-              <div className='tags'>
                 <input className='inputs' type="text" name="disease" placeholder='Enfermedades Crónicas' value={formData.disease} onChange={handleChange} />
                 {errors.disease && <p className="error">{errors.disease}</p>}
-              </div>
-              <button className='button' onClick={handleBack}>Atrás</button>
-              <button className='button' onClick={() => { const isValid = validateForm(step); if (isValid) handleNext(); }}>Siguiente</button>
+              <button className='login-button' onClick={handleBack}>Atrás</button>
+              <button className='login-button' onClick={() => { const isValid = validateForm(step); if (isValid) handleNext(); }}>Siguiente</button>
             </div>
           )}
           {step === 5 && (
             <div>
-              <h3 className='labels'>Finalizar registro</h3>
-              <div className='tags'>
+              <h3 className='heading'>Finalizar registro</h3>
                 <input className='inputs' type="text" name="country_of_destination" placeholder='Pais de Destino' value={formData.country_of_destination} onChange={handleChange} />
                 {errors.country_of_destination && <p className="error">{errors.country_of_destination}</p>}
-              </div>
-              <div className='tags'>
                 <input className='inputs' type="password" name="password" placeholder='Crear contraseña' value={formData.password} onChange={handleChange} />
                 {errors.password && <p className="error">{errors.password}</p>}
-              </div>
-              <button className='button' onClick={handleBack}>Atrás</button>
-              <button type="submit" className="btn btn-primary" onClick={handleSubmit}>Registrarse</button>
+              <button className='login-button' onClick={handleBack}>Atrás</button>
+              <button type="submit" className="login-button" onClick={handleSubmit}>Registrarse</button>
             </div>
           )}
         </div>
       </div>
+      <br/>
+      <br/>
     </div>
   );
 };

@@ -31,51 +31,43 @@ const Login = () => {
 
     console.log("Iniciando sesión con:", { email });
 
-    };
-  
-    return (
-      <>
-      <div className='login'>
-        <div className='form'>
-            
-              <label htmlFor="email" className="labels">Correo Electrónico</label>
-              <div className='tags'>
-              <input
-                type="email"
-                name="email"
-                className="inputs"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-            </div>
-              <label htmlFor="password" className="labels">Contraseña</label>
-              <div className='tags'>
-              <input
-                type="password"
-                name="password"
-                className="inputs "
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-            </div>
-            {error && <div className="alert alert-danger">{error}</div>}
-            <br/>
-            <br/>
-  
-            <button type="submit" className='button' onClick={handleSubmit}>Iniciar sesión</button>
-  
-              <label className="labels-subt">¿No tienes una cuenta? 
-                <div style={{width:"50%"}}>
-                <a className="labels-link" href="/signup">Regístrate</a>
-                <a className="labels-link" href="/recover-password">Olvidé mi contraseña</a>
-                </div>
-                </label>
-        </div>
-      </div>
-      </>
-    );
   };
 
-  export default Login
+  return (
+    <div className='backpage'>
+
+      <div className="container">
+        <div className="heading">Login</div>
+        <form className="forms" action={handleSubmit}>
+          <input
+            placeholder="E-mail"
+            id="email"
+            name="email"
+            type="email"
+            className="input"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+          <input
+            placeholder="Password"
+            id="password"
+            name="password"
+            type="password"
+            className="input"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+          {error && <div className="alert alert-danger">{error}</div>}
+          <span className="forgot-password"><a href="/signup">Regístrate</a></span>
+          <span className="forgot-password"><a href="/recover-password">Olvidé mi contraseña</a></span>
+          <input value="Iniciar sesión" type="submit" className="login-button" />
+        </form>
+        <span className="agreement"><a href="#">Aviso de privacidad</a></span>
+      </div>
+    </div>
+  );
+};
+
+export default Login
