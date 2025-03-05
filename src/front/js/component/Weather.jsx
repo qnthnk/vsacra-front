@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { Modal, Button, Alert, Spinner } from 'react-bootstrap';
 import { Context } from '../store/appContext';
 import { TiWeatherPartlySunny } from "react-icons/ti";
+import "../../styles/Footer.css"
 
 const Weather = () => {
     const { store, actions } = useContext(Context);

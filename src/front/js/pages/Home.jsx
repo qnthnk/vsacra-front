@@ -36,41 +36,24 @@ const Home = () => {
     getLocation();
   }, []);
   return (
-    <>
-    <div className="home">
+    <div className='backpage'>
+    <div className="container">
 
       <div>
-        <h1>NOTAS. BOTON DE EMERGENCIA ES DE ALI</h1>
         
       </div>
-      <ul className="form">
-        <div className="tags">
-          <Link className="buttons" to="/chat">Mensajería (EDUARDO)</Link>
-        </div>
-        <div className="tags">
-          <Link className="buttons" to="/chatbot">Chatbot (DANNY)</Link>
-        </div>
-        <div className="tags">
-          <Link className="buttons" to="/contact-list">Contact List (RUBEN)</Link>
-        </div>
-        <div className="tags">
-          <Link className="buttons" to="/freq-asked-questions">Preguntas Frecuentes (EDUARDO)</Link>
-        </div>
-        <div className="tags">
-          <Link className="buttons" to="/help">Contactar Ayuda (EDUARDO)</Link>
-        </div>
-        <div className="tags">
-          <Link className="buttons" to="/stats-and-reports">Estadísticas y reportes(ADMIN) (RUBEN)</Link>
-        </div>
-        <div className="tags">
-          <Link className="buttons" to="/location-view">Vista de ubicación(RENAME PD) (DANNY Y ALI)</Link>
-        </div>
-        <div className="tags">
-          <Link className="buttons" to="/admin-console">Consola de manejo de datos(ADMIN)</Link>
-        </div>
+      <ul className="forms">
+          <Link className="login-button" to="/chat">Mensajería (EDUARDO)</Link>
+          <Link className="login-button" to="/chatbot">Chatbot (DANNY)</Link>
+          <Link className="login-button" to="/contact-list">Contact List (RUBEN)</Link>
+          <Link className="login-button" to="/freq-asked-questions">Preguntas Frecuentes (EDUARDO)</Link>
+          <Link className="login-button" to="/help">Contactar Ayuda (EDUARDO)</Link>
+          <Link className="login-button" to="/stats-and-reports">Estadísticas y reportes(ADMIN) (RUBEN)</Link>
+          <Link className="login-button" to="/location-view">Vista de ubicación(RENAME PD) (DANNY Y ALI)</Link>
+          <Link className="login-button" to="/admin-console">Consola de manejo de datos(ADMIN)</Link>
       </ul>
     </div>
-    </>
+    </div>
   )
 }
 

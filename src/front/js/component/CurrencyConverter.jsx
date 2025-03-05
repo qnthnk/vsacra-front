@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from 'react';
 import { Modal, Button, Form, Alert } from 'react-bootstrap';
 import { MdCurrencyExchange } from "react-icons/md";
 import { Context } from '../store/appContext';
+import "../../styles/Footer.css"
 
 const CurrencyConverter = () => {
     const { store, actions } = useContext(Context);
