@@ -12,6 +12,7 @@ import os
 import re
 import requests
 
+mail = Mail()
 
 # Allow CORS requests to this API
 CORS(api)
@@ -22,8 +23,8 @@ client = OpenAI(
 )
 
 CONVERTER_API_KEY = '43af89a58a6d8fd938bdd176d46766df'  # Reemplaza con tu API Key
-BASE_URL = 'http://api.exchangeratesapi.io/v1/latest?access_key=43af89a58a6d8fd938bdd176d46766df'
-WEATHERAPI_KEY='ec91190b476a42a0aa102900250403'
+BASE_URL = os.environ.get("BASE_URL")
+WEATHERAPI_KEY= os.environ.get("WEATHERAPI_KEY")
 
 
 
@@ -345,3 +346,36 @@ def obtener_clima():
 
     except Exception as e:
         return jsonify({'error': str(e)}), 500
+
+@api.route('/enviar-coordenadas', methods=['POST'])
+@jwt_required()  
+def enviar_coordenadas():
+    
+    user_email = get_jwt_identity()
+    
+    
+    user = User.query.filter_by(email=user_email).first()
+    if not user:
+        return jsonify({"error": "Usuario no encontrado"}), 404
+    
+    latitude = user.latitude
+    longitude = user.longitude
+    
+    if not latitude or not longitude:
+        return jsonify({"error": "El usuario no tiene coordenadas registradas"}), 400
+    
+    coordenadas = f"{latitude},{longitude}"
+    
+    correo_emergencia = "emergencia@example.com"  # Cambia esto por el correo que desees
+    
+    try:
+        msg = Message(
+            subject="¡Emergencia! Coordenadas del usuario",
+            sender=os.getenv('MAIL_USERNAME'),
+            recipients=[correo_emergencia]
+        )
+        msg.body = f"El usuario {user.first_name} {user.first_last_name} ha activado el botón de emergencia. Coordenadas: {coordenadas}"
+        mail.send(msg)
+        return jsonify({"mensaje": "Coordenadas enviadas al correo de emergencia"}), 200
+    except Exception as e:
+        return jsonify({"error": f"Error al enviar el correo: {str(e)}"}), 500

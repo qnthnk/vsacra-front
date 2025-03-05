@@ -29,83 +29,64 @@ const Calculator = () => {
         <div>
             {/* Botón para abrir el modal */}
             <Button variant="primary" onClick={handleOpenModal} className="m-2">
-                <CiCalculator2 size={24} /> {/* Ajusta el tamaño del ícono */}
+                <CiCalculator2 size={24} />
             </Button>
 
+            {/* Modal de Bootstrap */}
             <Modal show={showModal} onHide={handleCloseModal}>
                 <Modal.Header closeButton>
                     <Modal.Title>Calculadora</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <input
-                        type="text"
-                        className="form-control mb-3"
-                        value={input}
-                        readOnly
-                    />
+                    {/* Pantalla de la calculadora */}
+                    <div
+                        style={{
+                            backgroundColor: '#f0f0f0',
+                            padding: '10px',
+                            borderRadius: '5px',
+                            textAlign: 'right',
+                            fontSize: '24px',
+                            border: '1px solid #ccc',
+                            marginBottom: '10px',
+                        }}
+                    >
+                        {input || '0'}
+                    </div>
 
-                    <div className="buttons">
-                        <div className="row mb-2">
-                            <div className="col">
-                                <Button variant="secondary" className="w-100" onClick={() => handleButtonClick('7')}>7</Button>
-                            </div>
-                            <div className="col">
-                                <Button variant="secondary" className="w-100" onClick={() => handleButtonClick('8')}>8</Button>
-                            </div>
-                            <div className="col">
-                                <Button variant="secondary" className="w-100" onClick={() => handleButtonClick('9')}>9</Button>
-                            </div>
-                            <div className="col">
-                                <Button variant="warning" className="w-100" onClick={() => handleButtonClick('/')}>/</Button>
-                            </div>
-                        </div>
-                        <div className="row mb-2">
-                            <div className="col">
-                                <Button variant="secondary" className="w-100" onClick={() => handleButtonClick('4')}>4</Button>
-                            </div>
-                            <div className="col">
-                                <Button variant="secondary" className="w-100" onClick={() => handleButtonClick('5')}>5</Button>
-                            </div>
-                            <div className="col">
-                                <Button variant="secondary" className="w-100" onClick={() => handleButtonClick('6')}>6</Button>
-                            </div>
-                            <div className="col">
-                                <Button variant="warning" className="w-100" onClick={() => handleButtonClick('*')}>*</Button>
-                            </div>
-                        </div>
-                        <div className="row mb-2">
-                            <div className="col">
-                                <Button variant="secondary" className="w-100" onClick={() => handleButtonClick('1')}>1</Button>
-                            </div>
-                            <div className="col">
-                                <Button variant="secondary" className="w-100" onClick={() => handleButtonClick('2')}>2</Button>
-                            </div>
-                            <div className="col">
-                                <Button variant="secondary" className="w-100" onClick={() => handleButtonClick('3')}>3</Button>
-                            </div>
-                            <div className="col">
-                                <Button variant="warning" className="w-100" onClick={() => handleButtonClick('-')}>-</Button>
-                            </div>
-                        </div>
-                        <div className="row mb-2">
-                            <div className="col">
-                                <Button variant="secondary" className="w-100" onClick={() => handleButtonClick('0')}>0</Button>
-                            </div>
-                            <div className="col">
-                                <Button variant="secondary" className="w-100" onClick={() => handleButtonClick('.')}>.</Button>
-                            </div>
-                            <div className="col">
-                                <Button variant="success" className="w-100" onClick={calculateResult}>=</Button>
-                            </div>
-                            <div className="col">
-                                <Button variant="warning" className="w-100" onClick={() => handleButtonClick('+')}>+</Button>
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="col">
-                                <Button variant="danger" className="w-100" onClick={clearInput}>C</Button>
-                            </div>
-                        </div>
+                    {/* Botones de la calculadora */}
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '10px' }}>
+                        {/* Fila 1 */}
+                        <Button variant="light" onClick={() => handleButtonClick('7')} style={{ fontSize: '20px' }}>7</Button>
+                        <Button variant="light" onClick={() => handleButtonClick('8')} style={{ fontSize: '20px' }}>8</Button>
+                        <Button variant="light" onClick={() => handleButtonClick('9')} style={{ fontSize: '20px' }}>9</Button>
+                        <Button variant="warning" onClick={() => handleButtonClick('/')} style={{ fontSize: '20px' }}>/</Button>
+
+                        {/* Fila 2 */}
+                        <Button variant="light" onClick={() => handleButtonClick('4')} style={{ fontSize: '20px' }}>4</Button>
+                        <Button variant="light" onClick={() => handleButtonClick('5')} style={{ fontSize: '20px' }}>5</Button>
+                        <Button variant="light" onClick={() => handleButtonClick('6')} style={{ fontSize: '20px' }}>6</Button>
+                        <Button variant="warning" onClick={() => handleButtonClick('*')} style={{ fontSize: '20px' }}>*</Button>
+
+                        {/* Fila 3 */}
+                        <Button variant="light" onClick={() => handleButtonClick('1')} style={{ fontSize: '20px' }}>1</Button>
+                        <Button variant="light" onClick={() => handleButtonClick('2')} style={{ fontSize: '20px' }}>2</Button>
+                        <Button variant="light" onClick={() => handleButtonClick('3')} style={{ fontSize: '20px' }}>3</Button>
+                        <Button variant="warning" onClick={() => handleButtonClick('-')} style={{ fontSize: '20px' }}>-</Button>
+
+                        {/* Fila 4 */}
+                        <Button variant="light" onClick={() => handleButtonClick('0')} style={{ fontSize: '20px' }}>0</Button>
+                        <Button variant="light" onClick={() => handleButtonClick('.')} style={{ fontSize: '20px' }}>.</Button>
+                        <Button variant="success" onClick={calculateResult} style={{ fontSize: '20px' }}>=</Button>
+                        <Button variant="warning" onClick={() => handleButtonClick('+')} style={{ fontSize: '20px' }}>+</Button>
+
+                        {/* Botón de limpiar */}
+                        <Button
+                            variant="danger"
+                            onClick={clearInput}
+                            style={{ gridColumn: 'span 4', fontSize: '20px' }}
+                        >
+                            C
+                        </Button>
                     </div>
                 </Modal.Body>
                 <Modal.Footer>

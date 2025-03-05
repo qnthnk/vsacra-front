@@ -152,6 +152,29 @@ const getState = ({ getStore, getActions, setStore }) => {
                     console.error(error);
                 }
             },
+            sendEmergencyCoordinates: async (userId) => {
+                try {
+                    const resp = await fetch(process.env.BACKEND_URL + "/enviar-coordenadas", {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ user_id: userId })
+                    });
+
+                    if (!resp.ok) {
+                        throw new Error('Error al enviar las coordenadas de emergencia');
+                    }
+
+                    const data = await resp.json();
+                    setStore({ message: data.mensaje, error: null });
+                    alert(data.mensaje); // Mostrar mensaje de éxito
+                } catch (error) {
+                    setStore({ error: 'Hubo un error al enviar las coordenadas de emergencia.' });
+                    console.error("Error al enviar las coordenadas de emergencia:", error);
+                    alert("Hubo un error al enviar las coordenadas de emergencia.");
+                }
+            },
         },
     };
 }

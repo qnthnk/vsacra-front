@@ -28,10 +28,10 @@ class User(db.Model):
     country_of_destination = db.Column(db.String(80), unique=False, nullable=False)
     state = db.Column(db.String(80), unique=False, nullable=False)
     zip_code = db.Column(db.String(80), unique=False, nullable=False)
-    # administrator_id = db.Column(db.Integer, db.ForeignKey('administrator.id'), nullable=True)
-    # location = db.relationship('Location', backref='user_principal', lazy=True)
     latitude = db.Column(db.String(80), nullable=True)
     longitude = db.Column(db.String(80), nullable=True)
+     # administrator_id = db.Column(db.Integer, db.ForeignKey('administrator.id'), nullable=True)
+    # location = db.relationship('Location', backref='user_principal', lazy=True)
     # migrant_or_family = db.Column(db.Boolean(), unique=False, nullable=True)
 
     def __repr__(self):
