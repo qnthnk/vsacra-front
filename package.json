@@ -75,6 +75,7 @@
 	"dependencies": {
 		"bootstrap": "^5.3.3",
 		"echarts-for-react": "^3.0.2",
+		"leaflet": "^1.9.4",
 		"openai": "^4.86.1",
 		"prop-types": "^15.6.1",
 		"react": "^16.8.4",
