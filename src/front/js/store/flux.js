@@ -7,6 +7,8 @@ const getState = ({ getStore, getActions, setStore }) => {
             error: null,
             weather: null,
             loading: false,
+            selectedLocation: null,
+
         },
         actions: {
 
@@ -175,6 +177,24 @@ const getState = ({ getStore, getActions, setStore }) => {
                     alert("Hubo un error al enviar las coordenadas de emergencia.");
                 }
             },
+            fetchLocationsFromOpenAI: async (latitude, longitude, category) => {
+                try {
+                  const response = await fetch(`${process.env.BACKEND_URL}/api/get_locations`, {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ latitude, longitude, category }),
+                  });
+        
+                  const data = await response.json();
+                  if (data.location) {
+                    setStore({ selectedLocation: data.location });
+                  }
+                } catch (error) {
+                  console.error("Error al obtener las ubicaciones desde OpenAI:", error);
+                }
+              },
         },
     };
 }

@@ -8,16 +8,19 @@ from flask_jwt_extended import create_access_token
 from flask_jwt_extended import jwt_required, get_jwt_identity, get_jwt
 api = Blueprint('api', __name__)
 from openai import OpenAI
+import openai
 import os
 import re
 import requests
 
-mail = Mail()
+# mail = Mail()
 
 # Allow CORS requests to this API
 CORS(api)
 
-client = OpenAI(
+
+
+client = openai.OpenAI(
     api_key=os.environ.get("OPENAI_API_KEY"),
     organization=os.environ.get("ORGANIZATION_ID")
 )
@@ -207,29 +210,38 @@ def private():
 #     user_exists = Administrator.query.filter_by(email=email).first() 
 #     return jsonify(user_exists.serialize()), 200
 
-def procesar_apies(apies_input, prompt):
-    try:
-        Location.info(f"Enviando solicitud a OpenAI para APIES {apies_input}...")
+#@app.route('/api/get_locations', methods=['POST'])
 
+
+def get_locations():
+    try:
+        data = request.json
+        latitude = data.get("latitude")
+        longitude = data.get("longitude")
+        category = data.get("category")
+        
+        if not latitude or not longitude or not category:
+            return jsonify({"error": "Faltan parámetros"}), 400
+        
+        prompt = f"Dame una dirección exacta y confiable de un lugar de {category} cerca de la ubicación ({latitude}, {longitude}). Solo responde con la dirección exacta."
+        
         completion = client.chat.completions.create(
             model="gpt-4o-mini",
             messages=[
-                {"role": "system", "content": "Eres un especialista en ubicaciones que va a ayudar a encontrar locaciones con direcciones exactas."},
+                {"role": "system", "content": "Eres un asistente experto en ubicaciones y direcciones precisas."},
                 {"role": "user", "content": prompt}
             ]
         )
-
-        respuesta = completion.choices[0].message.content
-        Location.info(f"Respuesta obtenida para APIES {apies_input}")
-
-        matches = re.findall(r'ID-(\d+):\s*(redflag|normal)', respuesta)
-
-        return matches  
-
+        
+        respuesta = completion.choices[0].message.content.strip()
+        client.info(f"Ubicación obtenida: {respuesta}")
+        
+        return jsonify({"location": respuesta})
     except Exception as e:
-        Location.error(f"Error al procesar el APIES {apies_input}: {e}")
-        return None   
-    
+        client.error(f"Error al obtener ubicación: {e}")
+        return jsonify({"error": "Error interno del servidor"}), 500
+
+
 @api.route('/api/clasificar', methods=['POST'])
 def darUBicacion():
     data = request.json
@@ -246,11 +258,13 @@ def darUBicacion():
 
     return jsonify({"resultado": resultado}), 200
 
-@api.route('/api/chatbot', methods=['POST'])
+@api.route('/chatbot', methods=['POST'])
 def chatbot():
     data = request.json
     message = data.get("message")
-
+    api_key=os.environ.get("OPENAI_API_KEY"),
+    organization=os.environ.get("ORGANIZATION_ID")
+    print(api_key, organization)
     if not message:
         return jsonify({"error": "Falta el mensaje"}), 400
 
