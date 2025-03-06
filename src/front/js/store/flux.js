@@ -33,24 +33,49 @@ const getState = ({ getStore, getActions, setStore }) => {
                     console.log("Error de registro", error)
                 }
             },
+
             login: async (payload) => {
-                console.log("datos cuando se hace clic en registro", payload)
+                console.log("Datos cuando se hace clic en inicio de sesión:", payload);
                 try {
                     const resp = await fetch(process.env.BACKEND_URL + "api/login", {
                         method: 'POST',
                         headers: {
-                            'Content-Type': 'application/json'
+                            'Content-Type': 'application/json',
                         },
-                        body: JSON.stringify(payload)
-                    })
+                        body: JSON.stringify(payload),
+                    });
+
                     if (!resp.ok) {
-                        throw new Error('valio v...')
-                    } else {
-                        alert('funciono')
+                        const errorData = await resp.json();
+                        throw new Error(errorData.message || 'Error al iniciar sesión');
                     }
 
+                    const data = await resp.json();
+                    const token = data.token;
+
+                    if (!token) {
+                        throw new Error('No se recibió un token válido');
+                    }
+
+                    localStorage.setItem('token', token);
+
+                    const store = getStore();
+                    setStore({
+                        ...store,
+                        user: {
+                            ...store.user,
+                            isAuthenticated: true,
+                            token: token,
+                        },
+                    });
+
+                    alert('Inicio de sesión exitoso'); // Opcional: mostrar un mensaje de éxito
+                    return true; // Indicar que el inicio de sesión fue exitoso
+
                 } catch (error) {
-                    console.log("Error al iniciar sesión:", error)
+                    console.error("Error al iniciar sesión:", error);
+                    alert(error.message || 'Error al iniciar sesión'); // Mostrar el mensaje de error
+                    return false; // Indicar que el inicio de sesión falló
                 }
             },
 
@@ -179,22 +204,22 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
             fetchLocationsFromOpenAI: async (latitude, longitude, category) => {
                 try {
-                  const response = await fetch(`${process.env.BACKEND_URL}/api/get_locations`, {
-                    method: "POST",
-                    headers: {
-                      "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify({ latitude, longitude, category }),
-                  });
-        
-                  const data = await response.json();
-                  if (data.location) {
-                    setStore({ selectedLocation: data.location });
-                  }
+                    const response = await fetch(`${process.env.BACKEND_URL}/api/get_locations`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({ latitude, longitude, category }),
+                    });
+
+                    const data = await response.json();
+                    if (data.location) {
+                        setStore({ selectedLocation: data.location });
+                    }
                 } catch (error) {
-                  console.error("Error al obtener las ubicaciones desde OpenAI:", error);
+                    console.error("Error al obtener las ubicaciones desde OpenAI:", error);
                 }
-              },
+            },
         },
     };
 }
