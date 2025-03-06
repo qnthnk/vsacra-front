@@ -50,7 +50,7 @@ const DashboardAdminSocioDem = () => {
 
     return (
         <div>
-            <div className='container row w-auto d-flex justify-content-between'>
+            <div className='container'>
                 {charts.map((chart, index) => (
                     <div key={index} className='col-3 card bg-dark' style={{ width: "30%" }}>
                         <div className="grid gap-0 column-gap-3">
