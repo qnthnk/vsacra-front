@@ -8,11 +8,10 @@ import DashboardAdminSocioDem from '../component/DashboardAdminSocioDem.jsx'
 
 const StatsAndReports = () => {
   return (
-    <div className="StatsAndReports">
-      <div className='container-fluid'>
+    <div className="backpage">
+      <div className='container'>
          <DashboardAdminSocioDem />
          </div>
-<h3>Explicacion del panel triple, uso e instrucciones para el admin</h3>
     </div>
   )
 }
