@@ -179,14 +179,15 @@ const getState = ({ getStore, getActions, setStore }) => {
                     console.error(error);
                 }
             },
-            sendEmergencyCoordinates: async (userId) => {
+
+            sendEmergencyCoordinates: async (userId, latitude, longitude) => {
                 try {
-                    const resp = await fetch(process.env.BACKEND_URL + "/enviar-coordenadas", {
+                    const resp = await fetch(process.env.BACKEND_URL + "api/emergency", {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
                         },
-                        body: JSON.stringify({ user_id: userId })
+                        body: JSON.stringify({ user_id: userId, latitude, longitude })
                     });
 
                     if (!resp.ok) {
@@ -195,13 +196,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 
                     const data = await resp.json();
                     setStore({ message: data.mensaje, error: null });
-                    alert(data.mensaje); // Mostrar mensaje de éxito
+                    alert(data.mensaje);
                 } catch (error) {
                     setStore({ error: 'Hubo un error al enviar las coordenadas de emergencia.' });
                     console.error("Error al enviar las coordenadas de emergencia:", error);
                     alert("Hubo un error al enviar las coordenadas de emergencia.");
                 }
             },
+
             fetchLocationsFromOpenAI: async (latitude, longitude, category) => {
                 try {
                     const response = await fetch(`${process.env.BACKEND_URL}/api/get_locations`, {

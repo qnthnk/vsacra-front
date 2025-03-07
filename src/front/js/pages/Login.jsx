@@ -29,7 +29,7 @@ const Login = () => {
       const success = await actions.login(payload);
 
       if (success) {
-        navigate('/dashboard');
+        navigate('/');
       } else {
         setError('Error al iniciar sesión. Verifica tus credenciales.');
       }

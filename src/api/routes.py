@@ -12,20 +12,28 @@ import openai
 import os
 import re
 import requests
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
-# mail = Mail()
+
 
 # Allow CORS requests to this API
 CORS(api)
 
-
+# Configuración del correo
+SMTP_SERVER = 'smtp.gmail.com'
+SMTP_PORT = 587
+EMAIL_ADDRESS = 'aliper1908@gmail.com'  # Cambia esto por tu correo
+EMAIL_PASSWORD = 'sczfsundcixbjbf'  # Usa la contraseña de aplicación aquí
+DESTINATARIO = 'aliper1908@gmail.com'  # Cambia esto por el correo del destinatario
 
 client = openai.OpenAI(
     api_key=os.environ.get("OPENAI_API_KEY"),
     organization=os.environ.get("ORGANIZATION_ID")
 )
 
-CONVERTER_API_KEY = '43af89a58a6d8fd938bdd176d46766df'  # Reemplaza con tu API Key
+CONVERTER_API_KEY = '43af89a58a6d8fd938bdd176d46766df'  
 BASE_URL = os.environ.get("BASE_URL")
 WEATHERAPI_KEY= os.environ.get("WEATHERAPI_KEY")
 
@@ -69,7 +77,6 @@ def sign_up():
     zip_code = data.get('zip_code')
     latitude = data.get('latitude')
     longitude = data.get('longitude')
-    # migrant_or_family = data.get('migrant_or_family')
 
     user_exists = User.query.filter_by(email=email).first() 
     if user_exists is None:
@@ -100,17 +107,16 @@ def sign_up():
                 zip_code = zip_code,
                 longitude = longitude,
                 latitude = latitude
-                # migrant_or_family = migrant_or_family
         )  
 
-        # try:
-        db.session.add(new_user)  
-        db.session.commit()
+        try:
+            db.session.add(new_user)  
+            db.session.commit()
 
             
-        # except Exception as error:
-        #     db.session.rollback()
-        #     return jsonify({"message": "An error has ocurred."}), 500
+        except Exception as error:
+            db.session.rollback()
+            return jsonify({"message": "An error has ocurred."}), 500
 
         return jsonify({
             "user": new_user.serialize(),
@@ -361,35 +367,35 @@ def obtener_clima():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-@api.route('/enviar-coordenadas', methods=['POST'])
-@jwt_required()  
-def enviar_coordenadas():
-    
-    user_email = get_jwt_identity()
-    
-    
-    user = User.query.filter_by(email=user_email).first()
-    if not user:
-        return jsonify({"error": "Usuario no encontrado"}), 404
-    
-    latitude = user.latitude
-    longitude = user.longitude
-    
-    if not latitude or not longitude:
-        return jsonify({"error": "El usuario no tiene coordenadas registradas"}), 400
-    
-    coordenadas = f"{latitude},{longitude}"
-    
-    correo_emergencia = "emergencia@example.com"  # Cambia esto por el correo que desees
-    
+@api.route('/emergency', methods=['POST'])
+def emergency():
     try:
-        msg = Message(
-            subject="¡Emergencia! Coordenadas del usuario",
-            sender=os.getenv('MAIL_USERNAME'),
-            recipients=[correo_emergencia]
-        )
-        msg.body = f"El usuario {user.first_name} {user.first_last_name} ha activado el botón de emergencia. Coordenadas: {coordenadas}"
-        mail.send(msg)
-        return jsonify({"mensaje": "Coordenadas enviadas al correo de emergencia"}), 200
+        # Obtener datos del cuerpo de la solicitud
+        data = request.json
+        user_id = data.get('user_id')
+        latitude = data.get('latitude')
+        longitude = data.get('longitude')
+
+        if not user_id or not latitude or not longitude:
+            return jsonify({"error": "Faltan datos requeridos"}), 400
+
+        # Crear el mensaje del correo
+        subject = "Coordenadas de Emergencia"
+        body = f"El usuario {user_id} ha presionado el botón de emergencia:\n\nLatitud: {latitude}\nLongitud: {longitude}"
+
+        msg = MIMEMultipart()
+        msg['From'] = EMAIL_ADDRESS
+        msg['To'] = DESTINATARIO
+        msg['Subject'] = subject
+        msg.attach(MIMEText(body, 'plain'))
+
+        # Enviar el correo usando SMTP
+        with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
+            server.starttls()  # Encriptación TLS
+            server.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
+            server.sendmail(EMAIL_ADDRESS, DESTINATARIO, msg.as_string())
+
+        return jsonify({"mensaje": "Coordenadas enviadas correctamente"}), 200
+
     except Exception as e:
-        return jsonify({"error": f"Error al enviar el correo: {str(e)}"}), 500
+        return jsonify({"error": str(e)}), 500
