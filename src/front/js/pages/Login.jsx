@@ -26,10 +26,17 @@ const Login = () => {
     };
 
     try {
-      const success = await actions.login(payload);
+      const response = await actions.login(payload); // Llama a la acción de login en el contexto
 
-      if (success) {
-        navigate('/');
+      if (response.token) {
+        // Almacena el token en el localStorage
+        localStorage.setItem('token', response.token);
+
+        if (response.role === 'user') {
+          navigate(`/user-dashboard/${response.id}`); // Redirige al dashboard del usuario
+        } else if (response.role === 'admin') {
+          navigate('/admin-dashboard'); // Redirige al dashboard del admin
+        }
       } else {
         setError('Error al iniciar sesión. Verifica tus credenciales.');
       }

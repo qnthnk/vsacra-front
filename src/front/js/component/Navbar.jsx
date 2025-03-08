@@ -8,7 +8,7 @@ const Navbar = () => {
     const token = localStorage.getItem('token');
 
     if (token) {
-      navigate('/home');
+      navigate('/');
     } else {
 
       navigate('/login');
