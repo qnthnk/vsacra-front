@@ -32,7 +32,7 @@ const Layout = () => {
     if (!process.env.BACKEND_URL || process.env.BACKEND_URL == "") return <BackendURL />;
 
     return (
-        <div style={{ display: "flex", flexDirection: "column", height: "100vh", paddingBottom: "40px", paddingTop:"40px"}}>
+        <div style={{ display: "flex", flexDirection: "column", height: "100vh", paddingBottom: "40px", paddingTop: "40px" }}>
             <BrowserRouter basename={basename}>
                 <ScrollToTop>
                     <Navbar style={{ position: "sticky", top: 0, zIndex: 1000 }} />

@@ -1,6 +1,6 @@
 
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User
+from api.models import db, User, Administrator, Contact
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -12,21 +12,14 @@ import openai
 import os
 import re
 import requests
-import smtplib
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
+
 
 
 
 # Allow CORS requests to this API
 CORS(api)
 
-# Configuración del correo
-SMTP_SERVER = 'smtp.gmail.com'
-SMTP_PORT = 587
-EMAIL_ADDRESS = 'aliper1908@gmail.com'  # Cambia esto por tu correo
-EMAIL_PASSWORD = 'sczfsundcixbjbf'  # Usa la contraseña de aplicación aquí
-DESTINATARIO = 'aliper1908@gmail.com'  # Cambia esto por el correo del destinatario
+
 
 client = openai.OpenAI(
     api_key=os.environ.get("OPENAI_API_KEY"),
@@ -36,6 +29,7 @@ client = openai.OpenAI(
 CONVERTER_API_KEY = '43af89a58a6d8fd938bdd176d46766df'  
 BASE_URL = os.environ.get("BASE_URL")
 WEATHERAPI_KEY= os.environ.get("WEATHERAPI_KEY")
+ADMIN_REQUIRED_EMAIL = 'admin@example.com'  # Cambia esto por el correo requerido
 
 
 
@@ -125,23 +119,38 @@ def sign_up():
     else:
         return jsonify({"message": "Email already in use. Try using another one."}), 400
     
-@api.route('/login', methods = ['POST'])
+
+@api.route('/login', methods=['POST'])
 def login():
     data = request.json
     email = data.get('email')
     password = data.get('password')
-    user_exists = User.query.filter_by(email=email).first() 
 
-
+    # Verificar si es un User
+    user_exists = User.query.filter_by(email=email).first()
     if user_exists:
-        valid_password = check_password_hash(user_exists.password, password) 
+        valid_password = check_password_hash(user_exists.password, password)
         if valid_password:
-            access_token = create_access_token(identity=user_exists.email)
-            return jsonify({"token": access_token}), 200  
+            access_token = create_access_token(identity={'email': email, 'role': 'user'})
+            return jsonify({"token": access_token, "role": "user"}), 200
         else:
-            return jsonify({"message": "Invalid password."}), 401 
-    else:
-        return jsonify({"message": "Invalid user."}), 404
+            return jsonify({"message": "Invalid password."}), 401
+
+    # Verificar si es un Admin
+    admin_exists = Administrator.query.filter_by(email=email).first()
+    if admin_exists:
+        # Validar que el correo del admin sea el requerido
+        if email != ADMIN_REQUIRED_EMAIL:
+            return jsonify({"message": "Acceso denegado. Correo de admin no autorizado."}), 403
+
+        valid_password = check_password_hash(admin_exists.password, password)
+        if valid_password:
+            access_token = create_access_token(identity={'email': email, 'role': 'admin'})
+            return jsonify({"token": access_token, "role": "admin"}), 200
+        else:
+            return jsonify({"message": "Invalid password."}), 401
+
+    return jsonify({"message": "Invalid user."}), 404
     
 @api.route('/example', methods=['GET'])
 @jwt_required()
@@ -153,70 +162,6 @@ def private():
     email = get_jwt_identity()
     user_exists = User.query.filter_by(email=email).first() 
     return jsonify(user_exists.serialize()), 200
-
-# @api.route('/signup/admin', methods = ['POST'])
-# def sign_up_admin():
-#     data = request.json
-#     email = data.get('email')
-#     password = data.get('password')
-#     organization_name = data.get('organization_name')
-
-#     user_exists = Administrator.query.filter_by(email=email).first() 
-
-#     if user_exists is None:
-#         password_hash = generate_password_hash(password)
-
-#         new_admin = Administrator(
-#                 email = email,
-#                 password = password_hash,
-#                 organization_name = organization_name
-#             )  
-
-#         try:
-#             db.session.add(new_admin)  
-#             db.session.commit()
-            
-#         except Exception as error:
-#             db.session.rollback()
-#             return jsonify({"message": "An error has ocurred."}), 500
-
-#         return jsonify({
-#             "user": new_admin.serialize(),
-#             "message": "You have registered! Redirecting to log-in page" 
-#         }), 200
-#     else:
-#         return jsonify({"message": "Email already in use. Try using another one."}), 400
-    
-# @api.route('/login/admin', methods = ['POST'])
-# def login_admin():
-#     data = request.json
-#     email = data.get('email')
-#     password = data.get('password')
-#     user_exists = Administrator.query.filter_by(email=email).first() 
-
-
-#     if user_exists:
-#         valid_password = check_password_hash(user_exists.password, password) 
-#         if valid_password:
-#             access_token = create_access_token(identity=user_exists.email)
-#             return jsonify({"token": access_token}), 200  
-#         else:
-#             return jsonify({"message": "Invalid password."}), 401 
-#     else:
-#         return jsonify({"message": "Invalid user."}), 404
-    
-# @api.route('/example/admin', methods=['GET'])
-# @jwt_required()
-# def private_admin():
-#     jti = get_jwt()["jti"]
-#     if jti in delete_tokens:
-#         return jsonify({"msg": "Token has been revoked."}), 401  
-
-#     email = get_jwt_identity()
-#     user_exists = Administrator.query.filter_by(email=email).first() 
-#     return jsonify(user_exists.serialize()), 200
-
-#@app.route('/api/get_locations', methods=['POST'])
 
 
 def get_locations():
@@ -367,35 +312,22 @@ def obtener_clima():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-@api.route('/emergency', methods=['POST'])
-def emergency():
-    try:
-        # Obtener datos del cuerpo de la solicitud
-        data = request.json
-        user_id = data.get('user_id')
-        latitude = data.get('latitude')
-        longitude = data.get('longitude')
+@api.route('/addcontact', methods=['POST'])
+def add_contact():
+    data = request.get_json()
 
-        if not user_id or not latitude or not longitude:
-            return jsonify({"error": "Faltan datos requeridos"}), 400
+    if not data or not all(key in data for key in ['full_name', 'email', 'phone_number', 'role', 'user_id']):
+        return jsonify({"error": "Missing data"}), 400
 
-        # Crear el mensaje del correo
-        subject = "Coordenadas de Emergencia"
-        body = f"El usuario {user_id} ha presionado el botón de emergencia:\n\nLatitud: {latitude}\nLongitud: {longitude}"
+    new_contact = Contact(
+        full_name=data['full_name'],
+        email=data['email'],
+        phone_number=data['phone_number'],
+        role=data['role'],
+        user_id=data['user_id']
+    )
 
-        msg = MIMEMultipart()
-        msg['From'] = EMAIL_ADDRESS
-        msg['To'] = DESTINATARIO
-        msg['Subject'] = subject
-        msg.attach(MIMEText(body, 'plain'))
+    db.session.add(new_contact)
+    db.session.commit()
 
-        # Enviar el correo usando SMTP
-        with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
-            server.starttls()  # Encriptación TLS
-            server.login(EMAIL_ADDRESS, EMAIL_PASSWORD)
-            server.sendmail(EMAIL_ADDRESS, DESTINATARIO, msg.as_string())
-
-        return jsonify({"mensaje": "Coordenadas enviadas correctamente"}), 200
-
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
+    return jsonify(new_contact.serialize()), 201
