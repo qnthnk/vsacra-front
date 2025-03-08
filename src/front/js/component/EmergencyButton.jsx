@@ -1,11 +1,25 @@
 import React, { useContext } from 'react';
-import { Context } from '../store/flux';
+import { Context } from '../store/appContext';
 
-const BotonEmergencia = ({ userId }) => {
+const EmergencyButton = ({ userId }) => {
     const { actions } = useContext(Context);
 
     const handleEmergencia = () => {
-        actions.sendEmergencyCoordinates(userId);
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const latitude = position.coords.latitude;
+                    const longitude = position.coords.longitude;
+                    actions.sendEmergencyCoordinates(userId, latitude, longitude);
+                },
+                (error) => {
+                    console.error("Error al obtener la ubicación:", error);
+                    alert("No se pudo obtener la ubicación.");
+                }
+            );
+        } else {
+            alert("Geolocalización no soportada en este navegador.");
+        }
     };
 
     return (
@@ -19,4 +33,4 @@ const BotonEmergencia = ({ userId }) => {
     );
 };
 
-export default BotonEmergencia;
+export default EmergencyButton;
