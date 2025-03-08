@@ -15,7 +15,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 contactEmail: "",
                 contactPhone: "",
                 contactRole: ""
-            }
+            },
             
 
             user: {
@@ -30,6 +30,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 
             // Use getActions to call a function within a fuction
             register: async (dataToSend) => {
+                
+                // dataToSend = {...dataToSend, latitude, longitude}
                 console.log("datos cuando se hace clic en registro", dataToSend)
                 try {
                     const resp = await fetch(process.env.BACKEND_URL + "api/signup", {
@@ -42,7 +44,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     if (!resp.ok) {
                         throw new Error('valio v...')
                     } else {
-                        alert('funciono')
+                        alert('funciono en el flux')
                     }
 
                 } catch (error) {
@@ -78,6 +80,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
                     localStorage.setItem('token', token);
                     localStorage.setItem('userRole', userRole);
+                    localStorage.setItem('id', data.id)
 
                     const store = getStore();
                     setStore({
@@ -251,6 +254,8 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
             addContact: async (payload) => {
 				let store = getStore();
+                let user_id = localStorage.getItem('id')
+                payload = { ...payload, user_id: user_id }
                 console.log("paquete de contacto", payload)
 				try {
 					let response = await fetch(process.env.BACKEND_URL + "api/addcontact", {

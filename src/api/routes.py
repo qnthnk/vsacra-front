@@ -67,14 +67,16 @@ def sign_up():
     address = data.get('address')
     home_country = data.get('home_country')
     country_of_residence = data.get('country_of_residence')
-    country_of_destination = data.get('country_of_residence')
+    country_of_destination = data.get('country_of_destination')
     zip_code = data.get('zip_code')
     latitude = data.get('latitude')
     longitude = data.get('longitude')
 
     user_exists = User.query.filter_by(email=email).first() 
     if user_exists is None:
+        print(user_exists, "creando nuevo usuario")
         password_hash = generate_password_hash(password)
+        print(password_hash, "este el password hash")
 
         new_user = User(
                 first_name = first_name,
@@ -102,7 +104,7 @@ def sign_up():
                 longitude = longitude,
                 latitude = latitude
         )  
-
+        print("nuevo usuario creado")
         try:
             db.session.add(new_user)  
             db.session.commit()
@@ -132,7 +134,7 @@ def login():
         valid_password = check_password_hash(user_exists.password, password)
         if valid_password:
             access_token = create_access_token(identity={'email': email, 'role': 'user'})
-            return jsonify({"token": access_token, "role": "user"}), 200
+            return jsonify({"token": access_token, "role": "user", id:user_exists.id}), 200
         else:
             return jsonify({"message": "Invalid password."}), 401
 

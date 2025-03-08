@@ -12,10 +12,10 @@ const ViewContact = () => {
     const { store, actions } = useContext(Context);
     const [detector, setDetector] = useState(false)
     const [payload, setPayload] = useState({
-        contactName: "",
-        contactEmail: "",
-        contactPhone: "",
-        contactRole: ""
+        full_name: "",
+        email: "",
+        phone_number: "",
+        role: ""
     })
     console.log(payload);
     // const handleEdit = async (event, payload, id) => {
@@ -67,10 +67,10 @@ const ViewContact = () => {
                             <div className="col-3">
                             </div>
                             <div className="col-7">
-                                <p>{item.contactName}</p>
-                                <p><IoLocation />{item.contactRole}</p>
-                                <p><FaPhoneFlip />{item.contactPhone}</p>
-                                <p><MdEmail />{item.contactEmail}</p>
+                                <p>{item.full_name}</p>
+                                <p><IoLocation />{item.role}</p>
+                                <p><FaPhoneFlip />{item.phone_number}</p>
+                                <p><MdEmail />{item.email}</p>
                                 <p>{item.id}</p>
                             </div>
 {/* 
