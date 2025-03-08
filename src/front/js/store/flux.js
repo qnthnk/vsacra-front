@@ -1,3 +1,4 @@
+import { jwtDecode } from 'jwt-decode';
 const getState = ({ getStore, getActions, setStore }) => {
     return {
         store: {
@@ -8,6 +9,11 @@ const getState = ({ getStore, getActions, setStore }) => {
             weather: null,
             loading: false,
             selectedLocation: null,
+            user: {
+                isAuthenticated: false,
+                token: null,
+                role: null,  // Agregar el rol al estado global
+            },
 
         },
         actions: {
@@ -57,7 +63,11 @@ const getState = ({ getStore, getActions, setStore }) => {
                         throw new Error('No se recibió un token válido');
                     }
 
+                    const decodedToken = jwtDecode(token);
+                    const userRole = decodedToken.role;
+
                     localStorage.setItem('token', token);
+                    localStorage.setItem('userRole', userRole);
 
                     const store = getStore();
                     setStore({
@@ -66,16 +76,23 @@ const getState = ({ getStore, getActions, setStore }) => {
                             ...store.user,
                             isAuthenticated: true,
                             token: token,
+                            role: userRole,
                         },
                     });
 
-                    alert('Inicio de sesión exitoso'); // Opcional: mostrar un mensaje de éxito
-                    return true; // Indicar que el inicio de sesión fue exitoso
+                    if (userRole === 'admin') {
+                        alert('Bienvenido, Admin.');  // Alert para admin
+                    } else {
+                        alert('Bienvenido, Usuario.');  // Alert para user
+                    }
+
+                    alert('Inicio de sesión exitoso');
+                    return true;
 
                 } catch (error) {
                     console.error("Error al iniciar sesión:", error);
-                    alert(error.message || 'Error al iniciar sesión'); // Mostrar el mensaje de error
-                    return false; // Indicar que el inicio de sesión falló
+                    alert(error.message || 'Error al iniciar sesión');
+                    return false;
                 }
             },
 
@@ -179,14 +196,15 @@ const getState = ({ getStore, getActions, setStore }) => {
                     console.error(error);
                 }
             },
-            sendEmergencyCoordinates: async (userId) => {
+
+            sendEmergencyCoordinates: async (userId, latitude, longitude) => {
                 try {
-                    const resp = await fetch(process.env.BACKEND_URL + "/enviar-coordenadas", {
+                    const resp = await fetch(process.env.BACKEND_URL + "api/emergency", {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
                         },
-                        body: JSON.stringify({ user_id: userId })
+                        body: JSON.stringify({ user_id: userId, latitude, longitude })
                     });
 
                     if (!resp.ok) {
@@ -195,13 +213,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 
                     const data = await resp.json();
                     setStore({ message: data.mensaje, error: null });
-                    alert(data.mensaje); // Mostrar mensaje de éxito
+                    alert(data.mensaje);
                 } catch (error) {
                     setStore({ error: 'Hubo un error al enviar las coordenadas de emergencia.' });
                     console.error("Error al enviar las coordenadas de emergencia:", error);
                     alert("Hubo un error al enviar las coordenadas de emergencia.");
                 }
             },
+
             fetchLocationsFromOpenAI: async (latitude, longitude, category) => {
                 try {
                     const response = await fetch(`${process.env.BACKEND_URL}/api/get_locations`, {
