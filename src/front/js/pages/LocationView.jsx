@@ -134,13 +134,13 @@ const LocationView = () => {
   }, []);
 
   return (
-    <div>
+    <div className="backpage">
       {location ? (
         <>
           <p>
             Latitud: {location.latitude}, Longitud: {location.longitude}
           </p>
-          <div style={{ width: "100%", height: "400px" }}>
+          <div className="container" style={{ width: "100%", height: "400px" }}>
             <iframe
               width="100%"
               height="100%"
@@ -156,9 +156,9 @@ const LocationView = () => {
         <p>Obteniendo ubicación...</p>
       )}
       <div className="d-grid gap-2 col-6 mx-auto">
-        <button className="btn btn-primary" onClick={() => actions.fetchLocationsFromOpenAI(location.latitude, location.longitude, 'seguridad')}>Seguridad Pública</button>
-        <button className="btn btn-primary" onClick={() => actions.fetchLocationsFromOpenAI(location.latitude, location.longitude, 'migrantes')}>Centros de ayuda para migrantes</button>
-        <button className="btn btn-primary" onClick={() => actions.fetchLocationsFromOpenAI(location.latitude, location.longitude, 'urgencias')}>Atención médica de urgencias</button>
+        <button className="login-button" onClick={() => actions.fetchLocationsFromOpenAI(location.latitude, location.longitude, 'seguridad')}>Seguridad Pública</button>
+        <button className="login-button" onClick={() => actions.fetchLocationsFromOpenAI(location.latitude, location.longitude, 'migrantes')}>Centros de ayuda para migrantes</button>
+        <button className="login-button" onClick={() => actions.fetchLocationsFromOpenAI(location.latitude, location.longitude, 'urgencias')}>Atención médica de urgencias</button>
       </div>
     </div>
   );
