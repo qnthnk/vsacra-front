@@ -164,11 +164,11 @@ const Register = () => {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const { latitude, longitude } = position.coords;
-          setFormData((prevData) => ({
+            setFormData((prevData) => ({
             ...prevData,
-            latitude: latitude,
-            longitude: longitude
-          }));
+            latitude: latitude.toString(),
+            longitude: longitude.toString()
+            }));
           console.log("Ubicación obtenida:", { latitude, longitude });
         },
         (error) => {
