@@ -1,53 +1,89 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from "react";
+import "./../../styles/Chat.css";
+import io from 'socket.io-client';
+import { v4 as uuidv4 } from 'uuid';
 
+const socket = io('https://stunning-bassoon-9vg7p6v4wvpc77xj-3001.app.github.dev');
 
-function Message({ text, sender }) {
-  return (
-    <div className={`message ${sender === 'Alice' ? 'text-left' : 'text-right'} mb-2`}>
-      <strong>{sender}: </strong>{text}
-    </div>
-  );
-}
+const Chat = () => {  
+    const [targetUser, setTargetUser] = useState("");
+    const [messages, setMessages] = useState([]);
+    const [message, setMessage] = useState("");
+    const [error, setError] = useState(null);
+    const [isConnected, setIsConnected] = useState(false);
 
-function Chat({ messages, onSendMessage }) {
-  const [input, setInput] = useState('');
+   
+    const [currentUser, setCurrentUser] = useState(() => {
+        return `Usuario-${uuidv4()}`;
+    });
 
-  const handleSend = () => {
-    if (input.trim()) {
-      onSendMessage(input);
-      setInput('');
-    }
-  };
+    useEffect(() => {
+       
+        socket.on("connect", () => setIsConnected(true));
+        socket.on("disconnect", () => setIsConnected(false));
+        socket.on("receive_message", (msg) => {
+            setMessages((prevMessages) => [...prevMessages, msg]);
+        });
 
-  return (
-    <div className="container col-4 mt-5">
-      <div className="card">
-        <div className="card-header bg-primary text-white text-center">
-          Chat
-        </div>
-        <div className="card-body" style={{ maxHeight: '400px', overflowY: 'auto' }}>
-          {messages.map((msg) => (
-            <Message key={msg.id} text={msg.text} sender={msg.sender} />
-          ))}
-        </div>
-        <div className="card-footer">
-          <div className="input-group">
-            <input
-              type="text"
-              className="form-control"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              placeholder="Escribe un mensaje..."
-            />
-            <div className="input-group-append">
-              <button className="btn btn-primary" onClick={handleSend}>Enviar</button>
+        return () => {
+            socket.off("connect");
+            socket.off("disconnect");
+            socket.off("receive_message");
+        };
+    }, []);
+
+    const sendMessage = () => {
+        if (!message.trim() || !targetUser.trim()) return;
+
+        const newMessage = { text: message, target: targetUser, sender: currentUser };
+        
+        // Enviar mensaje al servidor
+        socket.emit("send_message", newMessage);
+        
+        setMessage(""); 
+    };
+
+    return (
+        <div className="backpage">
+            <div className="container">
+                <h2 className="heading">Chat</h2>
+                {error && <p className="error">{error}</p>}
+                <div>
+                    <input
+                        className="inputuser"
+                        type="text"
+                        placeholder="Buscar usuario"
+                        value={targetUser}
+                        onChange={(e) => setTargetUser(e.target.value)}
+                    />
+                </div>
+                <div className="chat-box">
+                    {messages.map((msg, index) => (
+                        <div
+                            key={index}
+                            className={`message ${
+                                msg.sender === currentUser ? "user-message" : "other-user-message"
+                            }`}
+                        >
+                            {msg.text} {}
+                        </div>
+                    ))}
+                </div>
+                <label className="forms">
+                    <input
+                        type="text"
+                        name="text"
+                        className="input"
+                        required
+                        placeholder="Escribe un mensaje..."
+                        value={message}
+                        onChange={(e) => setMessage(e.target.value)}
+                    />
+                    <button className="login-button" onClick={sendMessage}>Enviar</button>
+                </label>
             </div>
-          </div>
         </div>
-      </div>
-    </div>
-  );
-}
+    ); 
+};
 
-export default Chat; 
-
+export default Chat;
