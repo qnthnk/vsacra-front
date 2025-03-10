@@ -112,14 +112,14 @@ def sign_up():
             
         except Exception as error:
             db.session.rollback()
-            return jsonify({"message": "An error has ocurred."}), 500
+            return jsonify({"message": "Ha ocurrido un error"}), 500
 
         return jsonify({
             "user": new_user.serialize(),
-            "message": "You have registered! Redirecting to log-in page" 
+            "message": "Te has registrado! Redirigiéndote al inicio de sesión" 
         }), 200
     else:
-        return jsonify({"message": "Email already in use. Try using another one."}), 400
+        return jsonify({"message": "Email ya registrado. Intenta con uno nuevo."}), 400
     
 
 @api.route('/login', methods=['POST'])
@@ -136,12 +136,11 @@ def login():
             access_token = create_access_token(identity={'email': email, 'role': 'user'})
             return jsonify({"token": access_token, "role": "user", "id":user_exists.id}), 200
         else:
-            return jsonify({"message": "Invalid password."}), 401
+            return jsonify({"message": "Contraseña inválida."}), 401
 
     # Verificar si es un Admin
     admin_exists = Administrator.query.filter_by(email=email).first()
     if admin_exists:
-        # Validar que el correo del admin sea el requerido
         if email != ADMIN_REQUIRED_EMAIL:
             return jsonify({"message": "Acceso denegado. Correo de admin no autorizado."}), 403
 
@@ -150,9 +149,9 @@ def login():
             access_token = create_access_token(identity={'email': email, 'role': 'admin'})
             return jsonify({"token": access_token, "role": "admin"}), 200
         else:
-            return jsonify({"message": "Invalid password."}), 401
+            return jsonify({"message": "Contraseña inválida."}), 401
 
-    return jsonify({"message": "Invalid user."}), 404
+    return jsonify({"message": "Usuario inválido."}), 404
     
 @api.route('/example', methods=['GET'])
 @jwt_required()
@@ -333,3 +332,10 @@ def add_contact():
     db.session.commit()
 
     return jsonify(new_contact.serialize()), 201
+
+@api.route('/logout', methods=['POST'])
+@jwt_required()
+def logout():
+    jti = get_jwt()["jti"]  
+    delete_tokens.add(jti)   
+    return jsonify({"msg": "You have been logged-out"}), 200

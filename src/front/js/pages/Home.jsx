@@ -38,47 +38,61 @@ const Home = () => {
   }, []);
   return (
     <div>
-     
-    <div className='backpage'>
-    <div className="container">
-      <ul className="forms">
-      {token && (
-          <Link className="login-button" to="/chat">Mensajería (EDUARDO)</Link>
-        )}
-        {token && (
-          <Link className="login-button" to="/chatbot">Chatbot (DANNY)</Link>
-        )}
-        {token && (
-          <Link className="login-button" to="/contact-list">Contact List (RUBEN)</Link>
-        )}
-        {token && (
-          <Link className="login-button" to="/freq-asked-questions">Preguntas Frecuentes (EDUARDO)</Link>
-        )}
-        {token && (
-          <Link className="login-button" to="/help">Contactar Ayuda (EDUARDO)</Link>
-        )}
-        {token && admin && (
-          <Link className="login-button" to="/stats-and-reports">Estadísticas y reportes(ADMIN) (RUBEN)</Link>
-        )}
-        {token && (
-          <Link className="login-button" to="/location-view">Vista de ubicación(RENAME PD) (DANNY Y ALI)</Link>
-        )}
-        {token && admin && (
-          <Link className="login-button" to="/admin-console">Consola de manejo de datos(ADMIN)</Link>
-        )}
-      </ul>
-    
-      
+      {token ? (
+        <div className='backpage'>
+          <div className='container'>
+            <ul className='forms'>
+              {token && (
+                <Link className='login-button' to='/chat'>
+                  Mensajería (EDUARDO)
+                </Link>
+              )}
+              {token && (
+                <Link className='login-button' to='/chatbot'>
+                  Chatbot (DANNY)
+                </Link>
+              )}
+              {token && (
+                <Link className='login-button' to='/contact-list'>
+                  Contact List (RUBEN)
+                </Link>
+              )}
+              {token && (
+                <Link className='login-button' to='/freq-asked-questions'>
+                  Preguntas Frecuentes (EDUARDO)
+                </Link>
+              )}
+              {token && (
+                <Link className='login-button' to='/help'>
+                  Contactar Ayuda (EDUARDO)
+                </Link>
+              )}
+              {token && admin && (
+                <Link className='login-button' to='/stats-and-reports'>
+                  Estadísticas y reportes(ADMIN) (RUBEN)
+                </Link>
+              )}
+              {token && (
+                <Link className='login-button' to='/location-view'>
+                  Vista de ubicación(RENAME PD) (DANNY Y ALI)
+                </Link>
+              )}
+              {token && admin && (
+                <Link className='login-button' to='/admin-console'>
+                  Consola de manejo de datos(ADMIN)
+                </Link>
+              )}
+            </ul>
+          </div>
+        </div>
+      ) : (
+        <div>
+          <h1>Por favor inicia sesión</h1>
+          <Link to='/login'>Iniciar sesión</Link>
+        </div>
+      )}
     </div>
-    </div>
-  ) : (
-    <div>
-        <h1>Por favor inicia sesión</h1>
-        <Link to="/login">Iniciar sesión</Link>
-      </div>
-    )}
-  </div>
-  )
-}
+  );
+};
 
 export default Home

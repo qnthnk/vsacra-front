@@ -80,7 +80,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
                     localStorage.setItem('token', token);
                     localStorage.setItem('userRole', userRole);
-                    localStorage.setItem('id', data.id)
+                    localStorage.setItem('id', data.id);
 
                     const store = getStore();
                     setStore({
@@ -94,18 +94,17 @@ const getState = ({ getStore, getActions, setStore }) => {
                     });
 
                     if (userRole === 'admin') {
-                        alert('Bienvenido, Admin.');  // Alert para admin
+                        alert('Bienvenido, Admin.'); // Alert para admin
                     } else {
-                        alert('Bienvenido, Usuario.');  // Alert para user
+                        alert('Bienvenido, Usuario.'); // Alert para user
                     }
 
                     alert('Inicio de sesión exitoso');
-                    return true;
-
+                    return data;
                 } catch (error) {
                     console.error("Error al iniciar sesión:", error);
                     alert(error.message || 'Error al iniciar sesión');
-                    return false;
+                    return null;
                 }
             },
 
@@ -278,7 +277,46 @@ const getState = ({ getStore, getActions, setStore }) => {
                     console.log(error);
                 }
             },
+            logout: async () => {
+                try {
+                    const token = localStorage.getItem('token');
+                    if (!token) {
+                        throw new Error('No hay sesión activa.');
+                    }
 
+                    const resp = await fetch(process.env.BACKEND_URL + "/api/logout", {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            Authorization: `Bearer ${token}`,
+                        },
+                    });
+
+                    if (!resp.ok) {
+                        throw new Error('Error al cerrar sesión.');
+                    }
+
+                    localStorage.removeItem('token');
+                    localStorage.removeItem('userRole');
+                    localStorage.removeItem('id');
+
+                    const store = getStore();
+                    setStore({
+                        ...store,
+                        user: {
+                            isAuthenticated: false,
+                            token: null,
+                            role: null,
+                        },
+                    });
+
+                    return true;
+                } catch (error) {
+                    console.error('Error al cerrar sesión:', error);
+                    alert(error.message || 'Error al cerrar sesión');
+                    return false;
+                }
+            },
             // deleteContact: async (handleDelete) => {
             // 	console.log("paquete de borrado", handleDelete)
             // 	let store = getStore();
