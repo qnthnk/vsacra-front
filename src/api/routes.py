@@ -134,7 +134,7 @@ def login():
         valid_password = check_password_hash(user_exists.password, password)
         if valid_password:
             access_token = create_access_token(identity={'email': email, 'role': 'user'})
-            return jsonify({"token": access_token, "role": "user", id:user_exists.id}), 200
+            return jsonify({"token": access_token, "role": "user", "id":user_exists.id}), 200
         else:
             return jsonify({"message": "Invalid password."}), 401
 
