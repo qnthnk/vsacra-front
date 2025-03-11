@@ -18,39 +18,39 @@ const ViewContact = () => {
         role: ""
     })
     console.log(payload);
-    // const handleEdit = async (event, payload, id) => {
-    //     try {
-    //         console.log("aqui debe estar el pedo", event, payload, id)
-    //         event.preventDefault();
-    //         // setNewContact(payload);
-    //         await actions.editContact(id, payload);
-    //         setDetector(prev => !prev)
-    //         setPayload({
-    //             contactName: "",
-    //             contactEmail: "",
-    //             contactPhone: "",
-    //             contactRole: ""
-    //         });
-    //     } catch (error) {
-    //         console.error(error)
+    const handleEdit = async (event, payload, id) => {
+        try {
+            console.log("aqui debe estar el pedo", event, payload, id)
+            event.preventDefault();
+            // setNewContact(payload);
+            await actions.editContact(id, payload);
+            setDetector(prev => !prev)
+            setPayload({
+                contactName: "",
+                contactEmail: "",
+                contactPhone: "",
+                contactRole: ""
+            });
+        } catch (error) {
+            console.error(error)
 
-    //     }
-    // }
-    // const handleDelete = async (id, event) => {
-    //     try {
-    //         event.preventDefault();
-    //         console.log("id buscado", id);
-    //         if (window.confirm("Estas seguro que quieres borrar el contacto?")) {
-    //             await actions.deleteContact(id);
-    //             setDetector(prev => !prev)
-    //         }
-    //         console.log("DELETE", id);
+        }
+    }
+    const handleDelete = async (id, event) => {
+        try {
+            event.preventDefault();
+            console.log("id buscado", id);
+            if (window.confirm("Estas seguro que quieres borrar el contacto?")) {
+                await actions.deleteContact(id);
+                setDetector(prev => !prev)
+            }
+            console.log("DELETE", id);
 
-    //     } catch (error) {
-    //         console.error(error)
+        } catch (error) {
+            console.error(error)
 
-    //     }
-    // }
+        }
+    }
     useEffect(() => {
         actions.viewContactos();
         console.log(store.contact);
@@ -61,7 +61,7 @@ const ViewContact = () => {
         <div className="text-center mt-5">
             <div className="">
                 <div className=" ">
-                    <h1 className="">Contacts</h1>
+                    <h1 className="">Contactos</h1>
                     {Array.isArray(store.contact) && store.contact.map((item, index) => (
                         <div className="row " key={index}>
                             <div className="col-3">
@@ -73,7 +73,7 @@ const ViewContact = () => {
                                 <p><MdEmail />{item.email}</p>
                                 <p>{item.id}</p>
                             </div>
-{/* 
+
                             <div className="col-2">
                                 <div className="row">
                                     <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target={`#exampleModal${index}`}>
@@ -109,7 +109,7 @@ const ViewContact = () => {
 
                                     <button className="btn col" onClick={(event) => handleDelete(item.id, event)} ><MdDeleteForever /></button>
                                 </div>
-                            </div> */}
+                            </div>
                         </div>
 
                     ))}

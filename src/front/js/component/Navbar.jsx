@@ -3,6 +3,11 @@ import { Context } from '../store/appContext';
 import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
+  const { store, actions } = useContext(Context);
+  const token = localStorage.getItem("token"); // Verificar si hay sesión activa
+
+  // Si no hay token, no mostrar el Navbar
+  if (!token) return null;
 
   const navigate = useNavigate();
 
@@ -17,7 +22,7 @@ const Navbar = () => {
     const token = localStorage.getItem('token');
 
     if (token) {
-      navigate('/');
+      navigate('/home');
     } else {
 
       navigate('/login');
@@ -73,7 +78,7 @@ const Navbar = () => {
                   </a>
                 </li>
                 <li>
-                  <a className="nav-link" href="/">
+                  <a className="nav-link" href="/home">
                     Home
                   </a>
                 </li>

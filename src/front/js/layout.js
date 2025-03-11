@@ -1,5 +1,5 @@
-import React from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import React, { useEffect } from "react";
+import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
 import HelpPlaces from './pages/HelpPlaces.jsx';
@@ -25,11 +25,21 @@ import Footer from "./component/Footer.jsx";
 import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
 
-//create your first component
+// Componente para manejar la redirección
+const RedirectToLogin = () => {
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        navigate("/login");
+    }, [navigate]);
+
+    return null;
+};
+
 const Layout = () => {
     const basename = process.env.BASENAME || "";
 
-    if (!process.env.BACKEND_URL || process.env.BACKEND_URL == "") return <BackendURL />;
+    if (!process.env.BACKEND_URL || process.env.BACKEND_URL === "") return <BackendURL />;
 
     return (
         <div style={{ display: "flex", flexDirection: "column", height: "100vh", paddingBottom: "40px", paddingTop: "40px" }}>
@@ -38,7 +48,8 @@ const Layout = () => {
                     <Navbar style={{ position: "sticky", top: 0, zIndex: 1000 }} />
                     <div style={{ flex: 1, overflowY: "auto" }}>
                         <Routes>
-                            <Route path="/" element={<Home />} />
+                            <Route path="/" element={<RedirectToLogin />} />
+                            <Route path="/home" element={<Home />} />
                             <Route path="/login" element={<Login />} />
                             <Route path="/signup" element={<Register />} />
                             <Route path="/help-places" element={<HelpPlaces />} />

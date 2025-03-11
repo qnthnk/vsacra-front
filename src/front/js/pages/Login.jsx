@@ -20,22 +20,16 @@ const Login = () => {
 
     setError('');
 
-    const payload = {
-      email: email,
-      password: password,
-    };
+    const payload = { email, password };
 
     try {
       const response = await actions.login(payload);
 
-      if (response && response.token) {
+      if (response?.token) {
         localStorage.setItem('token', response.token);
 
-        if (response.role === 'user') {
-          navigate('/');
-        } else if (response.role === 'admin') {
-          navigate('/admin-dashboard');
-        }
+        // Redirección según el rol del usuario
+        navigate(response.role === 'admin' ? '/admin-dashboard' : '/home');
       } else {
         setError('Error al iniciar sesión. Verifica tus credenciales.');
       }
