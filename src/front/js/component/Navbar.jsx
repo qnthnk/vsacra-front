@@ -1,8 +1,22 @@
-import React from 'react';
+import React, { useContext } from 'react'
+import { Context } from '../store/appContext';
 import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
+  const { store, actions } = useContext(Context);
+  const token = localStorage.getItem("token"); // Verificar si hay sesión activa
+
+  // Si no hay token, no mostrar el Navbar
+  if (!token) return null;
+
   const navigate = useNavigate();
+
+  const handleLogout = () => {
+    const logout = actions.logout();
+    if (logout) {
+      navigate('/login');
+    }
+  };
 
   const handleMigrappClick = () => {
     const token = localStorage.getItem('token');
@@ -64,7 +78,7 @@ const Navbar = () => {
                   </a>
                 </li>
                 <li>
-                  <a className="nav-link" href="/">
+                  <a className="nav-link" href="/home">
                     Home
                   </a>
                 </li>
@@ -116,6 +130,11 @@ const Navbar = () => {
                 <li>
                   <a className="nav-link" href="/help">
                     Contactar Ayuda
+                  </a>
+                </li>
+                <li>
+                  <a className="nav-link" href="/login" onClick={handleLogout}>
+                    Cerrar sesión
                   </a>
                 </li>
               </ul>

@@ -1,3 +1,4 @@
+import { jwtDecode } from 'jwt-decode';
 const getState = ({ getStore, getActions, setStore }) => {
     return {
         store: {
@@ -9,11 +10,28 @@ const getState = ({ getStore, getActions, setStore }) => {
             loading: false,
             selectedLocation: null,
 
+            contact: {
+                contactName: "ruben",
+                contactEmail: "",
+                contactPhone: "",
+                contactRole: ""
+            },
+
+
+            user: {
+                isAuthenticated: false,
+                token: null,
+                role: null,  // Agregar el rol al estado global
+            },
+
+
         },
         actions: {
 
             // Use getActions to call a function within a fuction
             register: async (dataToSend) => {
+
+                // dataToSend = {...dataToSend, latitude, longitude}
                 console.log("datos cuando se hace clic en registro", dataToSend)
                 try {
                     const resp = await fetch(process.env.BACKEND_URL + "api/signup", {
@@ -26,7 +44,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     if (!resp.ok) {
                         throw new Error('valio v...')
                     } else {
-                        alert('funciono')
+                        alert('funciono en el flux')
                     }
 
                 } catch (error) {
@@ -57,7 +75,12 @@ const getState = ({ getStore, getActions, setStore }) => {
                         throw new Error('No se recibió un token válido');
                     }
 
+                    const decodedToken = jwtDecode(token);
+                    const userRole = decodedToken.role;
+
                     localStorage.setItem('token', token);
+                    localStorage.setItem('userRole', userRole);
+                    localStorage.setItem('id', data.id);
 
                     const store = getStore();
                     setStore({
@@ -66,16 +89,22 @@ const getState = ({ getStore, getActions, setStore }) => {
                             ...store.user,
                             isAuthenticated: true,
                             token: token,
+                            role: userRole,
                         },
                     });
 
-                    alert('Inicio de sesión exitoso'); // Opcional: mostrar un mensaje de éxito
-                    return true; // Indicar que el inicio de sesión fue exitoso
+                    if (userRole === 'admin') {
+                        alert('Bienvenido, Admin.'); // Alert para admin
+                    } else {
+                        alert('Bienvenido, Usuario.'); // Alert para user
+                    }
 
+                    alert('Inicio de sesión exitoso');
+                    return data;
                 } catch (error) {
                     console.error("Error al iniciar sesión:", error);
-                    alert(error.message || 'Error al iniciar sesión'); // Mostrar el mensaje de error
-                    return false; // Indicar que el inicio de sesión falló
+                    alert(error.message || 'Error al iniciar sesión');
+                    return null;
                 }
             },
 
@@ -179,14 +208,15 @@ const getState = ({ getStore, getActions, setStore }) => {
                     console.error(error);
                 }
             },
-            sendEmergencyCoordinates: async (userId) => {
+
+            sendEmergencyCoordinates: async (userId, latitude, longitude) => {
                 try {
-                    const resp = await fetch(process.env.BACKEND_URL + "/enviar-coordenadas", {
+                    const resp = await fetch(process.env.BACKEND_URL + "api/emergency", {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
                         },
-                        body: JSON.stringify({ user_id: userId })
+                        body: JSON.stringify({ user_id: userId, latitude, longitude })
                     });
 
                     if (!resp.ok) {
@@ -195,13 +225,14 @@ const getState = ({ getStore, getActions, setStore }) => {
 
                     const data = await resp.json();
                     setStore({ message: data.mensaje, error: null });
-                    alert(data.mensaje); // Mostrar mensaje de éxito
+                    alert(data.mensaje);
                 } catch (error) {
                     setStore({ error: 'Hubo un error al enviar las coordenadas de emergencia.' });
                     console.error("Error al enviar las coordenadas de emergencia:", error);
                     alert("Hubo un error al enviar las coordenadas de emergencia.");
                 }
             },
+
             fetchLocationsFromOpenAI: async (latitude, longitude, category) => {
                 try {
                     const response = await fetch(`${process.env.BACKEND_URL}/api/get_locations`, {
@@ -218,6 +249,138 @@ const getState = ({ getStore, getActions, setStore }) => {
                     }
                 } catch (error) {
                     console.error("Error al obtener las ubicaciones desde OpenAI:", error);
+                };
+            },
+            addContact: async (payload) => {
+                let store = getStore();
+                let user_id = localStorage.getItem('id')
+                payload = { ...payload, user_id: user_id }
+                console.log("paquete de contacto", payload)
+                try {
+                    let response = await fetch(process.env.BACKEND_URL + "api/addcontact", {
+                        method: "POST",
+                        body: JSON.stringify(payload),
+                        headers: {
+                            "Content-Type": "application/json"
+                        }
+                    })
+                    if (!response.ok) {
+                        throw new Error("No agrego el contacto")
+                    }
+                    let data = await response.json();
+                    console.log("esta es la data que recibe de respuesta de addcontact", data)
+                    setStore({ ...store, contact: [...store.contact, data] });
+                    let storeUpdated = getStore();
+                    console.log("la concha", storeUpdated.contact)
+
+                } catch (error) {
+                    console.log(error);
+                }
+            },
+            logout: async () => {
+                try {
+                    const token = localStorage.getItem('token');
+                    if (!token) {
+                        throw new Error('No hay sesión activa.');
+                    }
+
+                    const resp = await fetch(process.env.BACKEND_URL + "/api/logout", {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            Authorization: `Bearer ${token}`,
+                        },
+                    });
+
+                    if (!resp.ok) {
+                        throw new Error('Error al cerrar sesión.');
+                    }
+
+                    localStorage.removeItem('token');
+                    localStorage.removeItem('userRole');
+                    localStorage.removeItem('id');
+
+                    const store = getStore();
+                    setStore({
+                        ...store,
+                        user: {
+                            isAuthenticated: false,
+                            token: null,
+                            role: null,
+                        },
+                    });
+
+                    return true;
+                } catch (error) {
+                    console.error('Error al cerrar sesión:', error);
+                    alert(error.message || 'Error al cerrar sesión');
+                    return false;
+                }
+            },
+            // deleteContact: async (handleDelete) => {
+            // 	console.log("paquete de borrado", handleDelete)
+            // 	let store = getStore();
+            // 	try {
+            // 		let response = await fetch(`https://playground.4geeks.com/contact/agendas/rumacon/contacts/${handleDelete}`, { //Crear usuario
+            // 			method: "DELETE",
+            // 		})
+            // 		if (!response.ok) {
+            // 			throw new Error("NO BORRA")
+            // 		}
+            // 		let data = await response.json();
+            // 		console.log(data)
+            // 		setStore({ ...store, contact: [...store.contact, data] });
+            // 		let storeUpdated = getStore();
+            // 		console.log("la concha", storeUpdated.contact)
+
+
+            // 	} catch (error) {
+            // 		console.log(error);
+            // 	}
+            // },
+
+            // editContact: async (payload, handleEdit) => {
+            // 	console.log("paquete editado", handleEdit)
+            // 	console.log("payload enviado", payload)
+            // 	let store = getStore();
+            // 	try {
+            // 		let response = await fetch(`https://playground.4geeks.com/contact/agendas/rumacon/contacts/${payload}`, { //Crear usuario
+            // 			method: "PUT",
+            // 			body: JSON.stringify(handleEdit),
+            // 			headers: {
+            // 				"Content-Type": "application/json"
+            // 			}
+            // 		})
+            // 		if (!response.ok) {
+            // 			throw new Error("NO SE REALIZARON LOS CAMBIOS")
+            // 		}
+            // 		let data = await response.json();
+            // 		console.log(data)
+            // 		setStore({ ...store, contact: [...store.contact, data] });
+            // 		let storeUpdated = getStore();
+            // 		console.log("la concha", storeUpdated.contact)
+
+
+            // 	} catch (error) {
+            // 		console.log(error);
+            // 	}
+            // },
+            viewContactos: async () => {
+                let store = getStore();
+                try {
+                    let response = await fetch(process.env.BACKEND_URL + "api/addcontact", {
+                    })
+                    if (!response.ok) {
+                        throw new Error("Se quebro alv")
+                    }
+                    let data = await response.json();
+                    console.log("dobletea", data)
+                    setStore(
+                        { ...store, contact: data.contacts }
+                    );
+
+                } catch (error) {
+                    console.log(error);
                 }
             },
         },
