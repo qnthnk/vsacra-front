@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
   const { store, actions } = useContext(Context);
-  const token = localStorage.getItem("token"); // Verificar si hay sesión activa
+  const token = localStorage.getItem("token");
 
   // Si no hay token, no mostrar el Navbar
   if (!token) return null;

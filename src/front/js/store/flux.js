@@ -31,7 +31,6 @@ const getState = ({ getStore, getActions, setStore }) => {
             // Use getActions to call a function within a fuction
             register: async (dataToSend) => {
 
-                // dataToSend = {...dataToSend, latitude, longitude}
                 console.log("datos cuando se hace clic en registro", dataToSend)
                 try {
                     const resp = await fetch(process.env.BACKEND_URL + "api/signup", {
@@ -53,7 +52,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
 
             login: async (payload) => {
-                console.log("Datos cuando se hace clic en inicio de sesión:", payload);
+
                 try {
                     const resp = await fetch(process.env.BACKEND_URL + "api/login", {
                         method: 'POST',
@@ -99,7 +98,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                         alert('Bienvenido, Usuario.'); // Alert para user
                     }
 
-                    alert('Inicio de sesión exitoso');
+
                     return data;
                 } catch (error) {
                     console.error("Error al iniciar sesión:", error);
@@ -149,7 +148,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             getMessage: async () => {
                 try {
 
-                    const resp = await fetch(process.env.BACKEND_URL + "/api/hello")
+                    const resp = await fetch(process.env.BACKEND_URL + "api/hello")
                     const data = await resp.json()
                     setStore({ message: data.message })
 
@@ -253,28 +252,67 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
             addContact: async (payload) => {
                 let store = getStore();
-                let user_id = localStorage.getItem('id')
-                payload = { ...payload, user_id: user_id }
-                console.log("paquete de contacto", payload)
+                let user_id = localStorage.getItem('id');
+                payload = { ...payload, user_id: user_id };
+
                 try {
                     let response = await fetch(process.env.BACKEND_URL + "api/addcontact", {
                         method: "POST",
                         body: JSON.stringify(payload),
                         headers: {
-                            "Content-Type": "application/json"
-                        }
-                    })
-                    if (!response.ok) {
-                        throw new Error("No agrego el contacto")
-                    }
-                    let data = await response.json();
-                    console.log("esta es la data que recibe de respuesta de addcontact", data)
-                    setStore({ ...store, contact: [...store.contact, data] });
-                    let storeUpdated = getStore();
-                    console.log("la concha", storeUpdated.contact)
+                            "Content-Type": "application/json",
+                        },
+                    });
 
+                    if (!response.ok) {
+                        throw new Error("No se pudo agregar el contacto");
+                    }
+
+                    let data = await response.json();
+                    setStore({ ...store, contact: [...store.contact, data] });
                 } catch (error) {
-                    console.log(error);
+                    console.error("Error en addContact:", error);
+                }
+            },
+            editContact: async (id, payload) => {
+                try {
+                    let response = await fetch(`${process.env.BACKEND_URL}api/editcontact/${id}`, {
+                        method: "PUT",
+                        body: JSON.stringify(payload),
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                    });
+
+                    if (!response.ok) {
+                        throw new Error("No se pudo editar el contacto");
+                    }
+
+                    let data = await response.json();
+                    let store = getStore();
+                    let updatedContacts = store.contact.map((contact) =>
+                        contact.id === id ? data : contact
+                    );
+                    setStore({ ...store, contact: updatedContacts });
+                } catch (error) {
+                    console.error("Error en editContact:", error);
+                }
+            },
+            deleteContact: async (id) => {
+                try {
+                    let response = await fetch(`${process.env.BACKEND_URL}api/deletecontact/${id}`, {
+                        method: "DELETE",
+                    });
+
+                    if (!response.ok) {
+                        throw new Error("No se pudo borrar el contacto");
+                    }
+
+                    let store = getStore();
+                    let updatedContacts = store.contact.filter((contact) => contact.id !== id);
+                    setStore({ ...store, contact: updatedContacts });
+                } catch (error) {
+                    console.error("Error en deleteContact:", error);
                 }
             },
             logout: async () => {
