@@ -313,7 +313,8 @@ def obtener_clima():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-@api.route('/addcontact', methods=['POST'])
+@api.route('/addcontact', methods=['POST', 'GET', 'PUT', 'DELETE'])
+# @jwt_required()
 def add_contact():
     data = request.get_json()
 

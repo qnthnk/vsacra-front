@@ -82,8 +82,8 @@ class Administrator(db.Model):
 class Contact(db.Model):
     __tablename__ = 'contact'
     id = db.Column(db.Integer, primary_key=True)
-    full_name = db.Column(db.String(150), unique=True, nullable=False)
-    email = db.Column(db.String(150), unique=True, nullable=False)
+    full_name = db.Column(db.String(150), unique=False, nullable=False)
+    email = db.Column(db.String(150), unique=False, nullable=False)
     role = db.Column(db.String(250), nullable=False)
     phone_number = db.Column(db.String(80), unique=False, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)

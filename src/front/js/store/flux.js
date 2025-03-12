@@ -10,12 +10,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             loading: false,
             selectedLocation: null,
 
-            contact: {
-                contactName: "ruben",
-                contactEmail: "",
-                contactPhone: "",
-                contactRole: ""
-            },
+            contact: [],
 
 
             user: {
@@ -251,10 +246,8 @@ const getState = ({ getStore, getActions, setStore }) => {
                     console.error("Error al obtener las ubicaciones desde OpenAI:", error);
                 };
             },
-            addContact: async (payload) => {
+            addContact: async (payload, user_id) => {
                 let store = getStore();
-                let user_id = localStorage.getItem('id')
-                payload = { ...payload, user_id: user_id }
                 console.log("paquete de contacto", payload)
                 try {
                     let response = await fetch(process.env.BACKEND_URL + "api/addcontact", {
@@ -269,7 +262,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     }
                     let data = await response.json();
                     console.log("esta es la data que recibe de respuesta de addcontact", data)
-                    setStore({ ...store, contact: [...store.contact, data] });
+                    setStore({ ...store, contact: { ...store.contact, ...data } });
                     let storeUpdated = getStore();
                     console.log("la concha", storeUpdated.contact)
 
@@ -368,19 +361,20 @@ const getState = ({ getStore, getActions, setStore }) => {
             viewContactos: async () => {
                 let store = getStore();
                 try {
-                    let response = await fetch(process.env.BACKEND_URL + "api/addcontact", {
-                    })
+                    let response = await fetch(process.env.BACKEND_URL + "api/contact"); // Asegúrate de que la URL es la correcta
                     if (!response.ok) {
-                        throw new Error("Se quebro alv")
+                        throw new Error("Error al obtener contactos");
                     }
                     let data = await response.json();
-                    console.log("dobletea", data)
-                    setStore(
-                        { ...store, contact: data.contacts }
-                    );
-
+                    console.log("Contactos obtenidos:", data);
+            
+                    setStore({
+                        ...store,
+                        contact: data.contacts || [] // Asegura que siempre sea un array
+                    });
+            
                 } catch (error) {
-                    console.log(error);
+                    console.error("Error en viewContactos:", error);
                 }
             },
         },
