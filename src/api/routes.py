@@ -340,3 +340,44 @@ def logout():
     jti = get_jwt()["jti"]  
     delete_tokens.add(jti)   
     return jsonify({"msg": "You have been logged-out"}), 200
+
+@api.route('/editcontact/<int:id>', methods=['PUT'])
+def edit_contact(id):
+    data = request.get_json()
+
+    if not data:
+        return jsonify({"error": "Missing data"}), 400
+
+    contact = Contact.query.get(id)
+    if not contact:
+        return jsonify({"error": "Contact not found"}), 404
+
+    contact.full_name = data.get('full_name', contact.full_name)
+    contact.email = data.get('email', contact.email)
+    contact.phone_number = data.get('phone_number', contact.phone_number)
+    contact.role = data.get('role', contact.role)
+
+    db.session.commit()
+
+    return jsonify(contact.serialize()), 200
+
+@api.route('/deletecontact/<int:id>', methods=['DELETE'])
+def delete_contact(id):
+    contact = Contact.query.get(id)
+    if not contact:
+        return jsonify({"error": "Contact not found"}), 404
+
+    db.session.delete(contact)
+    db.session.commit()
+
+    return jsonify({"message": "Contact deleted successfully"}), 200
+
+@api.route('/viewcontacts', methods=['GET'])
+def view_contacts():
+    user_id = request.args.get('user_id')  
+    if not user_id:
+        return jsonify({"error": "Missing user_id"}), 400
+
+    contacts = Contact.query.filter_by(user_id=user_id).all()
+    return jsonify([contact.serialize() for contact in contacts]), 200
+

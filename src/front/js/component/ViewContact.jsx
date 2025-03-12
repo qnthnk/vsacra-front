@@ -10,6 +10,7 @@ const ViewContact = () => {
         email: "",
         phone_number: "",
         role: "",
+
         user_id: ""
     });
 
@@ -30,11 +31,13 @@ const ViewContact = () => {
             console.log("Editando contacto:", id, payload);
             await actions.editContact(id, payload);
             setDetector(prev => !prev);
+
             setPayload({
                 full_name: "",
                 email: "",
                 phone_number: "",
                 role: "",
+
                 user_id: ""
             });
         } catch (error) {
@@ -125,6 +128,7 @@ const ViewContact = () => {
                                                         className="form-control"
                                                     />
                                                     <br />
+
                                                 </div>
                                             </div>
                                             <div className="modal-footer">
@@ -132,6 +136,12 @@ const ViewContact = () => {
                                                 <button className="btn btn-success" onClick={(event) => handleEdit(event, item.id)}>Guardar cambios</button>
                                             </div>
                                         </div>
+                                        <button
+                                            className="btn btn-danger"
+                                            onClick={(event) => handleDelete(item.id, event)}
+                                        >
+                                            <MdDeleteForever />
+                                        </button>
                                     </div>
                                 </div>
 
@@ -140,14 +150,18 @@ const ViewContact = () => {
                                     <MdDeleteForever />
                                 </button>
                             </div>
+
                         </div>
                     </div>
                 ))
             ) : (
                 <h1>No hay contactos</h1>
             )}
+
         </div>
     );
 };
 
+
 export default ViewContact;
+
