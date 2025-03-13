@@ -1,167 +1,74 @@
-// import React, { useState, useContext, useEffect } from "react";
-// import { Context } from "../store/appContext";
-// import "./../../styles/Register.css";
-
-// const GOOGLE_API_KEY = process.env.REACT_APP_GOOGLE_API_KEY;
-
-// const LocationView = () => {
-//   const { store, actions } = useContext(Context);
-//   const [location, setLocation] = useState(null);
-//   const [searchResult, setSearchResult] = useState(null);
-//   const [error, setError] = useState(null);
-
-//   useEffect(() => {
-//     if (!navigator.geolocation) {
-//       setError("La geolocalización no es soportada por este navegador.");
-//       return;
-//     }
-
-//     const getLocation = () => {
-//       navigator.geolocation.getCurrentPosition(
-//         (position) => {
-//           const { latitude, longitude } = position.coords;
-//           setLocation({ latitude, longitude });
-//           console.log("Ubicación obtenida:", { latitude, longitude });
-//         },
-//         (error) => {
-//           setError(`Error al obtener la ubicación: ${error.message}`);
-//         }
-//       );
-//     };
-
-//     getLocation();
-//   }, []);
-
-//   const handleButtonClick = async (type) => {
-//     if (!location) {
-//       setError("Ubicación no disponible.");
-//       return;
-//     }
-
-//     const placeType = {
-//       seguridad: "police",
-//       migrantes: "migrant_help",
-//       urgencias: "hospital",
-//     }[type];
-
-//     try {
-//       const response = await fetch(
-//         `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${location.latitude},${location.longitude}&radius=5000&type=${placeType}&key=${GOOGLE_API_KEY}`
-//       );
-
-//       const data = await response.json();
-
-//       if (data.results && data.results.length > 0) {
-//         const firstResult = data.results[0];
-//         const { lat, lng } = firstResult.geometry.location;
-//         setSearchResult({ lat, lng });
-//       } else {
-//         setError("No se encontraron lugares cercanos.");
-//       }
-//     } catch (err) {
-//       console.error("Error al obtener la ubicación:", err);
-//       setError("Hubo un problema al obtener la ubicación.");
-//     }
-//   };
-
-//   return (
-//     <div>
-//       {location ? (
-//         <>
-//           <p>
-//             Latitud: {location.latitude}, Longitud: {location.longitude}
-//           </p>
-//           <div style={{ width: "100%", height: "400px" }}>
-//             <iframe
-//               width="100%"
-//               height="100%"
-//               style={{ border: 0 }}
-//               loading="lazy"
-//               allowFullScreen
-//               referrerPolicy="no-referrer-when-downgrade"
-//               // LA API KEY DE GOOGLE MAPS ESTA DIRECTA. HAY QUE HACER QUE SE JALE DESDE EL ENV
-//               src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyBolAw6yd2HGS04tN3DuJiIC1qWPiE4iVU&q=${
-//                 searchResult
-//                   ? `${searchResult.lat},${searchResult.lng}`
-//                   : `${location.latitude},${location.longitude}`
-//               }`}
-//             ></iframe>
-//           </div>
-//         </>
-//       ) : (
-//         <p>Obteniendo ubicación...</p>
-//       )}
-
-//        <div className="d-grid gap-2 col-6 mx-auto">
-//          <button className="btn btn-primary" onClick={() => actions.fetchLocationsFromOpenAI(location.latitude, location.longitude, 'seguridad')}>Seguridad Pública</button>
-//          <button className="btn btn-primary" onClick={() => actions.fetchLocationsFromOpenAI(location.latitude, location.longitude, 'migrantes')}>Centros de ayuda para migrantes</button>
-//          <button className="btn btn-primary" onClick={() => actions.fetchLocationsFromOpenAI(location.latitude, location.longitude, 'urgencias')}>Atención médica de urgencias</button>
-//        </div>
-//     </div>
-//   );
-// };
-
-// export default LocationView;
-
-             
-
-             
-import React, { useState, useContext, useEffect } from "react";
-import { Context } from "../store/appContext";
-import "./../../styles/Register.css";
+import React, { useEffect, useState } from "react";
 
 const LocationView = () => {
-  const { store, actions } = useContext(Context);
-  const [location, setLocation] = useState(null);
-  const [error, setError] = useState(null);
+    const [map, setMap] = useState(null);
+    const [service, setService] = useState(null);
+    const [infowindow, setInfowindow] = useState(null);
 
-  useEffect(() => {
-    if (!navigator.geolocation) {
-      setError("La geolocalización no es soportada por este navegador.");
-      return;
-    }
+    useEffect(() => {
+        const loadMap = () => {
+            const script = document.createElement("script");
+            script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyBG_tnzTipDhubQSgV4mrWm3AYqh2odCdg&libraries=places`;
+            script.async = true;
+            script.onload = () => {
+                const defaultLocation = { lat: 9.9281, lng: -84.0907 }; // Example: San José, Costa Rica
+                const googleMap = new window.google.maps.Map(document.getElementById("map"), {
+                    center: defaultLocation,
+                    zoom: 13,
+                });
 
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const { latitude, longitude } = position.coords;
-        setLocation({ latitude, longitude });
-        actions.fetchLocationsFromOpenAI(latitude, longitude);
-      },
-      (error) => {
-        setError(`Error al obtener la ubicación: ${error.message}`);
-      }
+                setMap(googleMap);
+                setService(new window.google.maps.places.PlacesService(googleMap));
+                setInfowindow(new window.google.maps.InfoWindow());
+            };
+            document.body.appendChild(script);
+        };
+
+        loadMap();
+    }, []);
+
+    const searchPlaces = (type) => {
+        if (!map || !service) return;
+
+        const request = {
+            location: map.getCenter(),
+            radius: "5000",
+            type: [type],
+        };
+
+        service.nearbySearch(request, (results, status) => {
+            if (status === window.google.maps.places.PlacesServiceStatus.OK && results) {
+                results.forEach((place) => {
+                    if (place.geometry && place.geometry.location) {
+                        const marker = new window.google.maps.Marker({
+                            map,
+                            position: place.geometry.location,
+                            title: place.name,
+                        });
+
+                        marker.addListener("click", () => {
+                            infowindow.setContent(place.name || "");
+                            infowindow.open(map, marker);
+                        });
+                    }
+                });
+                map.setCenter(results[0]?.geometry.location || map.getCenter());
+            } else {
+                alert("No places found.");
+            }
+        });
+    };
+
+    return (
+        <div>
+            <div className="button-container">
+                <button onClick={() => searchPlaces("hospital")}>Hospitals</button>
+                <button onClick={() => searchPlaces("police")}>Police Stations</button>
+                <button onClick={() => searchPlaces("embassy")}>Embassies</button>
+            </div>
+            <div id="map" style={{ height: "500px", width: "100%" }}></div>
+        </div>
     );
-  }, []);
-
-  return (
-    <div className="backpage">
-      {location ? (
-        <>
-          <p>
-            Latitud: {location.latitude}, Longitud: {location.longitude}
-          </p>
-          <div className="container" style={{ width: "100%", height: "400px" }}>
-            <iframe
-              width="100%"
-              height="100%"
-              style={{ border: 0 }}
-              loading="lazy"
-              allowFullScreen
-              referrerPolicy="no-referrer-when-downgrade"
-              src={`https://www.google.com/maps/embed/v1/place?key=${process.env.REACT_APP_GOOGLE_API_KEY}&q=${store.selectedLocation || `${location.latitude},${location.longitude}`}`}
-            ></iframe>
-          </div>
-        </>
-      ) : (
-        <p>Obteniendo ubicación...</p>
-      )}
-      <div className="d-grid gap-2 col-6 mx-auto">
-        <button className="login-button" onClick={() => actions.fetchLocationsFromOpenAI(location.latitude, location.longitude, 'seguridad')}>Seguridad Pública</button>
-        <button className="login-button" onClick={() => actions.fetchLocationsFromOpenAI(location.latitude, location.longitude, 'migrantes')}>Centros de ayuda para migrantes</button>
-        <button className="login-button" onClick={() => actions.fetchLocationsFromOpenAI(location.latitude, location.longitude, 'urgencias')}>Atención médica de urgencias</button>
-      </div>
-    </div>
-  );
 };
 
 export default LocationView;

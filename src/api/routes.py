@@ -30,6 +30,7 @@ CONVERTER_API_KEY = '43af89a58a6d8fd938bdd176d46766df'
 BASE_URL = os.environ.get("BASE_URL")
 WEATHERAPI_KEY= os.environ.get("WEATHERAPI_KEY")
 ADMIN_REQUIRED_EMAIL = 'admin@example.com'  # Cambia esto por el correo requerido
+GOOGLE_MAPS_API= os.environ.get("GOOGLE_MAPS_API")
 
 
 
@@ -165,50 +166,20 @@ def private():
     return jsonify(user_exists.serialize()), 200
 
 
-def get_locations():
-    try:
-        data = request.json
-        latitude = data.get("latitude")
-        longitude = data.get("longitude")
-        category = data.get("category")
-        
-        if not latitude or not longitude or not category:
-            return jsonify({"error": "Faltan parámetros"}), 400
-        
-        prompt = f"Dame una dirección exacta y confiable de un lugar de {category} cerca de la ubicación ({latitude}, {longitude}). Solo responde con la dirección exacta."
-        
-        completion = client.chat.completions.create(
-            model="gpt-4o-mini",
-            messages=[
-                {"role": "system", "content": "Eres un asistente experto en ubicaciones y direcciones precisas."},
-                {"role": "user", "content": prompt}
-            ]
-        )
-        
-        respuesta = completion.choices[0].message.content.strip()
-        client.info(f"Ubicación obtenida: {respuesta}")
-        
-        return jsonify({"location": respuesta})
-    except Exception as e:
-        client.error(f"Error al obtener ubicación: {e}")
-        return jsonify({"error": "Error interno del servidor"}), 500
+@api.route("/nearby_places", methods=["GET"])
+def get_nearby_places():
+    place_type = request.args.get("type")
+    lat = request.args.get("lat", default="9.9281")  # Example: San José, Costa Rica
+    lng = request.args.get("lng", default="-84.0907")
 
+    if not place_type:
+        return jsonify({"error": "Missing place type"}), 400
 
-@api.route('/api/clasificar', methods=['POST'])
-def darUBicacion():
-    data = request.json
-    apies_input = data.get("apies_input")
-    prompt = data.get("prompt")
+    url = f"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location={lat},{lng}&radius=5000&type={place_type}&key={GOOGLE_MAPS_API}"
+    
+    response = requests.get(url)
+    return jsonify(response.json())
 
-    if not apies_input or not prompt:
-        return jsonify({"error": "Faltan parámetros"}), 400
-
-    resultado = procesar_apies(apies_input, prompt)
-
-    if resultado is None:
-        return jsonify({"error": "Error procesando la solicitud"}), 500
-
-    return jsonify({"resultado": resultado}), 200
 
 @api.route('/chatbot', methods=['POST'])
 def chatbot():

@@ -9,7 +9,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             weather: null,
             loading: false,
             selectedLocation: null,
-
+            places: [],
             contact: [],
 
 
@@ -231,24 +231,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
 
-            fetchLocationsFromOpenAI: async (latitude, longitude, category) => {
-                try {
-                    const response = await fetch(`${process.env.BACKEND_URL}/api/get_locations`, {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify({ latitude, longitude, category }),
-                    });
-
-                    const data = await response.json();
-                    if (data.location) {
-                        setStore({ selectedLocation: data.location });
-                    }
-                } catch (error) {
-                    console.error("Error al obtener las ubicaciones desde OpenAI:", error);
-                };
-            },
+        
             addContact: async (payload, user_id) => {
                 let store = getStore();
 
@@ -383,6 +366,20 @@ const getState = ({ getStore, getActions, setStore }) => {
                     });
                 } catch (error) {
                     console.error("Error en viewContacts:", error);
+                }
+            },
+            
+            setUserLocation: (lat, lng) => {
+                setStore({ userLocation: { lat, lng } });
+            },
+
+            fetchNearbyPlaces: async (type) => {
+                try {
+                    const response = await fetch(`/api/nearby-places?type=${type}`);
+                    const data = await response.json();
+                    setStore({ nearbyPlaces: data.results });
+                } catch (error) {
+                    console.error("Error fetching places:", error);
                 }
             },
         },
