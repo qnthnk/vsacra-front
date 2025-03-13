@@ -25,24 +25,28 @@ const getState = ({ getStore, getActions, setStore }) => {
 
             // Use getActions to call a function within a fuction
             register: async (dataToSend) => {
-
-                console.log("datos cuando se hace clic en registro", dataToSend)
+                console.log("Datos enviados para registro:", dataToSend);
                 try {
                     const resp = await fetch(process.env.BACKEND_URL + "api/signup", {
                         method: 'POST',
                         headers: {
-                            'Content-Type': 'application/json'
+                            'Content-Type': 'application/json',
                         },
-                        body: JSON.stringify(dataToSend)
-                    })
+                        body: JSON.stringify(dataToSend),
+                    });
+
+                    const data = await resp.json(); // Parsear la respuesta JSON
+
                     if (!resp.ok) {
-                        throw new Error('valio v...')
-                    } else {
-                        alert('funciono en el flux')
+                        // Si la respuesta no es exitosa, lanzar un error con el mensaje del servidor
+                        throw new Error(data.message || 'Error en el registro');
                     }
 
+                    console.log("Registro exitoso:", data);
+                    return data; // Devuelve los datos para que puedan ser manejados en el componente
                 } catch (error) {
-                    console.log("Error de registro", error)
+                    console.error("Error de registro:", error);
+                    throw error; // Lanza el error para que pueda ser manejado en el componente
                 }
             },
 
@@ -271,7 +275,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     console.log("la concha", storeUpdated.contact)
 
 
-                    let data = await response.json();
+
                     let store = getStore();
                     let updatedContacts = store.contact.map((contact) =>
                         contact.id === id ? data : contact
@@ -298,32 +302,56 @@ const getState = ({ getStore, getActions, setStore }) => {
                     console.error("Error en deleteContact:", error);
                 }
             },
-            logout: async () => {
+            editContact: async (id, payload) => {
                 try {
-                    const token = localStorage.getItem('token');
-                    if (!token) {
-                        throw new Error('No hay sesión activa.');
+                    let response = await fetch(`${process.env.BACKEND_URL}api/editcontact/${id}`, {
+                        method: "PUT",
+                        body: JSON.stringify(payload),
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                    });
+
+                    if (!response.ok) {
+                        throw new Error("No se pudo editar el contacto");
                     }
 
-                    const resp = await fetch(process.env.BACKEND_URL + "/api/logout", {
-                        method: 'POST',
+                    let data = await response.json();
+                    let store = getStore();
+                    let updatedContacts = store.contact.map((contact) =>
+                        contact.id === id ? data : contact
+                    );
+                    setStore({ ...store, contact: updatedContacts });
+                } catch (error) {
+                    console.error("Error en editContact:", error);
+                }
+            },
+            logout: async () => {
+                try {
+                    // Obtener el token del localStorage
+                    const token = localStorage.getItem("token");
+
+                    if (!token) {
+                        throw new Error("No hay sesión activa.");
+                    }
+
+                    const resp = await fetch(process.env.BACKEND_URL + "api/logout", {
+                        method: "POST",
                         headers: {
-                            'Content-Type': 'application/json',
-                            Authorization: `Bearer ${token}`,
+                            "Content-Type": "application/json",
+                            Authorization: `Bearer ${token}`, // Enviar el token en el encabezado
                         },
                     });
 
                     if (!resp.ok) {
-                        throw new Error('Error al cerrar sesión.');
+                        const errorData = await resp.json();
+                        throw new Error(errorData.msg || "Error al cerrar sesión.");
                     }
 
-                    localStorage.removeItem('token');
-                    localStorage.removeItem('userRole');
-                    localStorage.removeItem('id');
+                    localStorage.removeItem("token");
 
-                    const store = getStore();
+                    // Actualizar el estado global
                     setStore({
-                        ...store,
                         user: {
                             isAuthenticated: false,
                             token: null,
@@ -331,78 +359,30 @@ const getState = ({ getStore, getActions, setStore }) => {
                         },
                     });
 
-                    return true;
+                    return { msg: "Sesión cerrada correctamente" };
                 } catch (error) {
-                    console.error('Error al cerrar sesión:', error);
-                    alert(error.message || 'Error al cerrar sesión');
-                    return false;
+                    console.error("Error en el logout:", error);
+                    throw error;
                 }
             },
-            // deleteContact: async (handleDelete) => {
-            // 	console.log("paquete de borrado", handleDelete)
-            // 	let store = getStore();
-            // 	try {
-            // 		let response = await fetch(`https://playground.4geeks.com/contact/agendas/rumacon/contacts/${handleDelete}`, { //Crear usuario
-            // 			method: "DELETE",
-            // 		})
-            // 		if (!response.ok) {
-            // 			throw new Error("NO BORRA")
-            // 		}
-            // 		let data = await response.json();
-            // 		console.log(data)
-            // 		setStore({ ...store, contact: [...store.contact, data] });
-            // 		let storeUpdated = getStore();
-            // 		console.log("la concha", storeUpdated.contact)
 
-
-            // 	} catch (error) {
-            // 		console.log(error);
-            // 	}
-            // },
-
-            // editContact: async (payload, handleEdit) => {
-            // 	console.log("paquete editado", handleEdit)
-            // 	console.log("payload enviado", payload)
-            // 	let store = getStore();
-            // 	try {
-            // 		let response = await fetch(`https://playground.4geeks.com/contact/agendas/rumacon/contacts/${payload}`, { //Crear usuario
-            // 			method: "PUT",
-            // 			body: JSON.stringify(handleEdit),
-            // 			headers: {
-            // 				"Content-Type": "application/json"
-            // 			}
-            // 		})
-            // 		if (!response.ok) {
-            // 			throw new Error("NO SE REALIZARON LOS CAMBIOS")
-            // 		}
-            // 		let data = await response.json();
-            // 		console.log(data)
-            // 		setStore({ ...store, contact: [...store.contact, data] });
-            // 		let storeUpdated = getStore();
-            // 		console.log("la concha", storeUpdated.contact)
-
-
-            // 	} catch (error) {
-            // 		console.log(error);
-            // 	}
-            // },
-            viewContactos: async () => {
+            viewContacts: async () => {
                 let store = getStore();
                 try {
-                    let response = await fetch(process.env.BACKEND_URL + "api/contact"); // Asegúrate de que la URL es la correcta
+                    let user_id = localStorage.getItem('id');
+                    let response = await fetch(`${process.env.BACKEND_URL}api/viewcontacts?user_id=${user_id}`);
                     if (!response.ok) {
                         throw new Error("Error al obtener contactos");
                     }
                     let data = await response.json();
                     console.log("Contactos obtenidos:", data);
-            
+
                     setStore({
                         ...store,
-                        contact: data.contacts || [] // Asegura que siempre sea un array
+                        contact: data || [],
                     });
-            
                 } catch (error) {
-                    console.error("Error en viewContactos:", error);
+                    console.error("Error en viewContacts:", error);
                 }
             },
         },

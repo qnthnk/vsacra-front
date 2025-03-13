@@ -4,10 +4,12 @@ import countriesData from './../../../../countries.json';
 import statesData from './../../../../states.json';
 import citiesData from './../../../../cities.json';
 import './../../styles/Register.css';
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
   const { store, actions } = useContext(Context);
   const [step, setStep] = useState(1);
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     first_name: '',
     first_last_name: '',
@@ -119,20 +121,25 @@ const Register = () => {
     setStep(step - 1);
   };
 
-  const handleSubmit = () => {
-
+  const handleSubmit = async () => {
     let dataToSend = formData;
-    if (validateForm()) {
-      actions.register(formData);
-      console.log("Formulario enviado:", formData);
-    } else {
-      alert("Por favor complete los campos faltantes. Para continuar, revise su solicitud")
+
+    // Validar el formulario
+    if (!validateForm()) {
+      alert("Por favor complete los campos faltantes. Para continuar, revise su solicitud");
       console.log("Errores en el formulario:", errors);
+      return;
     }
-    actions.register(dataToSend);
 
-
-    console.log(formData);
+    try {
+      await actions.register(formData);
+      console.log("Formulario enviado:", formData);
+      alert("Te has registrado! Redirigiéndote a login.")
+      navigate('/login');
+    } catch (error) {
+      console.log("Error en el registro:", error);
+      alert("Hubo un error en el registro. Por favor, inténtalo de nuevo.");
+    }
   };
   const handleCountryChange = (e) => {
     const { name, value } = e.target;
@@ -154,6 +161,8 @@ const Register = () => {
     });
   };
 
+
+
   useEffect(() => {
     if (!navigator.geolocation) {
       setError("La geolocalización no es soportada por este navegador.");
@@ -164,11 +173,11 @@ const Register = () => {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const { latitude, longitude } = position.coords;
-            setFormData((prevData) => ({
+          setFormData((prevData) => ({
             ...prevData,
             latitude: latitude.toString(),
             longitude: longitude.toString()
-            }));
+          }));
           console.log("Ubicación obtenida:", { latitude, longitude });
         },
         (error) => {
@@ -183,51 +192,51 @@ const Register = () => {
 
   return (
     <div className='backpage'>
-      <br/>
-      <br/>
-        <h3 className='heading'>Completa el siguiente formulario para inscribirte</h3>
+      <br />
+      <br />
+      <h3 className='heading'>Completa el siguiente formulario para inscribirte</h3>
 
       <div className="container">
         <div className='forms'>
           {step === 1 && (
             <div>
               <h3 className='heading'>Datos Generales</h3>
-                <input className='inputs' type="text" name="first_name" placeholder='Nombre' value={formData.first_name} onChange={handleChange} />
-                {errors.first_name && <p className="error">{errors.first_name}</p>}
-                <input className='inputs' type="text" name="first_last_name" placeholder='Apellido 1' value={formData.first_last_name} onChange={handleChange} />
-                {errors.first_last_name && <p className="error">{errors.first_last_name}</p>}
-                <input className='inputs' type="text" name="second_last_name" placeholder='Apellido 2' value={formData.second_last_name} onChange={handleChange} />
-                <input className='inputs' type="text" name="nationality" placeholder='Nacionalidad' value={formData.nationality} onChange={handleChange} />
-                {errors.nationality && <p className="error">{errors.nationality}</p>}
-                <select className='inputs' name="gender"  value={formData.gender} onChange={handleChange}>
-              <button className='button' onClick={() => { const isValid = validateForm(step); if (isValid) handleNext(); }}>Siguiente</button>
-              <option >Seleccione una opción</option>
-                  <option value="male">Masculino</option>
-                  <option value="female">Femenino</option>
-                  <option value="other">Otro</option>
-                </select>
-                {errors.gender && <p className="error">{errors.gender}</p>}
-                <label>Fecha de nacimiento</label>
-                <input className='inputs' type="date" name="birthdate" placeholder='añadir date' value={formData.birthdate} onChange={handleChange} />
-                {errors.birthdate && <p className="error">{errors.birthdate}</p>}
-                <input className='inputs' type="text" name="home_country" placeholder='Pais de Nacimiento' value={formData.home_country} onChange={handleChange} />
-                {errors.home_country && <p className="error">{errors.home_country}</p>}
+              <input className='inputs' type="text" name="first_name" placeholder='Nombre' value={formData.first_name} onChange={handleChange} />
+              {errors.first_name && <p className="error">{errors.first_name}</p>}
+              <input className='inputs' type="text" name="first_last_name" placeholder='Apellido 1' value={formData.first_last_name} onChange={handleChange} />
+              {errors.first_last_name && <p className="error">{errors.first_last_name}</p>}
+              <input className='inputs' type="text" name="second_last_name" placeholder='Apellido 2' value={formData.second_last_name} onChange={handleChange} />
+              <input className='inputs' type="text" name="nationality" placeholder='Nacionalidad' value={formData.nationality} onChange={handleChange} />
+              {errors.nationality && <p className="error">{errors.nationality}</p>}
+              <select className='inputs' name="gender" value={formData.gender} onChange={handleChange}>
+                <button className='button' onClick={() => { const isValid = validateForm(step); if (isValid) handleNext(); }}>Siguiente</button>
+                <option >Seleccione una opción</option>
+                <option value="male">Masculino</option>
+                <option value="female">Femenino</option>
+                <option value="other">Otro</option>
+              </select>
+              {errors.gender && <p className="error">{errors.gender}</p>}
+              <label>Fecha de nacimiento</label>
+              <input className='inputs' type="date" name="birthdate" placeholder='añadir date' value={formData.birthdate} onChange={handleChange} />
+              {errors.birthdate && <p className="error">{errors.birthdate}</p>}
+              <input className='inputs' type="text" name="home_country" placeholder='Pais de Nacimiento' value={formData.home_country} onChange={handleChange} />
+              {errors.home_country && <p className="error">{errors.home_country}</p>}
               <button className='login-button' onClick={() => { const isValid = validateForm(step); if (isValid) handleNext(); }}>Siguiente</button>
             </div>
           )}
           {step === 2 && (
             <div>
               <h3 className='heading'>Dirección</h3>
-                <input className='inputs' type="text" name="address" placeholder='Dirección completa' value={formData.address} onChange={handleChange} />
-                {errors.address && <p className="error">{errors.address}</p>}
-                <input className='inputs' type="text" name="zip_code" placeholder='Código Postal' value={formData.zip_code} onChange={handleChange} />
-                {errors.zip_code && <p className="error">{errors.zip_code}</p>}
-                <input className='inputs' type="text" name="country_of_residence" placeholder='Pais de Residencia' value={formData.country_of_residence} onChange={handleChange} />
-                {errors.country_of_residence && <p className="error">{errors.country_of_residence}</p>}
-                <input className='inputs' type="text" name="state" placeholder='Estado' value={formData.state} onChange={handleChange} />
-                {errors.state && <p className="error">{errors.state}</p>}
-                <input className='inputs' type="text" name="city" placeholder='Ciudad' value={formData.city} onChange={handleChange} />
-                {errors.city && <p className="error">{errors.city}</p>}
+              <input className='inputs' type="text" name="address" placeholder='Dirección completa' value={formData.address} onChange={handleChange} />
+              {errors.address && <p className="error">{errors.address}</p>}
+              <input className='inputs' type="text" name="zip_code" placeholder='Código Postal' value={formData.zip_code} onChange={handleChange} />
+              {errors.zip_code && <p className="error">{errors.zip_code}</p>}
+              <input className='inputs' type="text" name="country_of_residence" placeholder='Pais de Residencia' value={formData.country_of_residence} onChange={handleChange} />
+              {errors.country_of_residence && <p className="error">{errors.country_of_residence}</p>}
+              <input className='inputs' type="text" name="state" placeholder='Estado' value={formData.state} onChange={handleChange} />
+              {errors.state && <p className="error">{errors.state}</p>}
+              <input className='inputs' type="text" name="city" placeholder='Ciudad' value={formData.city} onChange={handleChange} />
+              {errors.city && <p className="error">{errors.city}</p>}
               <button className='login-button' onClick={handleBack}>Atrás</button>
               <button className='login-button' onClick={() => { const isValid = validateForm(step); if (isValid) handleNext(); }}>Siguiente</button>
             </div>
@@ -235,13 +244,13 @@ const Register = () => {
           {step === 3 && (
             <div>
               <h3 className='heading'>Datos de Contacto</h3>
-                <input className='inputs' type="email" name="email" placeholder='Email' value={formData.email} onChange={handleChange} />
-                {errors.email && <p className="error">{errors.email}</p>}
-                <input className='inputs' type="text" name="phone_number" placeholder='Teléfono' value={formData.phone_number} onChange={handleChange} />
-                {errors.phone_number && <p className="error">{errors.phone_number}</p>}
-                <input className='inputs' type="text" name="facebook" placeholder='Facebook' value={formData.facebook} onChange={handleChange} />
-                <input className='inputs' type="text" name="instagram" placeholder='Instagram' value={formData.instagram} onChange={handleChange} />
-                <input className='inputs' type="text" name="x" placeholder='Twitter o X' value={formData.x} onChange={handleChange} />
+              <input className='inputs' type="email" name="email" placeholder='Email' value={formData.email} onChange={handleChange} />
+              {errors.email && <p className="error">{errors.email}</p>}
+              <input className='inputs' type="text" name="phone_number" placeholder='Teléfono' value={formData.phone_number} onChange={handleChange} />
+              {errors.phone_number && <p className="error">{errors.phone_number}</p>}
+              <input className='inputs' type="text" name="facebook" placeholder='Facebook' value={formData.facebook} onChange={handleChange} />
+              <input className='inputs' type="text" name="instagram" placeholder='Instagram' value={formData.instagram} onChange={handleChange} />
+              <input className='inputs' type="text" name="x" placeholder='Twitter o X' value={formData.x} onChange={handleChange} />
               <button className='login-button' onClick={handleBack}>Atrás</button>
               <button className='login-button' onClick={() => { const isValid = validateForm(step); if (isValid) handleNext(); }}>Siguiente</button>
             </div>
@@ -249,12 +258,12 @@ const Register = () => {
           {step === 4 && (
             <div>
               <h3 className='heading'>Datos clínicos</h3>
-                <input className='inputs' type="text" name="blood_type" placeholder='Tipo de sangre' value={formData.blood_type} onChange={handleChange} />
-                {errors.blood_type && <p className="error">{errors.blood_type}</p>}
-                <input className='inputs' type="text" name="allergy" placeholder='Alergias' value={formData.allergy} onChange={handleChange} />
-                {errors.allergy && <p className="error">{errors.allergy}</p>}
-                <input className='inputs' type="text" name="disease" placeholder='Enfermedades Crónicas' value={formData.disease} onChange={handleChange} />
-                {errors.disease && <p className="error">{errors.disease}</p>}
+              <input className='inputs' type="text" name="blood_type" placeholder='Tipo de sangre' value={formData.blood_type} onChange={handleChange} />
+              {errors.blood_type && <p className="error">{errors.blood_type}</p>}
+              <input className='inputs' type="text" name="allergy" placeholder='Alergias' value={formData.allergy} onChange={handleChange} />
+              {errors.allergy && <p className="error">{errors.allergy}</p>}
+              <input className='inputs' type="text" name="disease" placeholder='Enfermedades Crónicas' value={formData.disease} onChange={handleChange} />
+              {errors.disease && <p className="error">{errors.disease}</p>}
               <button className='login-button' onClick={handleBack}>Atrás</button>
               <button className='login-button' onClick={() => { const isValid = validateForm(step); if (isValid) handleNext(); }}>Siguiente</button>
             </div>
@@ -262,18 +271,18 @@ const Register = () => {
           {step === 5 && (
             <div>
               <h3 className='heading'>Finalizar registro</h3>
-                <input className='inputs' type="text" name="country_of_destination" placeholder='Pais de Destino' value={formData.country_of_destination} onChange={handleChange} />
-                {errors.country_of_destination && <p className="error">{errors.country_of_destination}</p>}
-                <input className='inputs' type="password" name="password" placeholder='Crear contraseña' value={formData.password} onChange={handleChange} />
-                {errors.password && <p className="error">{errors.password}</p>}
+              <input className='inputs' type="text" name="country_of_destination" placeholder='Pais de Destino' value={formData.country_of_destination} onChange={handleChange} />
+              {errors.country_of_destination && <p className="error">{errors.country_of_destination}</p>}
+              <input className='inputs' type="password" name="password" placeholder='Crear contraseña' value={formData.password} onChange={handleChange} />
+              {errors.password && <p className="error">{errors.password}</p>}
               <button className='login-button' onClick={handleBack}>Atrás</button>
               <button type="submit" className="login-button" onClick={handleSubmit}>Registrarse</button>
             </div>
           )}
         </div>
       </div>
-      <br/>
-      <br/>
+      <br />
+      <br />
     </div>
   );
 };

@@ -1,20 +1,24 @@
-import React, { useContext } from 'react'
+import React, { useContext } from 'react';
 import { Context } from '../store/appContext';
 import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
   const { store, actions } = useContext(Context);
   const token = localStorage.getItem("token");
-
-  // Si no hay token, no mostrar el Navbar
-  if (!token) return null;
-
   const navigate = useNavigate();
 
-  const handleLogout = () => {
-    const logout = actions.logout();
-    if (logout) {
-      navigate('/login');
+  if (!token) return null;
+
+  const handleLogout = async () => {
+    try {
+      await actions.logout();
+
+      navigate("/login");
+
+      alert("Has cerrado sesión correctamente.");
+    } catch (error) {
+      console.error("Error en el logout:", error);
+      alert("Ocurrió un error al cerrar sesión. Inténtalo de nuevo.");
     }
   };
 
@@ -24,7 +28,6 @@ const Navbar = () => {
     if (token) {
       navigate('/home');
     } else {
-
       navigate('/login');
     }
   };
@@ -133,7 +136,14 @@ const Navbar = () => {
                   </a>
                 </li>
                 <li>
-                  <a className="nav-link" href="/login" onClick={handleLogout}>
+                  <a
+                    className="nav-link"
+                    href="/login"
+                    onClick={(e) => {
+                      e.preventDefault(); // Evita la navegación predeterminada
+                      handleLogout(); // Llama a la función de cierre de sesión
+                    }}
+                  >
                     Cerrar sesión
                   </a>
                 </li>
@@ -145,52 +155,5 @@ const Navbar = () => {
     </div>
   );
 };
-
-
-
-
-{/* <nav className="navbar bg-body-tertiary fixed-top" >
-        <div className="container-fluid">
-          <a className="navbar-brand" href="/">Home</a>
-          <button className="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
-      <span className="navbar-toggler-icon"></span>
-    </button>
-          <a className="navbar-brand" href="/login">Login</a>
-          <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span className="navbar-toggler-icon"></span>
-          </button>
-          <div className="collapse navbar-collapse" id="navbarNav">
-            <ul className="navbar-nav">
-              <li className="nav-item">
-                <a className="nav-link" href="/chat">Mensajeria</a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="/chatbot">Chatbot</a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="/contact-list">Contact List</a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="/freq-asked-questions">Preguntas Frecuentes</a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="/help">Contactar Ayuda</a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="/admin-console">Consola manejo de datos(ADMIN)</a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="/stats-and-reports">Estadisticas y reportes(ADMIN)</a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="/location-view">Vista ubicacion(RENAME PD)</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
- */}
-
-
 
 export default Navbar;
