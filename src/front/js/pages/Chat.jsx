@@ -3,22 +3,22 @@ import "./../../styles/Chat.css";
 import io from 'socket.io-client';
 import { v4 as uuidv4 } from 'uuid';
 
-const socket = io('https://stunning-bassoon-9vg7p6v4wvpc77xj-3001.app.github.dev');
+const socket = io(process.env.BACKEND_URL);
 
-const Chat = () => {  
+const Chat = () => {
     const [targetUser, setTargetUser] = useState("");
     const [messages, setMessages] = useState([]);
     const [message, setMessage] = useState("");
     const [error, setError] = useState(null);
     const [isConnected, setIsConnected] = useState(false);
 
-   
+
     const [currentUser, setCurrentUser] = useState(() => {
         return `Usuario-${uuidv4()}`;
     });
 
     useEffect(() => {
-       
+
         socket.on("connect", () => setIsConnected(true));
         socket.on("disconnect", () => setIsConnected(false));
         socket.on("receive_message", (msg) => {
@@ -36,11 +36,11 @@ const Chat = () => {
         if (!message.trim() || !targetUser.trim()) return;
 
         const newMessage = { text: message, target: targetUser, sender: currentUser };
-        
+
         // Enviar mensaje al servidor
         socket.emit("send_message", newMessage);
-        
-        setMessage(""); 
+
+        setMessage("");
     };
 
     return (
@@ -61,11 +61,10 @@ const Chat = () => {
                     {messages.map((msg, index) => (
                         <div
                             key={index}
-                            className={`message ${
-                                msg.sender === currentUser ? "user-message" : "other-user-message"
-                            }`}
+                            className={`message ${msg.sender === currentUser ? "user-message" : "other-user-message"
+                                }`}
                         >
-                            {msg.text} {}
+                            {msg.text} { }
                         </div>
                     ))}
                 </div>
@@ -83,7 +82,7 @@ const Chat = () => {
                 </label>
             </div>
         </div>
-    ); 
+    );
 };
 
 export default Chat;

@@ -334,12 +334,22 @@ def add_contact():
 
     return jsonify(new_contact.serialize()), 201
 
+from flask_jwt_extended import jwt_required, get_jwt
+
+# Lista para almacenar tokens inválidos
+delete_tokens = set()
+
 @api.route('/logout', methods=['POST'])
-@jwt_required()
+# @jwt_required()
 def logout():
-    jti = get_jwt()["jti"]  
-    delete_tokens.add(jti)   
-    return jsonify({"msg": "You have been logged-out"}), 200
+    try:
+        jti = get_jwt()["jti"]
+
+        delete_tokens.add(jti)
+
+        return jsonify({"msg": "You have been logged out"}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 @api.route('/editcontact/<int:id>', methods=['PUT'])
 def edit_contact(id):
