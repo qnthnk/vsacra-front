@@ -1,72 +1,58 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
+import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
+import { Context } from "../store/appContext";
+
+const libraries = ["places"];   
+const mapContainerStyle = { width: "100%", height: "500px" };
 
 const LocationView = () => {
-    const [map, setMap] = useState(null);
-    const [service, setService] = useState(null);
-    const [infowindow, setInfowindow] = useState(null);
+    const { store, actions } = useContext(Context);
+    const [selectedType, setSelectedType] = useState(null);
+
+    const { isLoaded, loadError } = useLoadScript({
+        googleMapsApiKey: process.env.GOOGLE_MAPS_API,  
+        libraries,
+    });
 
     useEffect(() => {
-        const loadMap = () => {
-            const script = document.createElement("script");
-            script.src = `https://maps.googleapis.com/maps/api/js?key=AIzaSyBG_tnzTipDhubQSgV4mrWm3AYqh2odCdg&libraries=places`;
-            script.async = true;
-            script.onload = () => {
-                const defaultLocation = { lat: 9.9281, lng: -84.0907 }; // Example: San José, Costa Rica
-                const googleMap = new window.google.maps.Map(document.getElementById("map"), {
-                    center: defaultLocation,
-                    zoom: 13,
-                });
+        if (store.userLocation) {
+            console.log("Ubicación detectada:", store.userLocation);
+        }
+    }, [store.userLocation]);
 
-                setMap(googleMap);
-                setService(new window.google.maps.places.PlacesService(googleMap));
-                setInfowindow(new window.google.maps.InfoWindow());
-            };
-            document.body.appendChild(script);
-        };
+    useEffect(() => {
+        if (selectedType && store.userLocation) {
+            actions.fetchNearbyPlaces(selectedType);
+        }
+    }, [selectedType, store.userLocation]);
 
-        loadMap();
-    }, []);
-
-    const searchPlaces = (type) => {
-        if (!map || !service) return;
-
-        const request = {
-            location: map.getCenter(),
-            radius: "5000",
-            type: [type],
-        };
-
-        service.nearbySearch(request, (results, status) => {
-            if (status === window.google.maps.places.PlacesServiceStatus.OK && results) {
-                results.forEach((place) => {
-                    if (place.geometry && place.geometry.location) {
-                        const marker = new window.google.maps.Marker({
-                            map,
-                            position: place.geometry.location,
-                            title: place.name,
-                        });
-
-                        marker.addListener("click", () => {
-                            infowindow.setContent(place.name || "");
-                            infowindow.open(map, marker);
-                        });
-                    }
-                });
-                map.setCenter(results[0]?.geometry.location || map.getCenter());
-            } else {
-                alert("No places found.");
-            }
-        });
-    };
+    if (loadError) return <p>Error cargando el mapa</p>;
+    if (!isLoaded) return <p>Cargando mapa...</p>;
 
     return (
         <div>
             <div className="button-container">
-                <button onClick={() => searchPlaces("hospital")}>Hospitals</button>
-                <button onClick={() => searchPlaces("police")}>Police Stations</button>
-                <button onClick={() => searchPlaces("embassy")}>Embassies</button>
+                <button onClick={() => setSelectedType("hospital")}>Hospitales</button>
+                <button onClick={() => setSelectedType("police")}>Policía</button>
+                <button onClick={() => setSelectedType("embassy")}>Embajadas</button>
             </div>
-            <div id="map" style={{ height: "500px", width: "100%" }}></div>
+            <GoogleMap
+                mapContainerStyle={mapContainerStyle}
+                center={store.userLocation || { lat: 9.9281, lng: -84.0907 }}  
+                zoom={14}
+            >
+                {store.userLocation && <Marker position={store.userLocation} />}
+                {store.nearbyPlaces.map((place) => (
+                    <Marker
+                        key={place.place_id}
+                        position={{
+                            lat: place.geometry.location.lat,
+                            lng: place.geometry.location.lng,
+                        }}
+                        onClick={() => alert(`Dirección: ${place.vicinity}`)}
+                    />
+                ))}
+            </GoogleMap>
         </div>
     );
 };

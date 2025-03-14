@@ -26,12 +26,14 @@ const Home = () => {
         (position) => {
           const { latitude, longitude } = position.coords;
           setLocation({ latitud: latitude, longitud: longitude });
+          actions.setUserLocation(latitude, longitude);
           console.log("ubiv", location);
         },
         (error) => {
           setError("Error al obtener la ubicación: ", error);
         }
       );
+      
     };
 
     getLocation();
