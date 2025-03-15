@@ -1,4 +1,5 @@
 import { jwtDecode } from 'jwt-decode';
+
 const getState = ({ getStore, getActions, setStore }) => {
     return {
         store: {
@@ -8,8 +9,8 @@ const getState = ({ getStore, getActions, setStore }) => {
             error: null,
             weather: null,
             loading: false,
-            selectedLocation: null,
-            places: [],
+            userLocation: null,
+            nearbyPlaces: [],
             contact: [],
 
 
@@ -374,14 +375,47 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
 
             fetchNearbyPlaces: async (type) => {
-                try {
-                    const response = await fetch(`/api/nearby-places?type=${type}`);
-                    const data = await response.json();
-                    setStore({ nearbyPlaces: data.results });
-                } catch (error) {
-                    console.error("Error fetching places:", error);
+                const store = getStore();
+                if (!store.userLocation) {
+                    console.error("Ubicación del usuario no disponible");
+                    return;
                 }
-            },
+            
+                try {
+                    const response = await fetch('https://places.googleapis.com/v1/places:searchNearby', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-Goog-Api-Key': process.env.GOOGLE_MAPS_API,   
+                            'X-Goog-FieldMask': 'places.displayName,places.formattedAddress',   
+                        },
+                        body: JSON.stringify({
+                            includedTypes: [type],
+                            locationRestriction: {
+                                circle: {
+                                    center: {
+                                        latitude: store.userLocation.latitude,
+                                        longitude: store.userLocation.longitude,
+                                    },
+                                    radius: 30000, 
+                                },
+                            },
+                            maxResultCount: 10,
+                        }),
+                    });
+            
+                    const data = await response.json();
+            
+                    if (data.places) {
+                        setStore({ nearbyPlaces: data.places });
+                    } else {
+                        console.error("No se encontraron lugares", data);
+                        setStore({ nearbyPlaces: [] });
+                    }
+                } catch (error) {
+                    console.error("Error al obtener lugares:", error);
+                }
+            }
         },
     };
 }

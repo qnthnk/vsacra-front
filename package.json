@@ -73,14 +73,12 @@
 		]
 	},
 	"dependencies": {
+		"@react-google-maps/api": "^2.20.6",
 		"bootstrap": "^5.3.3",
 		"cors": "^2.8.5",
 		"echarts-for-react": "^3.0.2",
-
 		"express": "^4.21.2",
-
 		"jwt-decode": "^4.0.0",
-
 		"leaflet": "^1.9.4",
 		"morgan": "^1.10.0",
 		"openai": "^4.86.1",

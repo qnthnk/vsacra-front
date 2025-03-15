@@ -165,21 +165,49 @@ def private():
     user_exists = User.query.filter_by(email=email).first() 
     return jsonify(user_exists.serialize()), 200
 
-
-@api.route("/nearby_places", methods=["GET"])
+@api.route('/nearby_places', methods=['POST'])
 def get_nearby_places():
-    place_type = request.args.get("type")
-    lat = request.args.get("lat", default="9.9281")  # Example: San José, Costa Rica
-    lng = request.args.get("lng", default="-84.0907")
+    try:
+        data = request.json
+        place_type = data.get('includedTypes', [])[0]
+        lat = data.get('locationRestriction', {}).get('circle', {}).get('center', {}).get('latitude')
+        lng = data.get('locationRestriction', {}).get('circle', {}).get('center', {}).get('longitude')
+        
+        if not place_type or not lat or not lng:
+            return jsonify({"error": "Faltan parámetros"}), 400
 
-    if not place_type:
-        return jsonify({"error": "Missing place type"}), 400
+        url = f"https://places.googleapis.com/v1/places:searchNearby"
+        
+        headers = {
+            'Content-Type': 'application/json',
+            'X-Goog-Api-Key': GOOGLE_MAPS_API,
+            'X-Goog-FieldMask': 'places.displayName,places.formattedAddress',
+        }
+        
+        payload = {
+            "includedTypes": [place_type],
+            "locationRestriction": {
+                "circle": {
+                    "center": {
+                        "latitude": lat,
+                        "longitude": lng,
+                    },
+                    "radius": 5000,
+                }
+            },
+            "maxResultCount": 10,
+        }
 
-    url = f"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location={lat},{lng}&radius=5000&type={place_type}&key={GOOGLE_MAPS_API}"
+        response = requests.post(url, json=payload, headers=headers)
+        data = response.json()
+
+        if "places" in data:
+            return jsonify({"places": data["places"]})
+        else:
+            return jsonify({"error": "No se encontraron lugares", "data": data}), 404
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
     
-    response = requests.get(url)
-    return jsonify(response.json())
-
 
 @api.route('/chatbot', methods=['POST'])
 def chatbot():
