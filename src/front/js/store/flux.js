@@ -382,22 +382,28 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             
                 try {
-                    const response = await fetch('https://places.googleapis.com/v1/places:searchNearby', {
-                        method: 'POST',
+                    const apiKey = process.env.GOOGLE_MAPS_API;
+                    if (!apiKey) {
+                        console.error("Clave API no definida");
+                        return;
+                    }
+            
+                    const response = await fetch("https://places.googleapis.com/v1/places:searchNearby", {
+                        method: "POST",
                         headers: {
-                            'Content-Type': 'application/json',
-                            'X-Goog-Api-Key': process.env.GOOGLE_MAPS_API,   
-                            'X-Goog-FieldMask': 'places.displayName,places.formattedAddress',   
+                            "Content-Type": "application/json",
+                            "X-Goog-Api-Key": apiKey,
+                            "X-Goog-FieldMask": "places.displayName,places.formattedAddress,places.location",
                         },
                         body: JSON.stringify({
                             includedTypes: [type],
                             locationRestriction: {
                                 circle: {
                                     center: {
-                                        latitude: store.userLocation.latitude,
-                                        longitude: store.userLocation.longitude,
+                                        latitude: store.userLocation.lat,
+                                        longitude: store.userLocation.lng,
                                     },
-                                    radius: 30000, 
+                                    radius: 30000,
                                 },
                             },
                             maxResultCount: 10,
@@ -405,11 +411,12 @@ const getState = ({ getStore, getActions, setStore }) => {
                     });
             
                     const data = await response.json();
+                    console.log("Respuesta de la API:", data);
             
                     if (data.places) {
                         setStore({ nearbyPlaces: data.places });
                     } else {
-                        console.error("No se encontraron lugares", data);
+                        console.warn("No se encontraron lugares", data);
                         setStore({ nearbyPlaces: [] });
                     }
                 } catch (error) {
