@@ -208,31 +208,32 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
 
-            sendEmergencyCoordinates: async (userId, latitude, longitude) => {
+            sendEmergencyCoordinates: async (latitude, longitude) => {
+                let id = localStorage.getItem('id')
                 try {
                     const resp = await fetch(process.env.BACKEND_URL + "api/emergency", {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
+
                         },
-                        body: JSON.stringify({ user_id: userId, latitude, longitude })
+                        body: JSON.stringify({ 'latitude': latitude, 'longitude': longitude, 'id': id }),
                     });
 
                     if (!resp.ok) {
-                        throw new Error('Error al enviar las coordenadas de emergencia');
+                        const errorData = await resp.json();
+                        throw new Error(errorData.error || 'Error al enviar las coordenadas de emergencia');
                     }
 
                     const data = await resp.json();
-                    setStore({ message: data.mensaje, error: null });
-                    alert(data.mensaje);
+                    alert(data.message || "Coordenadas enviadas correctamente.");
                 } catch (error) {
-                    setStore({ error: 'Hubo un error al enviar las coordenadas de emergencia.' });
                     console.error("Error al enviar las coordenadas de emergencia:", error);
-                    alert("Hubo un error al enviar las coordenadas de emergencia.");
+                    alert(error.message || "Hubo un error al enviar las coordenadas de emergencia.");
                 }
             },
 
-        
+
             addContact: async (payload, user_id) => {
                 let store = getStore();
 
@@ -369,7 +370,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     console.error("Error en viewContacts:", error);
                 }
             },
-            
+
             setUserLocation: (lat, lng) => {
                 setStore({ userLocation: { lat, lng } });
             },
@@ -380,14 +381,14 @@ const getState = ({ getStore, getActions, setStore }) => {
                     console.error("Ubicación del usuario no disponible");
                     return;
                 }
-            
+
                 try {
                     const apiKey = process.env.GOOGLE_MAPS_API;
                     if (!apiKey) {
                         console.error("Clave API no definida");
                         return;
                     }
-            
+
                     const response = await fetch("https://places.googleapis.com/v1/places:searchNearby", {
                         method: "POST",
                         headers: {
@@ -409,10 +410,10 @@ const getState = ({ getStore, getActions, setStore }) => {
                             maxResultCount: 10,
                         }),
                     });
-            
+
                     const data = await response.json();
                     console.log("Respuesta de la API:", data);
-            
+
                     if (data.places) {
                         setStore({ nearbyPlaces: data.places });
                     } else {

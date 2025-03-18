@@ -6,18 +6,19 @@ from flask_cors import CORS
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_jwt_extended import create_access_token
 from flask_jwt_extended import jwt_required, get_jwt_identity, get_jwt
-api = Blueprint('api', __name__)
 from openai import OpenAI
 import openai
 import os
 import re
 import requests
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
 
 
-
+api = Blueprint('api', __name__)
 
 # Allow CORS requests to this API
-CORS(api)
+CORS(api, resources={r"/*": {"origins": "*"}}, supports_credentials=True,allow_headers=["Content-Type", "Authorization"])
 
 
 
@@ -31,6 +32,7 @@ BASE_URL = os.environ.get("BASE_URL")
 WEATHERAPI_KEY= os.environ.get("WEATHERAPI_KEY")
 ADMIN_REQUIRED_EMAIL = 'admin@example.com'  # Cambia esto por el correo requerido
 GOOGLE_MAPS_API= os.environ.get("GOOGLE_MAPS_API")
+SENDGRID_API_KEY = os.environ.get('SENDGRID_API_KEY')
 
 
 
@@ -390,3 +392,63 @@ def view_contacts():
     contacts = Contact.query.filter_by(user_id=user_id).all()
     return jsonify([contact.serialize() for contact in contacts]), 200
 
+@api.route('/emergency', methods=['POST'])
+# @jwt_required()
+def send_emergency():
+    data = request.json
+    print("Datos recibidos en el backend:", data)  # Log de los datos recibidos
+
+    latitude = data.get('latitude')
+    longitude = data.get('longitude')
+    id = data.get('id')
+    print(f'esta es la longitud: {longitude}, y esta es la latitud: {latitude}')
+
+    if not latitude or not longitude:
+        return jsonify({"error": "Coordenadas no proporcionadas"}), 400
+    # return jsonify({'msg': 'sirvió'}), 200
+    
+    user = User.query.get(id)
+
+    if not user:
+        return jsonify({"error": "Usuario no encontrado"}), 404
+
+    # Obtener los contactos del usuario
+    contacts = Contact.query.filter_by(user_id=user.id).all()
+
+    if not contacts:
+        return jsonify({"error": "No hay contactos de emergencia registrados"}), 404
+
+    # Extraer los correos electrónicos de los contactos
+    recipients = [contact.email for contact in contacts]
+
+    # Crear el contenido del correo
+    subject = "¡Emergencia! Necesito ayuda"
+    content = f"""
+    <h1>¡Emergencia!</h1>
+    <p>El usuario {user.first_name} {user.first_last_name} ha activado el botón de emergencia.</p>
+    <p>Sus coordenadas actuales son:</p>
+    <ul>
+        <li>Latitud: {latitude}</li>
+        <li>Longitud: {longitude}</li>
+    </ul>
+    <p>Por favor, contacta con él/ella lo antes posible.</p>
+    """
+
+    message = Mail(
+        from_email='migrappdemo@gmail.com',  # Cambia esto por tu correo
+        to_emails=recipients,  # Enviar a todos los contactos
+        subject=subject,
+        html_content=content
+    )
+
+    try:
+        sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
+        response = sg.send(message)
+        print("Código de estado de SendGrid:", response.status_code)
+        print("Respuesta de SendGrid:", response.body)
+        print("Cabeceras de SendGrid:", response.headers)
+
+        return jsonify({"message": "Correo de emergencia enviado correctamente"}), 200
+    except Exception as e:
+        print("Error al enviar el correo:", str(e))
+        return jsonify({"error": "Error al enviar el correo de emergencia"}), 500
