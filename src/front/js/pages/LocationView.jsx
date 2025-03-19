@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
 import { Context } from "../store/appContext";
 import "../../styles/home.css";
+import { RiHome6Fill } from "react-icons/ri";
 
 const libraries = ["places"];
 const mapContainerStyle = { width: "100%", height: "500px" };
@@ -71,6 +72,17 @@ const LocationView = () => {
                 <button className='login-buttonesMap' onClick={() => setSelectedType("police")}>Policía</button>
                 <button  className='login-buttonesMap'onClick={() => setSelectedType("embassy")}>Embajadas</button>
             </div>
+            <br/>
+             <div style={{ display: 'flex', justifyContent: 'center' }}>
+                                  <button className="login-buttonesN" onClick={() => {
+                                      const isLoggedIn = true; // Aquí deberías verificar si el usuario está loggeado correctamente
+                                      if (isLoggedIn) {
+                                          window.location.href = '/home';
+                                      } else {
+                                          window.location.href = '/login';
+                                      }
+                                  }}><RiHome6Fill style={{fontSize:"2em"}}/></button>
+                              </div>
         </>
     );
 };

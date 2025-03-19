@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./../../styles/Chat.css";
 import io from 'socket.io-client';
 import { v4 as uuidv4 } from 'uuid';
+import { RiHome6Fill } from "react-icons/ri";
 
 const socket = io(process.env.BACKEND_URL);
 
@@ -87,6 +88,16 @@ const Chat = () => {
                     <button className="login-button" onClick={sendMessage}>Enviar</button>
                 </label>
             </div>
+             <div style={{ display: 'flex', justifyContent: 'center' }}>
+                                  <button className="login-buttonesN" onClick={() => {
+                                      const isLoggedIn = true; // Aquí deberías verificar si el usuario está loggeado correctamente
+                                      if (isLoggedIn) {
+                                          window.location.href = '/home';
+                                      } else {
+                                          window.location.href = '/login';
+                                      }
+                                  }}><RiHome6Fill style={{fontSize:"2em"}}/></button>
+                              </div>
         </div>
     );
 };
