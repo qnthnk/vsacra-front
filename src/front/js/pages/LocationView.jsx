@@ -32,13 +32,7 @@ const LocationView = () => {
 
     return (
         <>
-        <div>
-               <div className="containermap">
-                <button onClick={() => setSelectedType("hospital")}>Hospitales</button>
-                <button onClick={() => setSelectedType("police")}>Policía</button>
-                <button onClick={() => setSelectedType("embassy")}>Embajadas</button>
-            </div>
-
+        <div className="containermap">
             <GoogleMap
                 mapContainerStyle={mapContainerStyle}
                 center={store.userLocation}
@@ -58,6 +52,7 @@ const LocationView = () => {
                     )
                 ))}
             </GoogleMap>
+            </div>
 
             <div className="places-list">
                 {store.nearbyPlaces.length > 0 ? (
@@ -71,11 +66,10 @@ const LocationView = () => {
                     <p>No se encontraron lugares cercanos</p>
                 )}
             </div>
-        </div>
         <div style={{ display: "flex", justifyContent: "center", marginTop: "10px" }}>
-                <button className='login-buttonesMap' onClick={() => searchPlaces("hospital")}>Hospitales</button>
-                <button className='login-buttonesMap' onClick={() => searchPlaces("police")}>Policia</button>
-                <button className='login-buttonesMap' onClick={() => searchPlaces("embassy")}>Embajadas</button>
+        <button  className='login-buttonesMap'onClick={() => setSelectedType("hospital")}>Hospitales</button>
+                <button className='login-buttonesMap' onClick={() => setSelectedType("police")}>Policía</button>
+                <button  className='login-buttonesMap'onClick={() => setSelectedType("embassy")}>Embajadas</button>
             </div>
         </>
     );
