@@ -23,6 +23,7 @@ const Chat = () => {
         socket.on("disconnect", () => setIsConnected(false));
         socket.on("receive_message", (msg) => {
             setMessages((prevMessages) => [...prevMessages, msg]);
+            console.log(msg);
         });
 
         return () => {
@@ -39,6 +40,7 @@ const Chat = () => {
 
         // Enviar mensaje al servidor
         socket.emit("send_message", newMessage);
+        console.log("esto es lo que se manda", newMessage);
 
         setMessage("");
     };
@@ -49,15 +51,19 @@ const Chat = () => {
                 <h2 className="heading">Chat</h2>
                 {error && <p className="error">{error}</p>}
                 <div>
+                <label className="forms">
                     <input
-                        className="inputuser"
+                        className="input"
                         type="text"
                         placeholder="Buscar usuario"
                         value={targetUser}
                         onChange={(e) => setTargetUser(e.target.value)}
                     />
+                     </label>
                 </div>
+               
                 <div className="chat-box">
+                    <p>Cuadro de Mensajes una vez que el chat funcione</p>
                     {messages.map((msg, index) => (
                         <div
                             key={index}

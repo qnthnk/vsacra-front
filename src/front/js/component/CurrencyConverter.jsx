@@ -26,13 +26,13 @@ const CurrencyConverter = () => {
 
     return (
         <>
-            <Button variant="primary" onClick={handleShow} className="m-2">
+            <Button  onClick={handleShow} className="m-2">
                 <MdCurrencyExchange size={24} />
             </Button>
 
-            <Modal show={show} onHide={handleClose}>
+            <Modal className='container-modal' show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Conversor de Divisas</Modal.Title>
+                    <Modal.Title className='heading-modal'>Conversor de Divisas</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     {/* Mensaje de error */}
@@ -82,13 +82,14 @@ const CurrencyConverter = () => {
                     )}
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
+                <Button className='close-buttonC' onClick={handleConvert}>
+                        Convertir
+                    </Button>
+                    <Button className='close-button' onClick={handleClose}>
                         Cerrar
                     </Button>
 
-                    <Button variant="primary" onClick={handleConvert}>
-                        Convertir
-                    </Button>
+                    
                 </Modal.Footer>
             </Modal>
         </>

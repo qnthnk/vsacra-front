@@ -9,18 +9,14 @@ const Footer = () => {
   return (
     <>
       <div className="card">
-        <a className="social-link">
+        <div className='buttons'>
           <Calculator />
-        </a>
-        <a className="social-link">
           <Weather />
-        </a>
-        <a className="social-link">
           <CurrencyConverter />
-        </a>
-        <a className="social-link">
+          </div>
+          <div className='social-link'>
           <EmergencyButton />
-        </a>
+          </div>
       </div>
     </>
   );

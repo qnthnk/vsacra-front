@@ -2,6 +2,12 @@ import React, { useEffect, useContext, useState } from 'react'
 import { Context } from '../store/appContext';
 import { Link } from "react-router-dom";
 import './../../styles/home.css';
+import { BsChatSquareTextFill } from "react-icons/bs";
+import { TbMessageChatbotFilled } from "react-icons/tb";
+import { RiContactsFill } from "react-icons/ri";
+import { BsQuestionCircleFill } from "react-icons/bs";
+import { FaLocationDot } from "react-icons/fa6";
+import { MdAddAlert } from "react-icons/md";
 
 
 
@@ -22,6 +28,7 @@ const Home = () => {
     }
 
     const getLocation = () => {
+
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const { latitude, longitude } = position.coords;
@@ -43,48 +50,57 @@ const Home = () => {
       {token ? (
         <div className='backpage'>
           <div className='container'>
-            <ul className='forms'>
+            <h2 className='heading'>Inicio</h2>
+            <div className='formis'>
+
               {token && (
-                <Link className='login-button' to='/chat'>
-                  Mensajería (EDUARDO)
+                <Link className='login-buttones' to='/chat'>
+                  <BsChatSquareTextFill style={{ fontSize: '3em' }} />
+                  <p>Mensajería</p>
                 </Link>
               )}
               {token && (
-                <Link className='login-button' to='/chatbot'>
-                  Chatbot (DANNY)
+                <Link className='login-buttones' to='/chatbot'>
+                  <TbMessageChatbotFilled style={{ fontSize: '3em' }} />
+                  <p>Chatbot</p>
                 </Link>
               )}
               {token && (
-                <Link className='login-button' to='/contact-list'>
-                  Contact List (RUBEN)
+                <Link className='login-buttones' to='/contact-list'>
+                  <RiContactsFill style={{ fontSize: '3em' }} />
+                  <p>Mis contactos</p>
                 </Link>
               )}
               {token && (
-                <Link className='login-button' to='/freq-asked-questions'>
-                  Preguntas Frecuentes (EDUARDO)
+                <Link className='login-buttones' to='/freq-asked-questions'>
+                  <BsQuestionCircleFill style={{ fontSize: '3em' }} />
+                  <p>Preguntas Frecuentes</p>
                 </Link>
               )}
               {token && (
-                <Link className='login-button' to='/help'>
-                  Contactar Ayuda (EDUARDO)
+                <Link className='login-buttones' to='/help'>
+                  <MdAddAlert style={{ fontSize: '3em' }}/>
+                  <p>Contactar Ayuda</p>
                 </Link>
               )}
               {token && admin && (
-                <Link className='login-button' to='/stats-and-reports'>
-                  Estadísticas y reportes(ADMIN) (RUBEN)
+                <Link className='login-buttones' to='/stats-and-reports'>
+                  <p>Estadísticas y reportes(ADMIN)</p>
                 </Link>
               )}
               {token && (
-                <Link className='login-button' to='/location-view'>
-                  Vista de ubicación(RENAME PD) (DANNY Y ALI)
+                <Link className='login-buttones' to='/location-view'>
+                  <FaLocationDot style={{ fontSize: '3em' }} />
+                  <p> Vista de ubicación</p>
                 </Link>
               )}
               {token && admin && (
-                <Link className='login-button' to='/admin-console'>
-                  Consola de manejo de datos(ADMIN)
+                <Link className='login-buttones' to='/admin-console'>
+                  <p>Consola de manejo de datos(ADMIN)</p>
                 </Link>
               )}
-            </ul>
+
+            </div>
           </div>
         </div>
       ) : (

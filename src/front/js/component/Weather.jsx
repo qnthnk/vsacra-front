@@ -41,9 +41,9 @@ const Weather = () => {
                 <TiWeatherPartlySunny size={24} /> {/* Ajusta el tamaño del ícono */}
             </Button>
 
-            <Modal show={show} onHide={handleClose}>
+            <Modal className='container-modal' show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Clima Actual</Modal.Title>
+                    <Modal.Title className='heading-modal'>Clima Actual</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     {store.loading && (
@@ -59,17 +59,18 @@ const Weather = () => {
 
                     {store.weather && (
                         <div>
-                            <h2>Resultado:</h2>
+                            <p><strong>País:</strong> {store.weather.pais}</p>
+                            <p><strong>Región:</strong> {store.weather.region}</p>
                             <p><strong>Ciudad:</strong> {store.weather.ciudad}</p>
                             <p><strong>Temperatura:</strong> {store.weather.temperatura} °C</p>
                             <p><strong>Humedad:</strong> {store.weather.humedad}%</p>
                             <p><strong>Clima:</strong> {store.weather.clima}</p>
-                            <p><strong>Viento:</strong> {store.weather.viento} km/h</p>
+                            <p><img src={store.weather.icono} alt="icono" style={{ display: 'block', margin: '0 auto' }}/></p>
                         </div>
                     )}
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
+                    <Button className='close-button'  onClick={handleClose}>
                         Cerrar
                     </Button>
                 </Modal.Footer>
