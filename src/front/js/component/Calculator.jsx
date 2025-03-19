@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
-import { CiCalculator2 } from "react-icons/ci";
+import { ImCalculator } from "react-icons/im";
 import "../../styles/Footer.css"
 
 const Calculator = () => {
@@ -29,14 +29,14 @@ const Calculator = () => {
     return (
         <div>
             {/* Botón para abrir el modal */}
-            <Button variant="primary" onClick={handleOpenModal} className="m-2">
-                <CiCalculator2 size={24} />
+            <Button  onClick={handleOpenModal} >
+            <ImCalculator style={{fontSize:"2em"}}/>
             </Button>
 
             {/* Modal de Bootstrap */}
-            <Modal show={showModal} onHide={handleCloseModal}>
+            <Modal className='container-modal' show={showModal} onHide={handleCloseModal}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Calculadora</Modal.Title>
+                    <Modal.Title className='heading-modal'>Calculadora</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     {/* Pantalla de la calculadora */}
@@ -60,29 +60,29 @@ const Calculator = () => {
                         <Button variant="light" onClick={() => handleButtonClick('7')} style={{ fontSize: '20px' }}>7</Button>
                         <Button variant="light" onClick={() => handleButtonClick('8')} style={{ fontSize: '20px' }}>8</Button>
                         <Button variant="light" onClick={() => handleButtonClick('9')} style={{ fontSize: '20px' }}>9</Button>
-                        <Button variant="warning" onClick={() => handleButtonClick('/')} style={{ fontSize: '20px' }}>/</Button>
+                        <Button variant="primary" onClick={() => handleButtonClick('/')} style={{ fontSize: '20px' }}>/</Button>
 
                         {/* Fila 2 */}
                         <Button variant="light" onClick={() => handleButtonClick('4')} style={{ fontSize: '20px' }}>4</Button>
                         <Button variant="light" onClick={() => handleButtonClick('5')} style={{ fontSize: '20px' }}>5</Button>
                         <Button variant="light" onClick={() => handleButtonClick('6')} style={{ fontSize: '20px' }}>6</Button>
-                        <Button variant="warning" onClick={() => handleButtonClick('*')} style={{ fontSize: '20px' }}>*</Button>
+                        <Button variant="primary" onClick={() => handleButtonClick('*')} style={{ fontSize: '20px' }}>*</Button>
 
                         {/* Fila 3 */}
                         <Button variant="light" onClick={() => handleButtonClick('1')} style={{ fontSize: '20px' }}>1</Button>
                         <Button variant="light" onClick={() => handleButtonClick('2')} style={{ fontSize: '20px' }}>2</Button>
                         <Button variant="light" onClick={() => handleButtonClick('3')} style={{ fontSize: '20px' }}>3</Button>
-                        <Button variant="warning" onClick={() => handleButtonClick('-')} style={{ fontSize: '20px' }}>-</Button>
+                        <Button variant="primary" onClick={() => handleButtonClick('-')} style={{ fontSize: '20px' }}>-</Button>
 
                         {/* Fila 4 */}
                         <Button variant="light" onClick={() => handleButtonClick('0')} style={{ fontSize: '20px' }}>0</Button>
                         <Button variant="light" onClick={() => handleButtonClick('.')} style={{ fontSize: '20px' }}>.</Button>
-                        <Button variant="success" onClick={calculateResult} style={{ fontSize: '20px' }}>=</Button>
-                        <Button variant="warning" onClick={() => handleButtonClick('+')} style={{ fontSize: '20px' }}>+</Button>
+                        <Button variant="dark" onClick={calculateResult} style={{ fontSize: '20px' }}>=</Button>
+                        <Button variant="primary" onClick={() => handleButtonClick('+')} style={{ fontSize: '20px' }}>+</Button>
 
                         {/* Botón de limpiar */}
                         <Button
-                            variant="danger"
+                            variant="primary"
                             onClick={clearInput}
                             style={{ gridColumn: 'span 4', fontSize: '20px' }}
                         >
@@ -91,7 +91,7 @@ const Calculator = () => {
                     </div>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={handleCloseModal}>
+                    <Button className='close-button' onClick={handleCloseModal}>
                         Cerrar
                     </Button>
                 </Modal.Footer>

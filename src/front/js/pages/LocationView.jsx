@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
 import { Context } from "../store/appContext";
+import "../../styles/home.css";
 
 const libraries = ["places"];
 const mapContainerStyle = { width: "100%", height: "500px" };
@@ -30,8 +31,9 @@ const LocationView = () => {
     if (!isLoaded) return <p>Cargando mapa...</p>;
 
     return (
+        <>
         <div>
-            <div className="button-container">
+               <div className="containermap">
                 <button onClick={() => setSelectedType("hospital")}>Hospitales</button>
                 <button onClick={() => setSelectedType("police")}>Policía</button>
                 <button onClick={() => setSelectedType("embassy")}>Embajadas</button>
@@ -70,6 +72,12 @@ const LocationView = () => {
                 )}
             </div>
         </div>
+        <div style={{ display: "flex", justifyContent: "center", marginTop: "10px" }}>
+                <button className='login-buttonesMap' onClick={() => searchPlaces("hospital")}>Hospitales</button>
+                <button className='login-buttonesMap' onClick={() => searchPlaces("police")}>Policia</button>
+                <button className='login-buttonesMap' onClick={() => searchPlaces("embassy")}>Embajadas</button>
+            </div>
+        </>
     );
 };
 

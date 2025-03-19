@@ -305,9 +305,12 @@ def obtener_clima():
         data = response.json()
         return jsonify({
             'ciudad': data['location']['name'],
+            'pais': data['location']['country'],
+            'region': data['location']['region'],
             'temperatura': data['current']['temp_c'],
             'humedad': data['current']['humidity'],
             'clima': data['current']['condition']['text'],
+            'icono': data['current']['condition']['icon'],
             'viento': data['current']['wind_kph']
         }), 200
 
