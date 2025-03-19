@@ -8,6 +8,7 @@ import { RiContactsFill } from "react-icons/ri";
 import { BsQuestionCircleFill } from "react-icons/bs";
 import { FaLocationDot } from "react-icons/fa6";
 import { MdAddAlert } from "react-icons/md";
+import { MdTipsAndUpdates } from "react-icons/md";
 
 
 
@@ -73,8 +74,8 @@ const Home = () => {
               )}
               {token && (
                 <Link className='login-buttones' to='/freq-asked-questions'>
-                  <BsQuestionCircleFill style={{ fontSize: '3em' }} />
-                  <p>Preguntas Frecuentes</p>
+                  <MdTipsAndUpdates style={{ fontSize: '3em' }} />
+                  <p>Tips</p>
                 </Link>
               )}
               {token && (

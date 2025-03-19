@@ -216,6 +216,7 @@ const Register = () => {
                 <option value="other">Otro</option>
               </select>
               {errors.gender && <p className="error">{errors.gender}</p>}
+              <br/>
               <label>Fecha de nacimiento</label>
               <input className='inputs' type="date" name="birthdate" placeholder='añadir date' value={formData.birthdate} onChange={handleChange} />
               {errors.birthdate && <p className="error">{errors.birthdate}</p>}

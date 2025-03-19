@@ -1,19 +1,18 @@
 import React, { useState } from 'react';
+import "../../styles/home.css";
+import { RiHome6Fill } from "react-icons/ri";
 
 const faqs = [
-    { question: "¿Qué documentos necesito para regularizar mi situación migratoria?", answer: "El Instituto Nacional de Migración (INAMI) ofrece opciones para regularizar la estancia por razones humanitarias, vínculo familiar, documento vencido, y realizar actividades no autorizadas.Los documentos que necesitas para regularizar tu situación migratoria en México dependen de la razón por la que solicites la regularización.   " },
-    { question: "¿Cómo solicitar asilo o refugio en este país?", answer: "Para solicitar refugio en México, puedes acudir a la Comisión Mexicana de Ayuda a Refugiados (COMAR) o al Instituto Nacional de Migración (INM)" },
-    { question: "¿Cuáles son los requisitos para obtener una visa de trabajo?", answer: "Los requisitos para obtener una visa de trabajo varían según el país y el tipo de visa.Para aplicar para una visa de trabajador permanente en Estados Unidos, se debe: Presentar los formularios y documentos requeridos, Pagar las tarifas de procesamiento, Acudir a una entrevista de visa, Realizar exámenes médicos.  " },
-    { question: "¿Qué hacer si mi visa está por expirar?", answer: "Si tu visa de turista para Estados Unidos está por expirar, debes renovarla en un consulado o embajada de Estados Unidos en el extranjero. " },
-    { question: "¿Dónde puedo obtener asistencia legal gratuita?", answer: "En México, puedes obtener asistencia legal gratuita en la Defensoría Pública, Locatel, el DIF, y el INAPAM" },
-    { question: "¿Dónde puedo buscar empleo como migrante?", answer: "Para buscar trabajo como migrante, puedes consultar vacantes en la Organización Internacional para las Migraciones (OIM), el Instituto Nacional de Migración (INM), y otras fuentes" },
-    { question: "¿Qué derechos laborales tengo como trabajador migrante?", answer: "Los trabajadores migrantes tienen acceso a todos los derechos laborales, independientemente de su situación migratoria." },
-    { question: "¿Existen programas de capacitación o becas para migrantes?", answer: "Sí, existen programas de becas y capacitación para migrantes, tanto en México como en otros países. En mexico existe el programa 3x1 para migrantes consulta mas informacion en www.gob.mx" },
-    { question: "¿Cómo acceder a servicios de salud pública como migrante?", answer: "Los migrantes tienen derecho a recibir atención médica gratuita en caso de urgencia, y pueden acceder a servicios de salud pública. " },
-    { question: "Cuáles son mis derechos como migrante en este país", answer: "Las personas migrantes en México tienen derecho a los mismos derechos humanos que cualquier otro ciudadano, como la libertad de expresión, la igualdad y la no discriminación" },
-    { question: "¿Dónde puedo recibir atención psicológica o emocional?", answer: "Puedes recibir atención psicológica o emocional en el IMSS, la Defensoría UNAM, la Línea de la Vida, el Consejo Ciudadano, y otros servicios" },
-    { question: "¿Qué hacer en caso de una emergencia médica?", answer: "En caso de una emergencia médica, debes llamar al 911 o acudir a la sala de emergencias. Si la persona está en riesgo de vida o puede empeorar en el camino al hospital, es importante actuar con rapidez. " }
-];
+  { question: "Transporte", answer: "Ten en cuenta que viajar hacinado en camiones con poca ventilación, puede causarte deshidratación severa o asfixia. También recuerda que viajar en trenes de carga es muy peligroso, ya que puedes caerte y sufrir lesiones graves e incluso la muerte. " },
+  { question: "Ríos", answer: "En épocas de lluvia evita cruzar por arroyos o caminar por el cauce de ríos, ya que en cuestión de minutos aumentan su nivel y te pueden arrastrar. Evita bañarte en ríos o estanques, especialmente si no sabes nadar, pues podrían tener zonas profundas difíciles de detectar a simple vista y corres el peligro de ahogarte. " },
+  { question: "Desierto durante el día", answer: "En el desierto, especialmente en los estados del norte de México, las temperaturas son extremas durante el día, llegando a los 50º C (122º Fahrenheit) o más, por eso, considera llevar contigo: Agua potable (al menos 4 litros). Alimentos enlatados o empaquetados. Suero oral o en su defecto agua con una pizca de sal. Usa pantalones y mangas largas para protegerte del sol y mantener la humedad de tu sudor. Usa zapatos cómodos y de preferencia cerrados" },
+  { question: "Desierto durante la noche", answer: "Durante las noches, las temperaturas pueden bajar a -10ºC (14º Fahrenheit), o menos, por eso, considera llevar contigo: Ropa abrigadora, zapatos cómodos y calcetines gruesos, dulces o alimentos calóricos que te ayudarán a mantener tu temperatura corporal regular, guantes para proteger tus manos, una lámpara de mano y cerillos." },
+  { question: "Deshidratación", answer: "Si presentas alguno de estos síntomas, es probable que estés deshidratado: Sed intensa, sequedad en la boca, ojos hundidos, piel seca, orina oscura y escasa, fatiga, mareos, confusión, irritabilidad, dolor de cabeza, calambres musculares, pulso débil y rápido. Si presentas estos síntomas, busca un lugar fresco y sombreado, hidrátate y descansa." },
+  { question: "Hipotermia", answer: "Si presentas alguno de estos síntomas, es probable que estés sufriendo de hipotermia: Escalofríos, piel pálida y fría, fatiga, confusión, somnolencia, habla lenta, pulso débil y lento, respiración lenta y superficial. Si presentas estos síntomas, busca un lugar cálido, abrígate y toma bebidas calientes." },
+  { question: "Golpe de calor", answer: "Si presentas alguno de estos síntomas, es probable que estés sufriendo de un golpe de calor: Temperatura corporal alta, piel roja, caliente y seca, pulso rápido y fuerte, dolor de cabeza, mareos, náuseas, vómito, confusión, desorientación, pérdida de la conciencia. Si presentas estos síntomas, busca un lugar fresco y sombreado, hidrátate y descansa." },
+  { question: "Mordedura o picadura de animales venenosos", answer: "Si presentas alguno de estos síntomas, es probable que hayas sido mordido o picado por un animal venenoso: Dolor intenso en la zona de la mordedura o mordedura, hinchazón, enrojecimiento, sangrado, debilidad, mareos, náuseas, vómito, dificultad para respirar, visión borrosa, parálisis, convulsiones. Si presentas estos síntomas, busca ayuda de inmediato." },
+  { question: "Más información", answer: <>Si quieres saber más tips, puedes consultar nuestro <a href="/chatbot">Chatbot</a>.</> },
+  ];
 
 const FreqAskedQuestions = () => {
   const [openIndex, setOpenIndex] = useState(null);
@@ -23,22 +22,34 @@ const FreqAskedQuestions = () => {
   };
 
   return (
-    <div className="container mt-5">
-      <h2 className="text-center mb-4">Preguntas Frecuentes</h2>
-      <div className="accordion">
+    <div className='backpage'>
+          <div className='containerFAQ'>
+            <h2 className='heading'>Tips</h2>
+            <div>
         {faqs.map((faq, index) => (
-          <div className="card mb-2" key={index}>
-            <div className="card-header bg-primary text-white" onClick={() => toggleFAQ(index)} style={{ cursor: 'pointer' }}>
-              <h5 className="mb-0">{faq.question}</h5>
+          <div  key={index}>
+            <div className='login-buttonesFAQ' onClick={() => toggleFAQ(index)} >
+              <h5 >{faq.question}</h5>
             </div>
+            
             <div className={`collapse ${openIndex === index ? 'show' : ''}`}>
-              <div className="card-body">{faq.answer}</div>
+              <div className="containerAnswer">{faq.answer}</div>
             </div>
           </div>
         ))}
+        </div>
       </div>
-    </div>
-  );
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+                      <button className="login-buttonesN" onClick={() => {
+                          const isLoggedIn = true; // Aquí deberías verificar si el usuario está loggeado correctamente
+                          if (isLoggedIn) {
+                              window.location.href = '/home';
+                          } else {
+                              window.location.href = '/login';
+                          }
+                      }}><RiHome6Fill style={{fontSize:"2em"}}/></button>
+                  </div>
+    </div>);
 };
 
 export default FreqAskedQuestions;

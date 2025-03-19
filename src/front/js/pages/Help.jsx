@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { RiHome6Fill } from "react-icons/ri";
 
 const emergencyNumbers = {
     "Aguascalientes": ["911 - Emergencias", "449-970-4075 - Cruz Roja", "449-970-4063 - Protección Civil"],
@@ -39,7 +40,7 @@ const Help = () => {
     const [selectedState, setSelectedState] = useState(null);
 
     return (
-        <div className="container mt-5">
+        <div className="container">
             <h2 className="text-center mb-4">CONTACTAR AYUDA</h2>
             <div className="accordion" id="emergencyAccordion">
                 {Object.entries(emergencyNumbers).map(([state, numbers], index) => (
@@ -67,6 +68,16 @@ const Help = () => {
                     </div>
                 ))}
             </div>
+             <div style={{ display: 'flex', justifyContent: 'center' }}>
+                                  <button className="login-buttonesN" onClick={() => {
+                                      const isLoggedIn = true; // Aquí deberías verificar si el usuario está loggeado correctamente
+                                      if (isLoggedIn) {
+                                          window.location.href = '/home';
+                                      } else {
+                                          window.location.href = '/login';
+                                      }
+                                  }}><RiHome6Fill style={{fontSize:"2em"}}/></button>
+                              </div>
         </div>
     );
 };
