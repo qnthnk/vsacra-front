@@ -32,26 +32,30 @@ const LocationView = () => {
 
     return (
         <>
-        <div className="containermap">
-            <GoogleMap
-                mapContainerStyle={mapContainerStyle}
-                center={store.userLocation}
-                zoom={14}
-            >
-                {store.userLocation && <Marker position={store.userLocation} />}
-                {store.nearbyPlaces?.map((place, index) => (
-                    place.location && (
-                        <Marker
-                            key={index}
-                            position={{
-                                lat: place.location.latitude,
-                                lng: place.location.longitude,
-                            }}
-                            onClick={() => alert(`Dirección: ${place.formattedAddress}`)}
-                        />
-                    )
-                ))}
-            </GoogleMap>
+            <div className="containermap">
+                <GoogleMap
+                    mapContainerStyle={mapContainerStyle}
+                    center={store.userLocation}
+                    zoom={14}
+                >
+                    {store.userLocation && <Marker position={store.userLocation} />}
+                    {store.nearbyPlaces?.map((place, index) => (
+                        place.location && (
+                            <Marker
+                                key={index}
+                                position={{
+                                    lat: place.location.latitude,
+                                    lng: place.location.longitude,
+                                }}
+                                onClick={() =>
+                                    alert(
+                                        `Dirección: ${place.formattedAddress}\nTeléfono internacional: ${place.internationalPhoneNumber || "No disponible"}`
+                                    )
+                                }
+                            />
+                        )
+                    ))}
+                </GoogleMap>
             </div>
 
             <div className="containermaplist places-list">
@@ -60,18 +64,37 @@ const LocationView = () => {
                         <div key={index} className="place-item">
                             <h2>{place.displayName?.text || "Sin nombre"}</h2>
                             <p>{place.formattedAddress || "Dirección desconocida"}</p>
+                            {place.internationalPhoneNumber && (
+                                <p>Teléfono internacional: {place.internationalPhoneNumber}</p>
+                            )}
                         </div>
                     ))
                 ) : (
                     <p className="heading">Presione la opción que desee para obtener las ubicaciones</p>
                 )}
             </div>
-        <div style={{ display: "flex", justifyContent: "center", marginTop: "10px" }}>
-        <button  className='login-buttonesMap'onClick={() => setSelectedType("hospital")}>Hospitales</button>
+
+            <div style={{ display: "flex", justifyContent: "center", marginTop: "10px" }}>
+                <button className='login-buttonesMap' onClick={() => setSelectedType("hospital")}>Hospitales</button>
                 <button className='login-buttonesMap' onClick={() => setSelectedType("police")}>Policía</button>
-                <button  className='login-buttonesMap'onClick={() => setSelectedType("embassy")}>Embajadas</button>
+                <button className='login-buttonesMap' onClick={() => setSelectedType("embassy")}>Embajadas</button>
             </div>
+            <br />
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+                <button className="login-buttonesN" onClick={() => {
+                    const isLoggedIn = true; // Aquí deberías verificar si el usuario está loggeado correctamente
+                    if (isLoggedIn) {
+                        window.location.href = '/home';
+                    } else {
+                        window.location.href = '/login';
+                    }
+                }}>
+                    <RiHome6Fill style={{ fontSize: "2em" }} />
+                </button>
+            </div>
+
             <br/>
+
         </>
     );
 };
