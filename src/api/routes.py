@@ -30,7 +30,7 @@ client = openai.OpenAI(
 CONVERTER_API_KEY = '43af89a58a6d8fd938bdd176d46766df'  
 BASE_URL = os.environ.get("BASE_URL")
 WEATHERAPI_KEY= os.environ.get("WEATHERAPI_KEY")
-ADMIN_REQUIRED_EMAIL = 'admin@example.com'  # Cambia esto por el correo requerido
+ADMIN_REQUIRED_EMAIL = 'admin@example.com'  
 GOOGLE_MAPS_API= os.environ.get("GOOGLE_MAPS_API")
 SENDGRID_API_KEY = os.environ.get('SENDGRID_API_KEY')
 
@@ -156,16 +156,6 @@ def login():
 
     return jsonify({"message": "Usuario inválido."}), 404
     
-@api.route('/example', methods=['GET'])
-@jwt_required()
-def private():
-    jti = get_jwt()["jti"]
-    if jti in delete_tokens:
-        return jsonify({"msg": "Token has been revoked."}), 401  
-
-    email = get_jwt_identity()
-    user_exists = User.query.filter_by(email=email).first() 
-    return jsonify(user_exists.serialize()), 200
 
 @api.route('/nearby_places', methods=['POST'])
 def get_nearby_places():
@@ -338,10 +328,7 @@ def add_contact():
 
     return jsonify(new_contact.serialize()), 201
 
-from flask_jwt_extended import jwt_required, get_jwt
 
-# Lista para almacenar tokens inválidos
-delete_tokens = set()
 
 @api.route('/logout', methods=['POST'])
 # @jwt_required()
@@ -408,7 +395,7 @@ def send_emergency():
 
     if not latitude or not longitude:
         return jsonify({"error": "Coordenadas no proporcionadas"}), 400
-    # return jsonify({'msg': 'sirvió'}), 200
+    
     
     user = User.query.get(id)
 
@@ -443,13 +430,13 @@ def send_emergency():
         subject=subject,
         html_content=content
     )
-
+    
     try:
         sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
         response = sg.send(message)
-        print("Código de estado de SendGrid:", response.status_code)
-        print("Respuesta de SendGrid:", response.body)
-        print("Cabeceras de SendGrid:", response.headers)
+        print(response.status_code)
+        print(response.body)
+        print(response.headers)
 
         return jsonify({"message": "Correo de emergencia enviado correctamente"}), 200
     except Exception as e:
