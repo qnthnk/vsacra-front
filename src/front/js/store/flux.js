@@ -221,8 +221,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     });
 
                     if (!resp.ok) {
-                        const errorData = await resp.json();
-                        throw new Error(errorData.error || 'Error al enviar las coordenadas de emergencia');
+                        throw new Error('Error al enviar las coordenadas de emergencia');
                     }
 
                     const data = await resp.json();
@@ -394,7 +393,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                         headers: {
                             "Content-Type": "application/json",
                             "X-Goog-Api-Key": apiKey,
-                            "X-Goog-FieldMask": "places.displayName,places.formattedAddress,places.location",
+                            "X-Goog-FieldMask": "places.displayName,places.formattedAddress,places.location,places.internationalPhoneNumber",
                         },
                         body: JSON.stringify({
                             includedTypes: [type],
