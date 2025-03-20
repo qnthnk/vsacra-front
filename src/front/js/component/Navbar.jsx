@@ -85,11 +85,11 @@ const Navbar = () => {
                 Home
                 </a>
               </li>
-              <li>
+              {/* <li>
                 <a className="nav-link" href="/login">
                 Login
                 </a>
-              </li>
+              </li> */}
               <li>
                 <a className="nav-link" href="/chat">
                 Mensajeria
@@ -107,7 +107,7 @@ const Navbar = () => {
               </li>
               <li>
                 <a className="nav-link" href="/freq-asked-questions">
-                Preguntas Frecuentes
+                Tips
                 </a>
               </li>
               <li>

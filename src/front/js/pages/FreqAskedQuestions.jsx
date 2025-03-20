@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import "../../styles/home.css";
-import { RiHome6Fill } from "react-icons/ri";
 
 const faqs = [
   { question: "Transporte", answer: "Ten en cuenta que viajar hacinado en camiones con poca ventilación, puede causarte deshidratación severa o asfixia. También recuerda que viajar en trenes de carga es muy peligroso, ya que puedes caerte y sufrir lesiones graves e incluso la muerte. " },
@@ -39,16 +38,6 @@ const FreqAskedQuestions = () => {
         ))}
         </div>
       </div>
-          <div style={{ display: 'flex', justifyContent: 'center' }}>
-                      <button className="login-buttonesN" onClick={() => {
-                          const isLoggedIn = true; // Aquí deberías verificar si el usuario está loggeado correctamente
-                          if (isLoggedIn) {
-                              window.location.href = '/home';
-                          } else {
-                              window.location.href = '/login';
-                          }
-                      }}><RiHome6Fill style={{fontSize:"2em"}}/></button>
-                  </div>
     </div>);
 };
 

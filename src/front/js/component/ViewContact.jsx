@@ -47,10 +47,11 @@ const ViewContact = () => {
     }, [detector]);
 
     return (
-        <div className="text-center mt-5">
+        <div className="">
             <div className="">
-                <div className="">
-                    <h1 className="">Contactos</h1>
+            <h1 className="">Contactos</h1>
+                <div  className="containermaplist places-list">
+                    
                     {Array.isArray(store.contact) &&
                         store.contact.map((item, index) => (
                             <div className="row" key={index}>

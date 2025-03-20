@@ -167,7 +167,9 @@
     bottom: 0;
     width: 98%;
     height: 50px;
-    background-color: #1948cf;
+    background: rgba(25, 72, 207, 0.5); /* Color del fondo del footer */
+    backdrop-filter: blur(10px); 
+    -webkit-backdrop-filter: blur(10px); 
     border-radius: 20px;
     margin-left: 1%;
   }
