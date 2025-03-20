@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import './../../styles/Chatbot.css';
-import { RiHome6Fill } from "react-icons/ri";
 
 const ChatBot = () => {
     const [GPTResponse, setGPTResponse]= useState("")
@@ -52,16 +51,6 @@ const ChatBot = () => {
                 <div className="forms">
                     <h4 className="input">{GPTResponse}</h4>
                 </div>
-            </div>
-            <div style={{ display: 'flex', justifyContent: 'center' }}>
-                <button className="login-buttonesN" onClick={() => {
-                    const isLoggedIn = true; // Aquí deberías verificar si el usuario está loggeado correctamente
-                    if (isLoggedIn) {
-                        window.location.href = '/home';
-                    } else {
-                        window.location.href = '/login';
-                    }
-                }}><RiHome6Fill style={{fontSize:"2em"}}/></button>
             </div>
         </div>
     );

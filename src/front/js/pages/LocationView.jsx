@@ -2,10 +2,9 @@ import React, { useEffect, useState, useContext } from "react";
 import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
 import { Context } from "../store/appContext";
 import "../../styles/home.css";
-import { RiHome6Fill } from "react-icons/ri";
 
 const libraries = ["places"];
-const mapContainerStyle = { width: "100%", height: "500px" };
+const mapContainerStyle = { width: "100%", height: "350px" };
 
 const LocationView = () => {
     const { store, actions } = useContext(Context);
@@ -55,7 +54,7 @@ const LocationView = () => {
             </GoogleMap>
             </div>
 
-            <div className="places-list">
+            <div className="containermaplist places-list">
                 {store.nearbyPlaces.length > 0 ? (
                     store.nearbyPlaces.map((place, index) => (
                         <div key={index} className="place-item">
@@ -64,7 +63,7 @@ const LocationView = () => {
                         </div>
                     ))
                 ) : (
-                    <p>No se encontraron lugares cercanos</p>
+                    <p className="heading">Presione la opción que desee para obtener las ubicaciones</p>
                 )}
             </div>
         <div style={{ display: "flex", justifyContent: "center", marginTop: "10px" }}>
@@ -73,16 +72,6 @@ const LocationView = () => {
                 <button  className='login-buttonesMap'onClick={() => setSelectedType("embassy")}>Embajadas</button>
             </div>
             <br/>
-             <div style={{ display: 'flex', justifyContent: 'center' }}>
-                                  <button className="login-buttonesN" onClick={() => {
-                                      const isLoggedIn = true; // Aquí deberías verificar si el usuario está loggeado correctamente
-                                      if (isLoggedIn) {
-                                          window.location.href = '/home';
-                                      } else {
-                                          window.location.href = '/login';
-                                      }
-                                  }}><RiHome6Fill style={{fontSize:"2em"}}/></button>
-                              </div>
         </>
     );
 };
