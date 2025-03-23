@@ -26,8 +26,8 @@ const CurrencyConverter = () => {
 
     return (
         <>
-            <Button  onClick={handleShow} className="m-2">
-                <MdCurrencyExchange size={24} />
+            <Button  style={{background:"none",border:"none"}} onClick={handleShow} className="m-2">
+                <MdCurrencyExchange className='login-buttonesGadgets' style={{fontSize:"2em"}} />
             </Button>
 
             <Modal className='container-modal' show={show} onHide={handleClose}>

@@ -37,8 +37,8 @@ const Weather = () => {
 
     return (
         <>
-            <Button variant="primary" onClick={handleShow} className="m-2">
-                <TiWeatherPartlySunny size={24} /> {/* Ajusta el tamaño del ícono */}
+            <Button  style={{background:"none",border:"none"}} onClick={handleShow} className="m-2">
+                <TiWeatherPartlySunny className='login-buttonesGadgets' style={{fontSize:"2em"}}  /> {/* Ajusta el tamaño del ícono */}
             </Button>
 
             <Modal className='container-modal' show={show} onHide={handleClose}>

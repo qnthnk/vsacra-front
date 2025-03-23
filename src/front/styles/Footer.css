@@ -30,7 +30,7 @@
 	text-align: center;
 	font-weight: 900;
 	font-size: 20px;
-	color: #1948cf;
+	color:rgb(184, 0, 169);
   }
   
   .forms-modal {
@@ -159,111 +159,95 @@
 
 
 .card {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    position: fixed;
-    bottom: 0;
-    width: 98%;
-    height: 50px;
-    background: rgba(25, 72, 207, 0.5); /* Color del fondo del footer */
-    backdrop-filter: blur(10px); 
-    -webkit-backdrop-filter: blur(10px); 
-    border-radius: 20px;
-    margin-left: 1%;
-  }
-  
-  
-  .card .social-link {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width:100%;
-    
-    font-size: 24px;
-    text-decoration: none;
-    transition: 0.25s;
-    border-radius: 50px;
-    background-color: none;
-  }
+  aspect-ratio: 16 / 9;
+  max-width: 100%;
+  max-height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 10vh; /* Use viewport height for responsiveness */
+  background: rgba(255, 255, 255, 0.5); /* Color del fondo del footer */
+  backdrop-filter: blur(10px); 
+  -webkit-backdrop-filter: blur(10px); 
+  border-top: 1px solid rgba(255, 255, 255, 0.18); /* Color de la línea que separa el footer del resto de la página */
+  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.1); /* Sombra del footer */
+}
 
-  .card .buttons {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width:100%;
-    
-    font-size: 24px;
-    text-decoration: none;
-    transition: 0.25s;
-    border-radius: 50px;
-    background-color: none;
+.card .social-link, .card .buttons {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  font-size: 2.4vh; /* Use viewport height for responsiveness */
+  text-decoration: none;
+  transition: 0.25s;
+  border-radius: 50px;
+  background-color: none;
+}
+
+.card .social-link:hover {
+  animation: bounce_613 0.4s linear;
+}
+
+@keyframes bounce_613 {
+  40% {
+    transform: scale(2);
   }
-  
-  
-  .card .social-link:hover {
-    animation: bounce_613 0.4s linear;
+  60% {
+    transform: scale(0.8);
   }
-  
-  @keyframes bounce_613 {
-    40% {
-      transform: scale(2);
-    }
-  
-    60% {
-      transform: scale(0.8);
-    }
-  
-    80% {
-      transform: scale(1.2);
-    }
-  
-    100% {
-      transform: scale(1);
-    }
+  80% {
+    transform: scale(1.2);
   }
-  .close-button{
-    display: block;
-    width: 100%;
-    font-weight: bold;
-    background: #1948cf;
-    color: white;
-    padding-block: 15px;
-    border-radius: 20px;
-    box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 20px 10px -15px;
-    border: none;
-    transition: all 0.2s ease-in-out;
+  100% {
+    transform: scale(1);
   }
-  .close-button:hover {
-    transform: scale(1.03);
-    box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 23px 10px -20px;
-    }
-    
-    .close-button:active {
-    transform: scale(0.95);
-    box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 15px 10px -10px;
-    }
-    .close-buttonC{
-      display: block;
-      width: 100%;
-      font-weight: bold;
-      background: #010512;
-      color: white;
-      padding-block: 15px;
-      border-radius: 20px;
-      box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 20px 10px -15px;
-      border: none;
-      transition: all 0.2s ease-in-out;
-    }
-    .close-buttonC:hover {
-      transform: scale(1.03);
-      box-shadow: rgba(1, 21, 31, 0.878) 0px 23px 10px -20px;
-      }
-      
-      .close-buttonC:active {
-      transform: scale(0.95);
-      box-shadow: rgba(2, 36, 52, 0.878) 0px 15px 10px -10px;
-      }
+}
+
+.close-button, .close-buttonC {
+  display: block;
+  width: 100%;
+  font-weight: bold;
+  padding-block: 1.5vh; /* Use viewport height for responsiveness */
+  border-radius: 20px;
+  border: none;
+  transition: all 0.2s ease-in-out;
+}
+
+.close-button {
+  background: #1948cf;
+  color: white;
+  box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 20px 10px -15px;
+}
+
+.close-button:hover {
+  transform: scale(1.03);
+  box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 23px 10px -20px;
+}
+
+.close-button:active {
+  transform: scale(0.95);
+  box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 15px 10px -10px;
+}
+
+.close-buttonC {
+  background: #010512;
+  color: white;
+  box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 20px 10px -15px;
+}
+
+.close-buttonC:hover {
+  transform: scale(1.03);
+  box-shadow: rgba(1, 21, 31, 0.878) 0px 23px 10px -20px;
+}
+
+.close-buttonC:active {
+  transform: scale(0.95);
+  box-shadow: rgba(2, 36, 52, 0.878) 0px 15px 10px -10px;
+}
