@@ -24,6 +24,8 @@ import Navbar from "./component/Navbar.jsx";
 import Footer from "./component/Footer.jsx";
 import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
+import ResetPassword from "./component/ResetPassword.jsx";
+import ForgotPassword from "./component/ForgotPassword.jsx";
 
 // Componente para manejar la redirección
 const RedirectToLogin = () => {
@@ -37,7 +39,7 @@ const RedirectToLogin = () => {
 };
 
 const Layout = () => {
-    const basename = process.env.BASENAME || "";
+    const basename = process.env.BASENAME || "/";
 
     if (!process.env.BACKEND_URL || process.env.BACKEND_URL === "") return <BackendURL />;
 
@@ -68,6 +70,8 @@ const Layout = () => {
                             <Route path="/location-view" element={<LocationView />} />
                             <Route path="/admin-console" element={<AdminConsole />} />
                             <Route path="/dashboard-edition" element={<DashboardEdition />} />
+                            <Route path="/reset-password" element={<ResetPassword />} />
+                            <Route path="/forgot-password" element={<ForgotPassword />} />
                         </Routes>
                     </div>
                     <Footer style={{ position: "sticky", bottom: 0, zIndex: 1000 }} />

@@ -69,7 +69,7 @@ const Login = () => {
             <a href="/signup">Regístrate</a>
           </span>
           <span className="forgot-password">
-            <a href="/recover-password">Olvidé mi contraseña</a>
+            <a href="/forgot-password">Olvidé mi contraseña</a>
           </span>
           <input value="Iniciar sesión" type="submit" className="login-button" />
         </form>

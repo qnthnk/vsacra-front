@@ -32,6 +32,7 @@ class User(db.Model):
     latitude = db.Column(db.String(80), nullable=True)
     longitude = db.Column(db.String(80), nullable=True)
     administrator_id = db.Column(db.Integer, db.ForeignKey('administrator.id'), nullable=True)
+    reset_code = db.Column(db.String(4), nullable=True)
 
     def __repr__(self):
         return f'<User {self.email}>'

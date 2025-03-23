@@ -25,6 +25,52 @@ const getState = ({ getStore, getActions, setStore }) => {
         actions: {
 
             // Use getActions to call a function within a fuction
+            forgotPassword: async (email) => {
+                try {
+                    const response = await fetch(`${process.env.BACKEND_URL}api/forgot-password`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ email }),
+                    });
+
+                    const data = await response.json();
+
+                    if (!response.ok) {
+                        throw new Error(data.error || "Error al enviar el correo de recuperación");
+                    }
+
+                    return { message: data.message, error: null };
+                } catch (error) {
+                    return { message: null, error: error.message };
+                }
+            },
+            resetPassword: async (email, resetCode, newPassword) => {
+                try {
+                    const response = await fetch(`${process.env.BACKEND_URL}/api/reset-password`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            email,
+                            reset_code: resetCode,
+                            new_password: newPassword,
+                        }),
+                    });
+
+                    const data = await response.json();
+
+                    if (!response.ok) {
+                        throw new Error(data.error || "Error al restablecer la contraseña");
+                    }
+
+                    return { message: data.message, error: null };
+                } catch (error) {
+                    return { message: null, error: error.message };
+                }
+            },
             register: async (dataToSend) => {
                 console.log("Datos enviados para registro:", dataToSend);
                 try {
@@ -424,6 +470,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             }
         },
+
     };
 }
 export default getState;

@@ -1,5 +1,5 @@
 
-from flask import Flask, request, jsonify, url_for, Blueprint
+from flask import Flask, request, jsonify, url_for, Blueprint, send_from_directory
 from api.models import db, User, Administrator, Contact
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
@@ -13,9 +13,12 @@ import re
 import requests
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
+from itsdangerous import URLSafeTimedSerializer
+import random
 
 
 api = Blueprint('api', __name__)
+app = Flask(__name__, static_folder='../frontend/build')
 
 # Allow CORS requests to this API
 CORS(api, resources={r"/*": {"origins": "*"}}, supports_credentials=True,allow_headers=["Content-Type", "Authorization"])
@@ -33,10 +36,10 @@ WEATHERAPI_KEY= os.environ.get("WEATHERAPI_KEY")
 ADMIN_REQUIRED_EMAIL = 'admin@example.com'  
 GOOGLE_MAPS_API= os.environ.get("GOOGLE_MAPS_API")
 SENDGRID_API_KEY = os.environ.get('SENDGRID_API_KEY')
-
-
+s = URLSafeTimedSerializer(os.environ.get('SECRET_KEY'))
 
 delete_tokens = set()
+
 
 @api.route('/hello', methods=['POST', 'GET'])
 def handle_hello():
@@ -442,3 +445,57 @@ def send_emergency():
     except Exception as e:
         print("Error al enviar el correo:", str(e))
         return jsonify({"error": "Error al enviar el correo de emergencia"}), 500
+    
+@api.route('/forgot-password', methods=['POST'])
+def forgot_password():
+    data = request.json
+    email = data.get('email')
+
+    if not email:
+        return jsonify({"error": "Email es requerido"}), 400
+
+    user = User.query.filter_by(email=email).first()
+    if not user:
+        return jsonify({"error": "Usuario no encontrado"}), 404
+
+    reset_code = str(random.randint(1000, 9999))
+
+    user.reset_code = reset_code
+    db.session.commit()
+
+    message = Mail(
+        from_email='migrappdemo@gmail.com',  
+        to_emails=email,
+        subject='Código de restablecimiento de contraseña',
+        html_content=f'<p>Tu código de restablecimiento de contraseña es: <strong>{reset_code}</strong></p>'
+    )
+
+    try:
+        sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
+        response = sg.send(message)
+        return jsonify({"message": "Código de restablecimiento enviado"}), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    
+@api.route('/reset-password', methods=['POST'])
+def reset_password():
+    data = request.json
+    email = data.get('email')
+    reset_code = data.get('reset_code')
+    new_password = data.get('new_password')
+
+    if not email or not reset_code or not new_password:
+        return jsonify({"error": "Todos los campos son requeridos"}), 400
+
+    user = User.query.filter_by(email=email).first()
+    if not user:
+        return jsonify({"error": "Usuario no encontrado"}), 404
+
+    if user.reset_code != reset_code:
+        return jsonify({"error": "Código de restablecimiento inválido"}), 400
+
+    user.password = generate_password_hash(new_password)
+    user.reset_code = None  
+    db.session.commit()
+
+    return jsonify({"message": "Contraseña restablecida exitosamente"}), 200
