@@ -28,9 +28,8 @@ const Calculator = () => {
 
     return (
         <div>
-            {/* Botón para abrir el modal */}
-            <Button  onClick={handleOpenModal} >
-            <ImCalculator style={{fontSize:"2em"}}/>
+            <Button  style={{background:"none",border:"none"}} onClick={handleOpenModal} >
+            <ImCalculator className='login-buttonesGadgets' style={{fontSize:"2em"}}/>
             </Button>
 
             {/* Modal de Bootstrap */}
@@ -82,9 +81,9 @@ const Calculator = () => {
 
                         {/* Botón de limpiar */}
                         <Button
-                            variant="primary"
+                            
                             onClick={clearInput}
-                            style={{ gridColumn: 'span 4', fontSize: '20px' }}
+                            style={{ gridColumn: 'span 4', fontSize: '20px', backgroundColor:"rgb(184, 0, 169)", border:"none" }}
                         >
                             C
                         </Button>

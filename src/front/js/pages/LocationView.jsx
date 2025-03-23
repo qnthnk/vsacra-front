@@ -62,11 +62,12 @@ const LocationView = () => {
             <div className="containermaplist places-list">
                 {store.nearbyPlaces.length > 0 ? (
                     store.nearbyPlaces.map((place, index) => (
-                        <div key={index} className="place-item">
+                        <div key={index} className="container">
                             <h2>{place.displayName?.text || "Sin nombre"}</h2>
                             <p>{place.formattedAddress || "Dirección desconocida"}</p>
                             {place.internationalPhoneNumber && (
-                                <p>Teléfono internacional: {place.internationalPhoneNumber}</p>
+                                
+                                <p><hr/>Teléfono internacional: {place.internationalPhoneNumber}</p>
                             )}
                         </div>
                     ))
@@ -81,19 +82,6 @@ const LocationView = () => {
                 <button className='login-buttonesMap' onClick={() => setSelectedType("embassy")}>Embajadas</button>
             </div>
             <br />
-            <div style={{ display: 'flex', justifyContent: 'center' }}>
-                <button className="login-buttonesN" onClick={() => {
-                    const isLoggedIn = true;
-                    if (isLoggedIn) {
-                        window.location.href = '/home';
-                    } else {
-                        window.location.href = '/login';
-                    }
-                }}>
-                    <RiHome6Fill style={{ fontSize: "2em" }} />
-                </button>
-            </div>
-
             <br />
 
         </>

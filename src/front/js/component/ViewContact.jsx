@@ -59,9 +59,6 @@ const ViewContact = () => {
                                 <div className="col-7">
                                     <p>{item.full_name}</p>
                                     <p>
-                                        <IoLocation /> {item.role}
-                                    </p>
-                                    <p>
                                         <FaPhoneFlip /> {item.phone_number}
                                     </p>
                                     <p>
