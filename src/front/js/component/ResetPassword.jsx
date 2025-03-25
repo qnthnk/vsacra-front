@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { Context } from '../store/appContext';
+import './../../styles/auth.css';
 
 const ResetPassword = () => {
+    const { actions } = useContext(Context);
     const location = useLocation();
-    const email = location.state?.email || ''; // Obtiene el correo desde la navegación
+    const email = location.state?.email || '';
     const [resetCode, setResetCode] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -13,38 +16,16 @@ const ResetPassword = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-
         if (newPassword !== confirmPassword) {
             setError("Las contraseñas no coinciden.");
             return;
         }
-
         try {
-            // Enviar una solicitud POST al backend
-            const response = await fetch(`${process.env.BACKEND_URL}/api/reset-password`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    email,
-                    reset_code: resetCode,
-                    new_password: newPassword,
-                }),
-            });
-
-            const data = await response.json();
-
-            if (!response.ok) {
-                throw new Error(data.error || "Error al restablecer la contraseña");
-            }
-
-            setMessage(data.message);
+            const result = await actions.resetPassword(email, resetCode, newPassword);
+            if (result.error) throw new Error(result.error);
+            setMessage(result.message);
             setError('');
-            setTimeout(() => {
-                navigate('/login'); // Redirige al usuario a la página de login
-            }, 3000); // Redirige después de 3 segundos
+            setTimeout(() => navigate('/login'), 1000);
         } catch (error) {
             setError(error.message);
             setMessage('');
@@ -52,73 +33,90 @@ const ResetPassword = () => {
     };
 
     return (
-        <div style={{ maxWidth: '400px', margin: '0 auto', padding: '20px' }}>
-            <h2>Restablecer Contraseña</h2>
-            {message && <p style={{ color: 'green' }}>{message}</p>}
-            {error && <p style={{ color: 'red' }}>{error}</p>}
-            <form onSubmit={handleSubmit}>
-                <div style={{ marginBottom: '15px' }}>
-                    <label>
-                        Email:
+        <div className="auth-container">
+            <div className="auth-card">
+                <div className="auth-header">
+                    <h2 className="auth-title">Restablecer Contraseña</h2>
+                    <p className="auth-subtitle">Ingresa el código y tu nueva contraseña</p>
+                </div>
+
+                {message && (
+                    <div className="auth-message auth-message-success">
+                        {message}
+                    </div>
+                )}
+
+                {error && (
+                    <div className="auth-message auth-message-error">
+                        {error}
+                    </div>
+                )}
+
+                <form onSubmit={handleSubmit} className="auth-form">
+                    <div className="auth-form-group">
+                        <label className="auth-label">Email</label>
                         <input
                             type="email"
                             value={email}
-                            readOnly // El correo no se puede modificar
-                            style={{ width: '100%', padding: '8px', marginTop: '5px', backgroundColor: '#f0f0f0' }}
+                            readOnly
+                            className="auth-input"
                         />
-                    </label>
-                </div>
-                <div style={{ marginBottom: '15px' }}>
-                    <label>
-                        Código de restablecimiento:
+                    </div>
+
+                    <div className="auth-form-group">
+                        <label className="auth-label">Código de verificación</label>
                         <input
                             type="text"
                             value={resetCode}
                             onChange={(e) => setResetCode(e.target.value)}
                             required
-                            style={{ width: '100%', padding: '8px', marginTop: '5px' }}
+                            className="auth-input"
+                            placeholder="Ingresa el código recibido"
                         />
-                    </label>
-                </div>
-                <div style={{ marginBottom: '15px' }}>
-                    <label>
-                        Nueva Contraseña:
+                    </div>
+
+                    <div className="auth-form-group">
+                        <label className="auth-label">Nueva Contraseña</label>
                         <input
                             type="password"
                             value={newPassword}
                             onChange={(e) => setNewPassword(e.target.value)}
                             required
-                            style={{ width: '100%', padding: '8px', marginTop: '5px' }}
+                            className="auth-input"
+                            placeholder=""
                         />
-                    </label>
-                </div>
-                <div style={{ marginBottom: '15px' }}>
-                    <label>
-                        Confirmar Nueva Contraseña:
+                    </div>
+
+                    <div className="auth-form-group">
+                        <label className="auth-label">Confirmar Contraseña</label>
                         <input
                             type="password"
                             value={confirmPassword}
                             onChange={(e) => setConfirmPassword(e.target.value)}
                             required
-                            style={{ width: '100%', padding: '8px', marginTop: '5px' }}
+                            className="auth-input"
+                            placeholder="Repite tu nueva contraseña"
                         />
-                    </label>
-                </div>
-                <button
-                    type="submit"
-                    style={{
-                        width: '100%',
-                        padding: '10px',
-                        backgroundColor: '#007bff',
-                        color: 'white',
-                        border: 'none',
-                        borderRadius: '5px',
-                        cursor: 'pointer',
-                    }}
-                >
-                    Restablecer Contraseña
-                </button>
-            </form>
+                    </div>
+
+                    <button
+                        type="submit"
+                        className="auth-button auth-button-primary"
+                    >
+                        Restablecer Contraseña
+                    </button>
+
+                    <div className="auth-footer">
+                        <button
+                            type="button"
+                            onClick={() => navigate('/login')}
+                            className="auth-link-button"
+                        >
+                            ← Volver al inicio de sesión
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     );
 };

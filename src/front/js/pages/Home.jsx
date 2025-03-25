@@ -41,7 +41,7 @@ const Home = () => {
           setError("Error al obtener la ubicación: ", error);
         }
       );
-      
+
     };
 
     getLocation();
@@ -54,12 +54,12 @@ const Home = () => {
             <h2 className='heading'>Inicio</h2>
             <div className='formis'>
 
-              {token && (
+              {/* {token && (
                 <Link className='login-buttones' to='/chat'>
                   <BsChatSquareTextFill style={{ fontSize: '3em' }} />
                   <p>Mensajería</p>
                 </Link>
-              )}
+              )} */}
               {token && (
                 <Link className='login-buttones' to='/chatbot'>
                   <TbMessageChatbotFilled style={{ fontSize: '3em' }} />
@@ -78,12 +78,12 @@ const Home = () => {
                   <p>Tips</p>
                 </Link>
               )}
-              {token && (
+              {/* {token && (
                 <Link className='login-buttones' to='/help'>
-                  <MdAddAlert style={{ fontSize: '3em' }}/>
+                  <MdAddAlert style={{ fontSize: '3em' }} />
                   <p>Contactar Ayuda</p>
                 </Link>
-              )}
+              )} */}
               {token && admin && (
                 <Link className='login-buttones' to='/stats-and-reports'>
                   <p>Estadísticas y reportes(ADMIN)</p>
