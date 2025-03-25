@@ -105,21 +105,6 @@ const Navbar = () => {
                 </a>
               </li> */}
                 <li>
-                  <a className="nav-link" href="/chat">
-                    Mensajeria
-                  </a>
-                </li>
-                <li>
-                  <a className="nav-link" href="/chatbot">
-                    Chatbot
-                  </a>
-                </li>
-                <li>
-                  <a className="nav-link" href="/contact-list">
-                    Contact List
-                  </a>
-                </li>
-                <li>
                   <a className="nav-link" href="/freq-asked-questions">
                     Tips
                   </a>

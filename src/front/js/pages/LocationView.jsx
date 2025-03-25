@@ -2,7 +2,6 @@ import React, { useEffect, useState, useContext } from "react";
 import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
 import { Context } from "../store/appContext";
 import "../../styles/home.css";
-import { RiHome6Fill } from "react-icons/ri";
 
 const libraries = ["places"];
 const mapContainerStyle = { width: "100%", height: "350px" };
@@ -62,7 +61,7 @@ const LocationView = () => {
             <div className="containermaplist places-list">
                 {store.nearbyPlaces.length > 0 ? (
                     store.nearbyPlaces.map((place, index) => (
-                        <div key={index} className="container">
+                        <div key={index} className="containerData">
                             <h2>{place.displayName?.text || "Sin nombre"}</h2>
                             <p>{place.formattedAddress || "Dirección desconocida"}</p>
                             {place.internationalPhoneNumber && (

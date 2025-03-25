@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Context } from "../store/appContext.js";
+import "../../styles/home.css"
 
 const AddContact = () => {
     const { actions } = useContext(Context);
@@ -62,7 +63,7 @@ const AddContact = () => {
     };
 
     return (
-        <div className="">
+        <div className="formis">
             <form onSubmit={handleAdd}>
                 <div className="mb-3">
                     <input
@@ -71,7 +72,8 @@ const AddContact = () => {
                         value={payload.full_name}
                         onChange={handleChange}
                         placeholder="Nombre completo"
-                        className="form-control"
+                        className="input d-flex justify-content-center"
+                        style={{width:"200%"}}
                     />
                     {errors.full_name && <p className="text-danger">{errors.full_name}</p>}
                 </div>
@@ -83,7 +85,8 @@ const AddContact = () => {
                         value={payload.email}
                         onChange={handleChange}
                         placeholder="Email"
-                        className="form-control"
+                        className="input d-flex justify-content-center"
+                        style={{width:"200%"}}
                     />
                     {errors.email && <p className="text-danger">{errors.email}</p>}
                 </div>
@@ -95,26 +98,38 @@ const AddContact = () => {
                         value={payload.phone_number}
                         onChange={handleChange}
                         placeholder="Teléfono"
-                        className="form-control"
+                        className="input d-flex justify-content-center"
+                        style={{width:"200%"}}
                     />
                     {errors.phone_number && <p className="text-danger">{errors.phone_number}</p>}
                 </div>
 
                 <div className="mb-3">
-                    <input
-                        type="text"
+                    <select
                         name="role"
                         value={payload.role}
                         onChange={handleChange}
-                        placeholder="Parentesco"
-                        className="form-control"
-                    />
+                        className="input d-flex justify-content-center"
+                        style={{width:"200%"}}
+                    >
+                        <option value="">Seleccione un parentezco</option>
+                        <option value="Conyuge">Cónyugue</option>
+                        <option value="Padre">Padre</option>
+                        <option value="Madre">Madre</option>
+                        <option value="Hijo">Hijo</option>
+                        <option value="Hija">Hija</option>
+                        <option value="Amistad">Amistad</option>
+                        <option value="Tutor">Tutor</option>
+                        <option value="Representante legal">Representante legal</option>
+                    </select>
                     {errors.role && <p className="text-danger">{errors.role}</p>}
                 </div>
 
-                <button type="submit" className="btn btn-warning">
-                    Guardar contacto
-                </button>
+                <div className="d-flex justify-content-center">
+                    <button type="submit" className="login-buttonesN2" style={{width:"200%"}}>
+                        Guardar
+                    </button>
+                </div>
             </form>
         </div>
     );
