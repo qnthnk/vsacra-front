@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { Context } from '../store/appContext';
+import './../../styles/home.css';
 
 const EmergencyButton = ({ userId }) => {
     const { actions } = useContext(Context);
@@ -9,7 +10,7 @@ const EmergencyButton = ({ userId }) => {
 
     const handleEmergencia = () => {
         setLoading(true);
-        setShowCountdown(false); // Cerrar modal cuando inicie la emergencia
+        setShowCountdown(false);
 
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
@@ -19,7 +20,7 @@ const EmergencyButton = ({ userId }) => {
 
                     try {
                         await actions.sendEmergencyCoordinates(latitude, longitude);
-                        alert("Coordenadas enviadas correctamente.");
+
                     } catch (error) {
                         alert(error.message || "Hubo un error al enviar las coordenadas.");
                     } finally {
@@ -59,7 +60,7 @@ const EmergencyButton = ({ userId }) => {
                 disabled={loading}
             >
                 <i className="fas fa-exclamation-triangle me-2"></i>
-                {loading ? 'Enviando...' : 'Emergencia'}
+                {loading ? 'Enviando...' : ''}
             </button>
 
             {showCountdown && (

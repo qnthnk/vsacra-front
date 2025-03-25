@@ -61,7 +61,9 @@ class User(db.Model):
             "country_of_destination": self.country_of_destination,
             "state": self.state,
             "zip_code": self.zip_code,
-            # do not serialize the password, its a security breach
+            "latitude": self.latitude,
+            "longitude": self.longitude
+            
         }
 
 

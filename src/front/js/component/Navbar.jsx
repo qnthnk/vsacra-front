@@ -47,19 +47,19 @@ const Navbar = () => {
               e.preventDefault();
               handleMigrappClick();
             }}
-            >
+          >
             <img src={LOGO} alt="Via Sacra" className="logo" style={{ height: "50px" }} />
             <strong className='heading' style={{ fontFamily: "fantasy" }}> Via Sacra</strong>
-            </a>
+          </a>
 
-            <button className="login-buttonesN" style={{ float: "right" }} onClick={() => {
+          <button className="login-buttonesN" style={{ float: "right" }} onClick={() => {
             const isLoggedIn = true; // Aquí deberías verificar si el usuario está loggeado correctamente
             if (isLoggedIn) {
               window.location.href = '/home';
             } else {
               window.location.href = '/login';
             }
-          }}><RiHome6Fill style={{fontSize:"2em"}}/></button>
+          }}><RiHome6Fill style={{ fontSize: "2em" }} /></button>
 
 
           <button
@@ -104,16 +104,34 @@ const Navbar = () => {
                 Login
                 </a>
               </li> */}
+
+                {/* <li>
+                  <a className="nav-link" href="/chat">
+                    Mensajeria
+                  </a>
+                </li> */}
+                <li>
+                  <a className="nav-link" href="/chatbot">
+                    Chatbot
+                  </a>
+                </li>
+                <li>
+                  <a className="nav-link" href="/contact-list">
+                    Contact List
+                  </a>
+                </li>
+
+
                 <li>
                   <a className="nav-link" href="/freq-asked-questions">
                     Tips
                   </a>
                 </li>
-                <li>
+                {/* <li>
                   <a className="nav-link" href="/help">
                     Contactar Ayuda
                   </a>
-                </li>
+                </li> */}
                 <li>
                   <a className="nav-link" href="/admin-console">
                     Consola manejo de datos(ADMIN)
@@ -126,14 +144,14 @@ const Navbar = () => {
                 </li>
                 <li>
                   <a className="nav-link" href="/location-view">
-                    Vista ubicacion(RENAME PD)
+                    Vista ubicacion
                   </a>
                 </li>
-                <li>
+                {/* <li>
                   <a className="nav-link" href="/help">
                     Contactar Ayuda
                   </a>
-                </li>
+                </li> */}
                 <li>
                   <a
                     className="nav-link"

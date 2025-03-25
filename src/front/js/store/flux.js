@@ -25,6 +25,35 @@ const getState = ({ getStore, getActions, setStore }) => {
         actions: {
 
             // Use getActions to call a function within a fuction
+            getAllUsers: async () => {
+                try {
+                    const token = localStorage.getItem("token");
+                    const response = await fetch(process.env.BACKEND_URL + "api/users", {
+                        method: "GET",
+                        headers: {
+                            "Content-Type": "application/json",
+                            Authorization: `Bearer ${token}`,
+                        },
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('Error al obtener los usuarios');
+                    }
+
+                    const data = await response.json();
+
+                    // Puedes almacenar los usuarios en el store si lo necesitas
+                    setStore({
+                        ...getStore(),
+                        users: data  // Agrega esta propiedad al store si no existe
+                    });
+
+                    return data;
+                } catch (error) {
+                    console.error("Error en getAllUsers:", error);
+                    throw error;
+                }
+            },
             forgotPassword: async (email) => {
                 try {
                     const response = await fetch(`${process.env.BACKEND_URL}api/forgot-password`, {
@@ -48,7 +77,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
             resetPassword: async (email, resetCode, newPassword) => {
                 try {
-                    const response = await fetch(`${process.env.BACKEND_URL}/api/reset-password`, {
+                    const response = await fetch(`${process.env.BACKEND_URL}api/reset-password`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -358,6 +387,35 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
             logout: async () => {
                 try {
+
+                    const token = localStorage.getItem("token");
+
+                    if (!token) {
+                        throw new Error("No hay sesión activa.");
+                    }
+
+                    const resp = await fetch(process.env.BACKEND_URL + "/api/logout", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            Authorization: `Bearer ${token}`,
+                        },
+                    });
+
+                    const data = await resp.json();
+
+                    if (!resp.ok) {
+                        throw new Error(data.msg || "Error al cerrar sesión.");
+                    }
+
+                    localStorage.removeItem("token");
+
+                    setStore({
+                        user: null,
+                    });
+
+                    return data;
+
                   const token = localStorage.getItem("token");
         
                   if (!token) {
@@ -385,6 +443,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                   });
         
                   return data;
+
                 } catch (error) {
                   console.error("Error en el logout:", error);
                   throw error;
