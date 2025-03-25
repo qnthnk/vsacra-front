@@ -2,6 +2,9 @@ import React, { useEffect, useState, useContext } from "react";
 import { GoogleMap, Marker, useLoadScript } from "@react-google-maps/api";
 import { Context } from "../store/appContext";
 import "../../styles/home.css";
+import { RiHome6Fill } from "react-icons/ri";
+import Swal from 'sweetalert2';
+
 
 const libraries = ["places"];
 const mapContainerStyle = { width: "100%", height: "350px" };
@@ -48,7 +51,7 @@ const LocationView = () => {
                                     lng: place.location.longitude,
                                 }}
                                 onClick={() =>
-                                    alert(
+                                    Swal.fire(
                                         `Dirección: ${place.formattedAddress}\nTeléfono internacional: ${place.internationalPhoneNumber || "No disponible"}`
                                     )
                                 }

@@ -1,10 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
 import { Context } from "../store/appContext";
+import Swal from "sweetalert2";
 import { IoMdContact } from "react-icons/io";
 import { BsFillTelephoneFill } from "react-icons/bs";
 import { AiTwotoneMail } from "react-icons/ai";
 import { FaRegHandPointDown } from "react-icons/fa6";
 import { FaArrowDown } from "react-icons/fa";
+
 
 const ViewContact = () => {
     const { store, actions } = useContext(Context);
@@ -33,14 +35,42 @@ const ViewContact = () => {
     };
 
     const handleDelete = async (id, event) => {
-        try {
-            event.preventDefault();
-            if (window.confirm("¿Estás seguro de que quieres borrar el contacto?")) {
+        event.preventDefault(); // Evita que la página se recargue
+
+        const result = await Swal.fire({
+            title: "¿Estás seguro?",
+            text: "No podrás recuperar este contacto una vez eliminado.",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#d33",
+            cancelButtonColor: "#3085d6",
+            confirmButtonText: "Sí, eliminar",
+            cancelButtonText: "Cancelar",
+        });
+    
+        if (result.isConfirmed) {
+            try {
                 await actions.deleteContact(id);
                 setDetector((prev) => !prev);
+    
+                // Mensaje de éxito
+                Swal.fire({
+                    title: "¡Eliminado!",
+                    text: "El contacto ha sido eliminado con éxito.",
+                    icon: "success",
+                    confirmButtonColor: "#3085d6",
+                });
+            } catch (error) {
+                console.error(error);
+    
+                // Mensaje de error
+                Swal.fire({
+                    title: "Error",
+                    text: "Hubo un problema al eliminar el contacto.",
+                    icon: "error",
+                    confirmButtonColor: "#d33",
+                });
             }
-        } catch (error) {
-            console.error(error);
         }
     };
 

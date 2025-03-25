@@ -1,4 +1,6 @@
 import { jwtDecode } from 'jwt-decode';
+import Swal from 'sweetalert2';
+
 
 const getState = ({ getStore, getActions, setStore }) => {
     return {
@@ -168,16 +170,22 @@ const getState = ({ getStore, getActions, setStore }) => {
                     });
 
                     if (userRole === 'admin') {
+
+                        Swal.fire('Bienvenido, Admin.'); // Alert para admin
+                    } else {
+                        Swal.fire('Bienvenido, Usuario.'); // Alert para user
+
                         alert('Bienvenido. Has ingresado con cuenta de Administrador.'); // Alert para admin
                     } else {
                         alert(`Bienvenido a Vía Sacra`); // Alert para user
+
                     }
 
 
                     return data;
                 } catch (error) {
                     console.error("Error al iniciar sesión:", error);
-                    alert(error.message || 'Error al iniciar sesión');
+                    Swal.fire(error.message || 'Error al iniciar sesión');
                     return null;
                 }
             },
@@ -300,10 +308,10 @@ const getState = ({ getStore, getActions, setStore }) => {
                     }
 
                     const data = await resp.json();
-                    alert(data.message || "Coordenadas enviadas correctamente.");
+                    Swal.fire(data.message || "Coordenadas enviadas correctamente.");
                 } catch (error) {
                     console.error("Error al enviar las coordenadas de emergencia:", error);
-                    alert(error.message || "Hubo un error al enviar las coordenadas de emergencia.");
+                    Swal.fire(error.message || "Hubo un error al enviar las coordenadas de emergencia.");
                 }
             },
 

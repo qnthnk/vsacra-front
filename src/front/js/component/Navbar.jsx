@@ -5,6 +5,8 @@ import { GiHamburgerMenu } from "react-icons/gi";;
 import "../../styles/home.css";
 import LOGO from "../../img/viasacra.png"
 import { RiHome6Fill } from "react-icons/ri";
+import Swal from 'sweetalert2';
+
 
 const Navbar = () => {
   const { store, actions } = useContext(Context);
@@ -19,10 +21,10 @@ const Navbar = () => {
 
       navigate("/login");
 
-      alert("Has cerrado sesión correctamente.");
+      Swal.fire("Has cerrado sesión correctamente.");
     } catch (error) {
       console.error("Error en el logout:", error);
-      alert("Ocurrió un error al cerrar sesión. Inténtalo de nuevo.");
+      Swal.fire("Ocurrió un error al cerrar sesión. Inténtalo de nuevo.");
     }
   };
 

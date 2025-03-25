@@ -3,6 +3,8 @@ import { Modal, Button, Form, Alert } from 'react-bootstrap';
 import { MdCurrencyExchange } from "react-icons/md";
 import { Context } from '../store/appContext';
 import "../../styles/Footer.css"
+import Swal from 'sweetalert2';
+
 
 const CurrencyConverter = () => {
     const { store, actions } = useContext(Context);
