@@ -18,7 +18,7 @@ import random
 
 
 api = Blueprint('api', __name__)
-app = Flask(__name__, static_folder='../frontend/build')
+
 
 # Allow CORS requests to this API
 CORS(api, resources={r"/*": {"origins": "*"}}, supports_credentials=True,allow_headers=["Content-Type", "Authorization"])
@@ -334,7 +334,7 @@ def add_contact():
 
 
 @api.route('/logout', methods=['POST'])
-# @jwt_required()
+@jwt_required()
 def logout():
     try:
         jti = get_jwt()["jti"]
@@ -498,4 +498,23 @@ def reset_password():
     user.reset_code = None  
     db.session.commit()
 
-    return jsonify({"message": "Contraseña restablecida exitosamente"}), 200
+    return jsonify({"message": "Contraseña restablecida exitosamente"}), 200 
+
+@api.route('/users', methods=['GET'])
+@jwt_required()
+def get_all_users():
+    try:
+        current_user = get_jwt_identity()
+        if current_user['role'] != 'admin':
+            return jsonify({"error": "Acceso no autorizado"}), 403
+        
+        # Obtener todos los usuarios
+        users = User.query.all()
+        
+        # Serializar los datos de los usuarios
+        users_data = [user.serialize() for user in users]
+        
+        return jsonify(users_data), 200
+        
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
