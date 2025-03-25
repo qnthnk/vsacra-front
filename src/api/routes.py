@@ -334,16 +334,11 @@ def add_contact():
 
 
 @api.route('/logout', methods=['POST'])
-# @jwt_required()
+@jwt_required()
 def logout():
-    try:
-        jti = get_jwt()["jti"]
-
-        delete_tokens.add(jti)
-
-        return jsonify({"msg": "You have been logged out"}), 200
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
+    jti = get_jwt()["jti"]
+    delete_tokens.add(jti)
+    return jsonify({"msg": "You have been logged-out"}), 200
 
 @api.route('/editcontact/<int:id>', methods=['PUT'])
 def edit_contact(id):

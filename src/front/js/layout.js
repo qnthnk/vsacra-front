@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
 import HelpPlaces from './pages/HelpPlaces.jsx';
@@ -27,57 +27,64 @@ import Register from "./pages/Register.jsx";
 import ResetPassword from "./component/ResetPassword.jsx";
 import ForgotPassword from "./component/ForgotPassword.jsx";
 
-// Componente para manejar la redirección
-const RedirectToLogin = () => {
-    const navigate = useNavigate();
+const Layout = () => {
+    const [token, setToken] = useState(localStorage.getItem("token"));
 
     useEffect(() => {
-        navigate("/login");
-    }, [navigate]);
-
-    return null;
-};
-
-const Layout = () => {
-    const basename = process.env.BASENAME || "/";
-
-    if (!process.env.BACKEND_URL || process.env.BACKEND_URL === "") return <BackendURL />;
+        const checkToken = () => {
+            const storedToken = localStorage.getItem("token");
+            if (storedToken) {
+                setToken(storedToken);
+            }
+        };
+        checkToken();
+    }, []);
 
     return (
-        <div style={{ display: "flex", flexDirection: "column", height: "100vh", paddingBottom: "40px", paddingTop: "40px" }}>
-            <BrowserRouter basename={basename}>
-                <ScrollToTop>
-                    <Navbar style={{ position: "sticky", top: 0, zIndex: 1000 }} />
-                    <div style={{ flex: 1, overflowY: "auto" }}>
-                        <Routes>
-                            <Route path="/" element={<RedirectToLogin />} />
-                            <Route path="/home" element={<Home />} />
-                            <Route path="/login" element={<Login />} />
-                            <Route path="/signup" element={<Register />} />
-                            <Route path="/help-places" element={<HelpPlaces />} />
-                            <Route path="/embassies" element={<Embassies />} />
-                            <Route path="/chat" element={<Chat />} />
-                            <Route path="/blog" element={<Blog />} />
-                            <Route path="/gadgets" element={<Gadgets />} />
-                            <Route path="/chatbot" element={<ChatBot />} />
-                            <Route path="/contact-list" element={<ContactList />} />
-                            <Route path="/immigration-requirements" element={<ImmigrationRequirements />} />
-                            <Route path="/paypal-balance" element={<PaypalBalance />} />
-                            <Route path="/freq-asked-questions" element={<FreqAskedQuestions />} />
-                            <Route path="/emergency" element={<Emergency />} />
-                            <Route path="/stats-and-reports" element={<StatsAndReports />} />
-                            <Route path="/help" element={<Help />} />
-                            <Route path="/location-view" element={<LocationView />} />
-                            <Route path="/admin-console" element={<AdminConsole />} />
-                            <Route path="/dashboard-edition" element={<DashboardEdition />} />
-                            <Route path="/reset-password" element={<ResetPassword />} />
-                            <Route path="/forgot-password" element={<ForgotPassword />} />
-                        </Routes>
-                    </div>
-                    <Footer style={{ position: "sticky", bottom: 0, zIndex: 1000 }} />
-                </ScrollToTop>
-            </BrowserRouter>
-        </div>
+        <BrowserRouter>
+            <ScrollToTop>
+                {/* Rutas públicas */}
+                {!token ? (
+                    <Routes>
+                        <Route path="/login" element={<Login setToken={setToken} />} />
+                        <Route path="/signup" element={<Register />} />
+                        <Route path="/reset-password" element={<ResetPassword />} />
+                        <Route path="/forgot-password" element={<ForgotPassword />} />
+                        <Route path="*" element={<Navigate to="/login" />} />
+                    </Routes>
+                ) : (
+                    // Si el usuario está autenticado, mostrar el Navbar, Footer y rutas protegidas
+                    <>
+                        <Navbar style={{ position: "sticky", top: 0, zIndex: 1000 }} />
+                        <div style={{ flex: 1, overflowY: "none" }}>
+                            <Routes>
+                                <Route path="/" element={<Navigate to="/home" />} />
+                                <Route path="/home" element={<Home />} />
+                                <Route path="/chat" element={<Chat />} />
+                                <Route path="/help-places" element={<HelpPlaces />} />
+                                <Route path="/embassies" element={<Embassies />} />
+                                <Route path="/chat" element={<Chat />} />
+                                <Route path="/blog" element={<Blog />} />
+                                <Route path="/gadgets" element={<Gadgets />} />
+                                <Route path="/chatbot" element={<ChatBot />} />
+                                <Route path="/contact-list" element={<ContactList />} />
+                                <Route path="/immigration-requirements" element={<ImmigrationRequirements />} />
+                                <Route path="/paypal-balance" element={<PaypalBalance />} />
+                                <Route path="/freq-asked-questions" element={<FreqAskedQuestions />} />
+                                <Route path="/emergency" element={<Emergency />} />
+                                <Route path="/stats-and-reports" element={<StatsAndReports />} />
+                                <Route path="/help" element={<Help />} />
+                                <Route path="/location-view" element={<LocationView />} />
+                                <Route path="/admin-console" element={<AdminConsole />} />
+                                <Route path="/dashboard-edition" element={<DashboardEdition />} />
+                                {/* Agrega aquí todas las demás rutas protegidas */}
+                            </Routes>
+                        </div>
+                        <Footer style={{ position: "sticky", bottom: 0, zIndex: 1000 }} />
+                    </>
+                )}
+            </ScrollToTop>
+        </BrowserRouter>
     );
 };
 

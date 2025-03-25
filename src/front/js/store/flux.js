@@ -139,9 +139,9 @@ const getState = ({ getStore, getActions, setStore }) => {
                     });
 
                     if (userRole === 'admin') {
-                        alert('Bienvenido, Admin.'); // Alert para admin
+                        alert('Bienvenido. Has ingresado con cuenta de Administrador.'); // Alert para admin
                     } else {
-                        alert('Bienvenido, Usuario.'); // Alert para user
+                        alert(`Bienvenido a Vía Sacra`); // Alert para user
                     }
 
 
@@ -358,44 +358,38 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
             logout: async () => {
                 try {
-                    // Obtener el token del localStorage
-                    const token = localStorage.getItem("token");
-
-                    if (!token) {
-                        throw new Error("No hay sesión activa.");
-                    }
-
-                    const resp = await fetch(process.env.BACKEND_URL + "api/logout", {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                            Authorization: `Bearer ${token}`, // Enviar el token en el encabezado
-                        },
-                    });
-
-                    if (!resp.ok) {
-                        const errorData = await resp.json();
-                        throw new Error(errorData.msg || "Error al cerrar sesión.");
-                    }
-
-                    localStorage.removeItem("token");
-
-                    // Actualizar el estado global
-                    setStore({
-                        user: {
-                            isAuthenticated: false,
-                            token: null,
-                            role: null,
-                        },
-                    });
-
-                    return { msg: "Sesión cerrada correctamente" };
+                  const token = localStorage.getItem("token");
+        
+                  if (!token) {
+                    throw new Error("No hay sesión activa.");
+                  }
+        
+                  const resp = await fetch(process.env.BACKEND_URL + "/api/logout", {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                      Authorization: `Bearer ${token}`,
+                    },
+                  });
+        
+                  const data = await resp.json();
+        
+                  if (!resp.ok) {
+                    throw new Error(data.msg || "Error al cerrar sesión.");
+                  }
+        
+                  localStorage.removeItem("token");
+        
+                  setStore({
+                    user: null,
+                  });
+        
+                  return data;
                 } catch (error) {
-                    console.error("Error en el logout:", error);
-                    throw error;
+                  console.error("Error en el logout:", error);
+                  throw error;
                 }
-            },
-
+              },
             viewContacts: async () => {
                 let store = getStore();
                 try {
