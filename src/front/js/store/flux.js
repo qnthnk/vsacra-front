@@ -387,68 +387,43 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
             logout: async () => {
                 try {
-
                     const token = localStorage.getItem("token");
 
                     if (!token) {
-                        throw new Error("No hay sesión activa.");
+                        throw new Error("No hay sesión activa");
                     }
 
-                    const resp = await fetch(process.env.BACKEND_URL + "/api/logout", {
+                    // Opcional: llamar al endpoint de logout del backend
+                    await fetch(process.env.BACKEND_URL + "api/logout", {
                         method: "POST",
                         headers: {
-                            "Content-Type": "application/json",
-                            Authorization: `Bearer ${token}`,
-                        },
+                            "Authorization": `Bearer ${token}`,
+                            "Content-Type": "application/json"
+                        }
                     });
 
-                    const data = await resp.json();
-
-                    if (!resp.ok) {
-                        throw new Error(data.msg || "Error al cerrar sesión.");
-                    }
-
+                    // Limpiar localStorage
                     localStorage.removeItem("token");
+                    localStorage.removeItem("userRole");
+                    localStorage.removeItem("id");
 
+                    // Resetear estado global
                     setStore({
-                        user: null,
+                        ...getStore(),
+                        user: {
+                            isAuthenticated: false,
+                            token: null,
+                            role: null,
+                            email: null
+                        }
                     });
 
-                    return data;
-
-                  const token = localStorage.getItem("token");
-        
-                  if (!token) {
-                    throw new Error("No hay sesión activa.");
-                  }
-        
-                  const resp = await fetch(process.env.BACKEND_URL + "/api/logout", {
-                    method: "POST",
-                    headers: {
-                      "Content-Type": "application/json",
-                      Authorization: `Bearer ${token}`,
-                    },
-                  });
-        
-                  const data = await resp.json();
-        
-                  if (!resp.ok) {
-                    throw new Error(data.msg || "Error al cerrar sesión.");
-                  }
-        
-                  localStorage.removeItem("token");
-        
-                  setStore({
-                    user: null,
-                  });
-        
-                  return data;
-
+                    return { success: true };
                 } catch (error) {
-                  console.error("Error en el logout:", error);
-                  throw error;
+                    console.error("Error en logout:", error);
+                    throw error;
                 }
-              },
+            },
             viewContacts: async () => {
                 let store = getStore();
                 try {

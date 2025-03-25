@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
+import { Context } from './store/appContext.js';
 import HelpPlaces from './pages/HelpPlaces.jsx';
 import Embassies from './pages/Embassies.jsx';
 import Chat from './pages/Chat.jsx';
@@ -29,41 +30,68 @@ import ForgotPassword from "./component/ForgotPassword.jsx";
 
 const Layout = () => {
     const [token, setToken] = useState(localStorage.getItem("token"));
+    const { store } = useContext(Context);
 
+    // Sincronizar el token con el localStorage
     useEffect(() => {
-        const checkToken = () => {
-            const storedToken = localStorage.getItem("token");
-            if (storedToken) {
-                setToken(storedToken);
+        const handleStorageChange = () => {
+            const newToken = localStorage.getItem("token");
+            if (newToken !== token) {
+                setToken(newToken);
             }
         };
-        checkToken();
-    }, []);
+
+        // Escuchar cambios en el localStorage
+        window.addEventListener('storage', handleStorageChange);
+
+        // Verificar el token periódicamente
+        const interval = setInterval(() => {
+            const currentToken = localStorage.getItem("token");
+            if (currentToken !== token) {
+                setToken(currentToken);
+            }
+        }, 1000);
+
+        return () => {
+            window.removeEventListener('storage', handleStorageChange);
+            clearInterval(interval);
+        };
+    }, [token]);
+
+
+    useEffect(() => {
+        if (store.user?.isAuthenticated) {
+            const currentPath = window.location.pathname;
+            const isAuthPath = ['/login', '/signup', '/forgot-password'].includes(currentPath);
+
+            if (isAuthPath) {
+                const redirectPath = store.user.role === 'admin' ? '/admin-dashboard' : '/home';
+                window.location.href = redirectPath;
+            }
+        }
+    }, [store.user]);
 
     return (
         <BrowserRouter>
             <ScrollToTop>
-                {/* Rutas públicas */}
                 {!token ? (
                     <Routes>
                         <Route path="/login" element={<Login setToken={setToken} />} />
                         <Route path="/signup" element={<Register />} />
                         <Route path="/reset-password" element={<ResetPassword />} />
                         <Route path="/forgot-password" element={<ForgotPassword />} />
-                        <Route path="*" element={<Navigate to="/login" />} />
+                        <Route path="*" element={<Navigate to="/login" replace />} />
                     </Routes>
                 ) : (
-                    // Si el usuario está autenticado, mostrar el Navbar, Footer y rutas protegidas
                     <>
                         <Navbar style={{ position: "sticky", top: 0, zIndex: 1000 }} />
-                        <div style={{ flex: 1, overflowY: "none" }}>
+                        <div style={{ flex: 1, overflowY: "auto" }}>
                             <Routes>
-                                <Route path="/" element={<Navigate to="/home" />} />
+                                <Route path="/" element={<Navigate to="/home" replace />} />
                                 <Route path="/home" element={<Home />} />
                                 <Route path="/chat" element={<Chat />} />
                                 <Route path="/help-places" element={<HelpPlaces />} />
                                 <Route path="/embassies" element={<Embassies />} />
-                                <Route path="/chat" element={<Chat />} />
                                 <Route path="/blog" element={<Blog />} />
                                 <Route path="/gadgets" element={<Gadgets />} />
                                 <Route path="/chatbot" element={<ChatBot />} />
@@ -77,7 +105,7 @@ const Layout = () => {
                                 <Route path="/location-view" element={<LocationView />} />
                                 <Route path="/admin-console" element={<AdminConsole />} />
                                 <Route path="/dashboard-edition" element={<DashboardEdition />} />
-                                {/* Agrega aquí todas las demás rutas protegidas */}
+                                <Route path="*" element={<Navigate to="/home" replace />} />
                             </Routes>
                         </div>
                         <Footer style={{ position: "sticky", bottom: 0, zIndex: 1000 }} />
@@ -87,5 +115,7 @@ const Layout = () => {
         </BrowserRouter>
     );
 };
+
+
 
 export default injectContext(Layout);

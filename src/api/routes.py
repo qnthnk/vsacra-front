@@ -33,7 +33,7 @@ client = openai.OpenAI(
 CONVERTER_API_KEY = '43af89a58a6d8fd938bdd176d46766df'  
 BASE_URL = os.environ.get("BASE_URL")
 WEATHERAPI_KEY= os.environ.get("WEATHERAPI_KEY")
-ADMIN_REQUIRED_EMAIL = 'admin@example.com'  
+ADMIN_REQUIRED_EMAIL = 'admin@viasacra.com'  
 GOOGLE_MAPS_API= os.environ.get("GOOGLE_MAPS_API")
 SENDGRID_API_KEY = os.environ.get('SENDGRID_API_KEY')
 s = URLSafeTimedSerializer(os.environ.get('SECRET_KEY'))
@@ -134,7 +134,7 @@ def login():
     email = data.get('email')
     password = data.get('password')
 
-    # Verificar si es un User
+    
     user_exists = User.query.filter_by(email=email).first()
     if user_exists:
         valid_password = check_password_hash(user_exists.password, password)
@@ -150,10 +150,10 @@ def login():
         if email != ADMIN_REQUIRED_EMAIL:
             return jsonify({"message": "Acceso denegado. Correo de admin no autorizado."}), 403
 
-        valid_password = check_password_hash(admin_exists.password, password)
+        valid_password = admin_exists.password
         if valid_password:
             access_token = create_access_token(identity={'email': email, 'role': 'admin'})
-            return jsonify({"token": access_token, "role": "admin"}), 200
+            return jsonify({"token": access_token, "role": "admin", "id":admin_exists.id}), 200
         else:
             return jsonify({"message": "Contraseña inválida."}), 401
 
