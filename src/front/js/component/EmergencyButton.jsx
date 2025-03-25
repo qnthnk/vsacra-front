@@ -1,6 +1,8 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { Context } from '../store/appContext';
 import Swal from 'sweetalert2';
+import './../../styles/home.css';
+
 
 const EmergencyButton = ({ userId }) => {
     const { actions } = useContext(Context);
@@ -20,7 +22,11 @@ const EmergencyButton = ({ userId }) => {
 
                     try {
                         await actions.sendEmergencyCoordinates(latitude, longitude);
+
                         Swal.fire("Coordenadas enviadas correctamente.");
+
+
+
                     } catch (error) {
                         Swal.fire(error.message || "Hubo un error al enviar las coordenadas.");
                     } finally {
@@ -71,7 +77,7 @@ const EmergencyButton = ({ userId }) => {
                 disabled={loading}
             >
                 <i className="fas fa-exclamation-triangle me-2"></i>
-                {loading ? 'Enviando...' : 'Emergencia'}
+                {loading ? 'Enviando...' : ''}
             </button>
 
             {showCountdown && (

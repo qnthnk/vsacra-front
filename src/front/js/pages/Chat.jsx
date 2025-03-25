@@ -1,94 +1,142 @@
 import React, { useState, useEffect } from "react";
 import "./../../styles/Chat.css";
-import io from 'socket.io-client';
-import { v4 as uuidv4 } from 'uuid';
-
+import io from "socket.io-client";
 const socket = io(process.env.BACKEND_URL);
-
-const Chat = () => {
-    const [targetUser, setTargetUser] = useState("");
-    const [messages, setMessages] = useState([]);
-    const [message, setMessage] = useState("");
-    const [error, setError] = useState(null);
-    const [isConnected, setIsConnected] = useState(false);
-
-
-    const [currentUser, setCurrentUser] = useState(() => {
-        return `Usuario-${uuidv4()}`;
+const Chat = ({ userEmail }) => {
+  const [users, setUsers] = useState([]);
+  const [conversations, setConversations] = useState({});
+  const [message, setMessage] = useState("");
+  const [targetUser, setTargetUser] = useState("");
+  const [newUserEmail, setNewUserEmail] = useState("");
+  useEffect(() => {
+    if (userEmail) {
+      socket.emit("register_user", userEmail);
+    }
+    socket.on("update_users", (connectedUsers) => {
+      setUsers(connectedUsers);
     });
-
-    useEffect(() => {
-
-        socket.on("connect", () => setIsConnected(true));
-        socket.on("disconnect", () => setIsConnected(false));
-        socket.on("receive_message", (msg) => {
-            setMessages((prevMessages) => [...prevMessages, msg]);
-            console.log(msg);
-        });
-
-        return () => {
-            socket.off("connect");
-            socket.off("disconnect");
-            socket.off("receive_message");
-        };
-    }, []);
-
-    const sendMessage = () => {
-        if (!message.trim() || !targetUser.trim()) return;
-
-        const newMessage = { text: message, target: targetUser, sender: currentUser };
-
-        // Enviar mensaje al servidor
-        socket.emit("send_message", newMessage);
-        console.log("esto es lo que se manda", newMessage);
-
-        setMessage("");
+    socket.on("receive_message", (msg) => {
+      setConversations(prev => ({
+        ...prev,
+        [msg.sender]: [...(prev[msg.sender] || []), msg]
+      }));
+    });
+    return () => {
+      socket.off("update_users");
+      socket.off("receive_message");
     };
-
-    return (
-        <div className="backpage">
-            <div className="container">
-                <h2 className="heading">Chat</h2>
-                {error && <p className="error">{error}</p>}
-                <div>
-                <label className="forms">
-                    <input
-                        className="input"
-                        type="text"
-                        placeholder="Buscar usuario"
-                        value={targetUser}
-                        onChange={(e) => setTargetUser(e.target.value)}
-                    />
-                     </label>
+  }, [userEmail]);
+  const addUser = () => {
+    if (newUserEmail.trim() && !users.includes(newUserEmail)) {
+      setUsers(prev => [...prev, newUserEmail]);
+      setNewUserEmail("");
+    }
+  };
+  const removeUser = (email, e) => {
+    e.stopPropagation();
+    setUsers(users.filter(user => user !== email));
+    if (targetUser === email) {
+      setTargetUser("");
+    }
+  };
+  const sendMessage = () => {
+    if (!message.trim() || !targetUser.trim()) return;
+    const newMessage = {
+      text: message,
+      target: targetUser,
+      sender: userEmail,
+      timestamp: new Date().toISOString()
+    };
+    socket.emit("send_message", newMessage);
+    setConversations(prev => ({
+      ...prev,
+      [targetUser]: [...(prev[targetUser] || []), newMessage]
+    }));
+    setMessage("");
+  };
+  return (
+    <div className="chat-page">
+      <div className="chat-container">
+        <h3 className="chat-heading" style={{ color: '#8A2BE2' }}>Mensajería</h3>
+        <div className="sidebar">
+          <div className="sidebar-top">
+            <h3 style={{ color: '#8A2BE2', marginBottom: '10px' }}>Usuarios</h3>
+            <div className="user-list">
+              {users.map((user, index) => (
+                <div
+                  key={index}
+                  className={`user ${user === targetUser ? "selected-user" : ""}`}
+                  onClick={() => setTargetUser(user)}
+                >
+                  <span>{user} {user === userEmail ? "(Tú)" : ""}</span>
+                  {user !== userEmail && (
+                    <button
+                      className="remove-user-btn"
+                      onClick={(e) => removeUser(user, e)}
+                    >
+                      ×
+                    </button>
+                  )}
                 </div>
-               
-                <div className="chat-box">
-                    <p>Cuadro de Mensajes una vez que el chat funcione</p>
-                    {messages.map((msg, index) => (
-                        <div
-                            key={index}
-                            className={`message ${msg.sender === currentUser ? "user-message" : "other-user-message"
-                                }`}
-                        >
-                            {msg.text} { }
-                        </div>
-                    ))}
-                </div>
-                <label className="forms">
-                    <input
-                        type="text"
-                        name="text"
-                        className="input"
-                        required
-                        placeholder="Escribe un mensaje..."
-                        value={message}
-                        onChange={(e) => setMessage(e.target.value)}
-                    />
-                    <button className="login-button" onClick={sendMessage}>Enviar</button>
-                </label>
+              ))}
             </div>
+          </div>
+          <div className="sidebar-bottom">
+            <div className="add-user">
+              <input
+                type="text"
+                placeholder="Agregar usuario..."
+                value={newUserEmail}
+                onChange={(e) => setNewUserEmail(e.target.value)}
+                onKeyPress={(e) => e.key === 'Enter' && addUser()}
+              />
+              <button onClick={addUser}>+</button>
+            </div>
+          </div>
         </div>
-    );
+        <div className="chat-area">
+          <div className="chat-header">
+            {targetUser ? `Chat con ${targetUser}` : "Selecciona un usuario"}
+          </div>
+          <div className="messages">
+            {(conversations[targetUser] || []).map((msg, index) => (
+              <div
+                key={`${msg.timestamp || index}`}
+                className={`message ${msg.sender === userEmail ? "user-message" : "other-user-message"}`}
+              >
+                <div className="messageinfo">
+                  <span>{msg.sender === userEmail ? "Tú" : msg.sender}</span>
+                </div>
+                <div className="messagecontent">
+                  <p>{msg.text}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+          {targetUser && (
+            <div className="chat-input">
+              <input
+                type="text"
+                placeholder="Escribe un mensaje..."
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
+              />
+              <button onClick={sendMessage}>Enviar</button>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
 };
-
 export default Chat;
+
+
+
+
+
+
+
+
+

@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
-import { IoLocation } from "react-icons/io5";
-import { FaPhoneFlip } from "react-icons/fa6";
-import { MdEmail, MdDeleteForever, MdModeEditOutline } from "react-icons/md";
 import { Context } from "../store/appContext";
 import Swal from "sweetalert2";
+import { IoMdContact } from "react-icons/io";
+import { BsFillTelephoneFill } from "react-icons/bs";
+import { AiTwotoneMail } from "react-icons/ai";
+import { FaRegHandPointDown } from "react-icons/fa6";
+import { FaArrowDown } from "react-icons/fa";
 
 
 const ViewContact = () => {
@@ -79,124 +81,127 @@ const ViewContact = () => {
     return (
         <div className="">
             <div className="">
-            <h1 className="">Contactos</h1>
-                <div  className="containermaplist places-list">
-                    
-                    {Array.isArray(store.contact) &&
+                <div className="containerData" style={{ overflowY: 'auto', maxHeight: '400px' }}>
+                    {Array.isArray(store.contact) && store.contact.length > 0 ? (
                         store.contact.map((item, index) => (
-                            <div className="row" key={index}>
-                                <div className="col-3"></div>
-                                <div className="col-7">
-                                    <p>{item.full_name}</p>
+                            <div style={{ textAlign: 'left', marginBottom: '10px' }} key={index}>
+                                <div>
+                                    <p><IoMdContact style={{ fontSize: '2.5em', color: 'rgb(184, 0, 169)' }} />{item.full_name}</p>
                                     <p>
-                                        <FaPhoneFlip /> {item.phone_number}
+                                        <BsFillTelephoneFill style={{ fontSize: '2em', color: 'rgb(184, 0, 169)' }} /> {item.phone_number}
                                     </p>
                                     <p>
-                                        <MdEmail /> {item.email}
+                                        <AiTwotoneMail style={{ fontSize: '2em', color: 'rgb(184, 0, 169)' }} /> {item.email}
                                     </p>
                                 </div>
-                                <div className="col-2">
-                                    <div className="row">
-                                        <button
-                                            type="button"
-                                            className="btn btn-primary"
-                                            data-bs-toggle="modal"
-                                            data-bs-target={`#exampleModal${index}`}
-                                        >
-                                            <MdModeEditOutline />
-                                        </button>
-                                        <div
-                                            className="modal fade"
-                                            id={`exampleModal${index}`}
-                                            tabIndex="-1"
-                                            aria-labelledby="exampleModalLabel"
-                                            aria-hidden="true"
-                                        >
-                                            <div className="modal-dialog">
-                                                <div className="modal-content">
-                                                    <div className="modal-header">
-                                                        <h1 className="modal-title fs-5" id="exampleModalLabel">
-                                                            Editar Contacto
-                                                        </h1>
-                                                        <button
-                                                            type="button"
-                                                            className="btn-close"
-                                                            data-bs-dismiss="modal"
-                                                            aria-label="Close"
-                                                        ></button>
-                                                    </div>
-                                                    <div className="modal-body">
-                                                        <div className="mb-3">
-                                                            <input
-                                                                type="text"
-                                                                value={payload.full_name}
-                                                                onChange={(e) =>
-                                                                    setPayload({ ...payload, full_name: e.target.value })
-                                                                }
-                                                                placeholder="Nombre completo"
-                                                                className="form-control"
-                                                            />
-                                                            <br />
-                                                            <input
-                                                                type="email"
-                                                                value={payload.email}
-                                                                onChange={(e) =>
-                                                                    setPayload({ ...payload, email: e.target.value })
-                                                                }
-                                                                placeholder="Email"
-                                                                className="form-control"
-                                                            />
-                                                            <br />
-                                                            <input
-                                                                type="text"
-                                                                value={payload.phone_number}
-                                                                onChange={(e) =>
-                                                                    setPayload({ ...payload, phone_number: e.target.value })
-                                                                }
-                                                                placeholder="Teléfono"
-                                                                className="form-control"
-                                                            />
-                                                            <br />
-                                                            <input
-                                                                type="text"
-                                                                value={payload.role}
-                                                                onChange={(e) =>
-                                                                    setPayload({ ...payload, role: e.target.value })
-                                                                }
-                                                                placeholder="Rol"
-                                                                className="form-control"
-                                                            />
-                                                            <br />
-                                                        </div>
-                                                    </div>
-                                                    <div className="modal-footer">
-                                                        <button
-                                                            type="button"
-                                                            className="btn btn-secondary"
-                                                            data-bs-dismiss="modal"
+                                <div className="cointainer-fluid row">
+                                    <button
+                                        type="button"
+                                        className="col login-buttonesMap"
+                                        data-bs-toggle="modal"
+                                        data-bs-target={`#exampleModal${index}`}
+                                        style={{ width: '50%' }}
+                                    >
+                                        Editar
+                                    </button>
+                                    <div
+                                        className="modal fade"
+                                        id={`exampleModal${index}`}
+                                        tabIndex="-1"
+                                        aria-labelledby="exampleModalLabel"
+                                        aria-hidden="true"
+                                    >
+                                        <div className="container modal-dialog">
+                                            <div className="modal-content">
+                                                <div className="modal-header">
+                                                    <h1 className="heading modal-title fs-5" id="exampleModalLabel">
+                                                        Editar Contacto
+                                                    </h1>
+                                                    <button
+                                                        type="button"
+                                                        className="btn-close"
+                                                        data-bs-dismiss="modal"
+                                                        aria-label="Close"
+                                                    ></button>
+                                                </div>
+                                                <div className="modal-body">
+                                                    <div className="mb-3">
+                                                        <input
+                                                            type="text"
+                                                            value={payload.full_name}
+                                                            onChange={(e) =>
+                                                                setPayload({ ...payload, full_name: e.target.value })
+                                                            }
+                                                            placeholder="Nombre completo"
+                                                            className="form-control"
+                                                        />
+                                                        <br />
+                                                        <input
+                                                            type="email"
+                                                            value={payload.email}
+                                                            onChange={(e) =>
+                                                                setPayload({ ...payload, email: e.target.value })
+                                                            }
+                                                            placeholder="Email"
+                                                            className="form-control"
+                                                        />
+                                                        <br />
+                                                        <input
+                                                            type="text"
+                                                            value={payload.phone_number}
+                                                            onChange={(e) =>
+                                                                setPayload({ ...payload, phone_number: e.target.value })
+                                                            }
+                                                            placeholder="Teléfono"
+                                                            className="form-control"
+                                                        />
+                                                        <br />
+                                                        <select
+                                                            value={payload.role}
+                                                            onChange={(e) =>
+                                                                setPayload({ ...payload, role: e.target.value })
+                                                            }
+                                                            className="form-control"
                                                         >
-                                                            Cerrar
-                                                        </button>
-                                                        <button
-                                                            className="btn btn-primary"
-                                                            onClick={(event) => handleEdit(event, payload, item.id)}
-                                                        >
-                                                            Guardar cambios
-                                                        </button>
+                                                            <option value="">Seleccione un parentezco</option>
+                                                            <option value="Conyuge">Cónyugue</option>
+                                                            <option value="Padre">Padre</option>
+                                                            <option value="Madre">Madre</option>
+                                                            <option value="Hijo">Hijo</option>
+                                                            <option value="Hija">Hija</option>
+                                                            <option value="Amistad">Amistad</option>
+                                                            <option value="Tutor">Tutor</option>
+                                                            <option value="Representante legal">Representante legal</option>
+                                                        </select>
+                                                        <br />
                                                     </div>
+                                                </div>
+                                                <div className="modal-footer">
+                                                    <button
+                                                        className="login-buttonesMap"
+                                                        style={{ width: '100%' }}
+                                                        onClick={(event) => handleEdit(event, payload, item.id)}
+                                                    >
+                                                        Guardar cambios
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
-                                        <button
-                                            className="btn btn-danger"
-                                            onClick={(event) => handleDelete(item.id, event)}
-                                        >
-                                            <MdDeleteForever />
-                                        </button>
                                     </div>
+                                    <button
+                                        className="col login-buttonesEmergencia"
+                                        style={{ width: '50%' }}
+                                        onClick={(event) => handleDelete(item.id, event)}
+                                    >
+                                        Eliminar
+                                    </button>
                                 </div>
+                                <hr />
                             </div>
-                        ))}
+                        ))
+                    ) : (
+                        <p className="heading" style={{ fontSize: "110%" }}>No tienes contactos. Por favor, registralos.<br /><FaArrowDown style={{ fontSize: "3em" }} /></p>
+                    )}
                 </div>
             </div>
         </div>

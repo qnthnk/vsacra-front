@@ -64,7 +64,7 @@ const LocationView = () => {
             <div className="containermaplist places-list">
                 {store.nearbyPlaces.length > 0 ? (
                     store.nearbyPlaces.map((place, index) => (
-                        <div key={index} className="container">
+                        <div key={index} className="containerData">
                             <h2>{place.displayName?.text || "Sin nombre"}</h2>
                             <p>{place.formattedAddress || "Dirección desconocida"}</p>
                             {place.internationalPhoneNumber && (

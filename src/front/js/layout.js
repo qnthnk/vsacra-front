@@ -1,7 +1,8 @@
-import React, { useEffect } from "react";
-import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
+import React, { useEffect, useState, useContext } from "react";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
+import { Context } from './store/appContext.js';
 import HelpPlaces from './pages/HelpPlaces.jsx';
 import Embassies from './pages/Embassies.jsx';
 import Chat from './pages/Chat.jsx';
@@ -27,58 +28,94 @@ import Register from "./pages/Register.jsx";
 import ResetPassword from "./component/ResetPassword.jsx";
 import ForgotPassword from "./component/ForgotPassword.jsx";
 
-// Componente para manejar la redirección
-const RedirectToLogin = () => {
-    const navigate = useNavigate();
+const Layout = () => {
+    const [token, setToken] = useState(localStorage.getItem("token"));
+    const { store } = useContext(Context);
+
+    // Sincronizar el token con el localStorage
+    useEffect(() => {
+        const handleStorageChange = () => {
+            const newToken = localStorage.getItem("token");
+            if (newToken !== token) {
+                setToken(newToken);
+            }
+        };
+
+        // Escuchar cambios en el localStorage
+        window.addEventListener('storage', handleStorageChange);
+
+        // Verificar el token periódicamente
+        const interval = setInterval(() => {
+            const currentToken = localStorage.getItem("token");
+            if (currentToken !== token) {
+                setToken(currentToken);
+            }
+        }, 1000);
+
+        return () => {
+            window.removeEventListener('storage', handleStorageChange);
+            clearInterval(interval);
+        };
+    }, [token]);
+
 
     useEffect(() => {
-        navigate("/login");
-    }, [navigate]);
+        if (store.user?.isAuthenticated) {
+            const currentPath = window.location.pathname;
+            const isAuthPath = ['/login', '/signup', '/forgot-password'].includes(currentPath);
 
-    return null;
-};
-
-const Layout = () => {
-    const basename = process.env.BASENAME || "/";
-
-    if (!process.env.BACKEND_URL || process.env.BACKEND_URL === "") return <BackendURL />;
+            if (isAuthPath) {
+                const redirectPath = store.user.role === 'admin' ? '/admin-dashboard' : '/home';
+                window.location.href = redirectPath;
+            }
+        }
+    }, [store.user]);
 
     return (
-        <div style={{ display: "flex", flexDirection: "column", height: "100vh", paddingBottom: "40px", paddingTop: "40px" }}>
-            <BrowserRouter basename={basename}>
-                <ScrollToTop>
-                    <Navbar style={{ position: "sticky", top: 0, zIndex: 1000 }} />
-                    <div style={{ flex: 1, overflowY: "auto" }}>
-                        <Routes>
-                            <Route path="/" element={<RedirectToLogin />} />
-                            <Route path="/home" element={<Home />} />
-                            <Route path="/login" element={<Login />} />
-                            <Route path="/signup" element={<Register />} />
-                            <Route path="/help-places" element={<HelpPlaces />} />
-                            <Route path="/embassies" element={<Embassies />} />
-                            <Route path="/chat" element={<Chat />} />
-                            <Route path="/blog" element={<Blog />} />
-                            <Route path="/gadgets" element={<Gadgets />} />
-                            <Route path="/chatbot" element={<ChatBot />} />
-                            <Route path="/contact-list" element={<ContactList />} />
-                            <Route path="/immigration-requirements" element={<ImmigrationRequirements />} />
-                            <Route path="/paypal-balance" element={<PaypalBalance />} />
-                            <Route path="/freq-asked-questions" element={<FreqAskedQuestions />} />
-                            <Route path="/emergency" element={<Emergency />} />
-                            <Route path="/stats-and-reports" element={<StatsAndReports />} />
-                            <Route path="/help" element={<Help />} />
-                            <Route path="/location-view" element={<LocationView />} />
-                            <Route path="/admin-console" element={<AdminConsole />} />
-                            <Route path="/dashboard-edition" element={<DashboardEdition />} />
-                            <Route path="/reset-password" element={<ResetPassword />} />
-                            <Route path="/forgot-password" element={<ForgotPassword />} />
-                        </Routes>
-                    </div>
-                    <Footer style={{ position: "sticky", bottom: 0, zIndex: 1000 }} />
-                </ScrollToTop>
-            </BrowserRouter>
-        </div>
+        <BrowserRouter>
+            <ScrollToTop>
+                {!token ? (
+                    <Routes>
+                        <Route path="/login" element={<Login setToken={setToken} />} />
+                        <Route path="/signup" element={<Register />} />
+                        <Route path="/reset-password" element={<ResetPassword />} />
+                        <Route path="/forgot-password" element={<ForgotPassword />} />
+                        <Route path="*" element={<Navigate to="/login" replace />} />
+                    </Routes>
+                ) : (
+                    <>
+                        <Navbar style={{ position: "sticky", top: 0, zIndex: 1000 }} />
+                        <div style={{ flex: 1, overflowY: "auto" }}>
+                            <Routes>
+                                <Route path="/" element={<Navigate to="/home" replace />} />
+                                <Route path="/home" element={<Home />} />
+                                <Route path="/chat" element={<Chat />} />
+                                <Route path="/help-places" element={<HelpPlaces />} />
+                                <Route path="/embassies" element={<Embassies />} />
+                                <Route path="/blog" element={<Blog />} />
+                                <Route path="/gadgets" element={<Gadgets />} />
+                                <Route path="/chatbot" element={<ChatBot />} />
+                                <Route path="/contact-list" element={<ContactList />} />
+                                <Route path="/immigration-requirements" element={<ImmigrationRequirements />} />
+                                <Route path="/paypal-balance" element={<PaypalBalance />} />
+                                <Route path="/freq-asked-questions" element={<FreqAskedQuestions />} />
+                                <Route path="/emergency" element={<Emergency />} />
+                                <Route path="/stats-and-reports" element={<StatsAndReports />} />
+                                <Route path="/help" element={<Help />} />
+                                <Route path="/location-view" element={<LocationView />} />
+                                <Route path="/admin-console" element={<AdminConsole />} />
+                                <Route path="/dashboard-edition" element={<DashboardEdition />} />
+                                <Route path="*" element={<Navigate to="/home" replace />} />
+                            </Routes>
+                        </div>
+                        <Footer style={{ position: "sticky", bottom: 0, zIndex: 1000 }} />
+                    </>
+                )}
+            </ScrollToTop>
+        </BrowserRouter>
     );
 };
+
+
 
 export default injectContext(Layout);

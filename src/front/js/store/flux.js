@@ -27,6 +27,35 @@ const getState = ({ getStore, getActions, setStore }) => {
         actions: {
 
             // Use getActions to call a function within a fuction
+            getAllUsers: async () => {
+                try {
+                    const token = localStorage.getItem("token");
+                    const response = await fetch(process.env.BACKEND_URL + "api/users", {
+                        method: "GET",
+                        headers: {
+                            "Content-Type": "application/json",
+                            Authorization: `Bearer ${token}`,
+                        },
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('Error al obtener los usuarios');
+                    }
+
+                    const data = await response.json();
+
+                    // Puedes almacenar los usuarios en el store si lo necesitas
+                    setStore({
+                        ...getStore(),
+                        users: data  // Agrega esta propiedad al store si no existe
+                    });
+
+                    return data;
+                } catch (error) {
+                    console.error("Error en getAllUsers:", error);
+                    throw error;
+                }
+            },
             forgotPassword: async (email) => {
                 try {
                     const response = await fetch(`${process.env.BACKEND_URL}api/forgot-password`, {
@@ -50,7 +79,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
             resetPassword: async (email, resetCode, newPassword) => {
                 try {
-                    const response = await fetch(`${process.env.BACKEND_URL}/api/reset-password`, {
+                    const response = await fetch(`${process.env.BACKEND_URL}api/reset-password`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
@@ -141,9 +170,15 @@ const getState = ({ getStore, getActions, setStore }) => {
                     });
 
                     if (userRole === 'admin') {
+
                         Swal.fire('Bienvenido, Admin.'); // Alert para admin
                     } else {
                         Swal.fire('Bienvenido, Usuario.'); // Alert para user
+
+                        alert('Bienvenido. Has ingresado con cuenta de Administrador.'); // Alert para admin
+                    } else {
+                        alert(`Bienvenido a Vía Sacra`); // Alert para user
+
                     }
 
 
@@ -360,44 +395,43 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
             logout: async () => {
                 try {
-                    // Obtener el token del localStorage
                     const token = localStorage.getItem("token");
 
                     if (!token) {
-                        throw new Error("No hay sesión activa.");
+                        throw new Error("No hay sesión activa");
                     }
 
-                    const resp = await fetch(process.env.BACKEND_URL + "api/logout", {
+                    // Opcional: llamar al endpoint de logout del backend
+                    await fetch(process.env.BACKEND_URL + "api/logout", {
                         method: "POST",
                         headers: {
-                            "Content-Type": "application/json",
-                            Authorization: `Bearer ${token}`, // Enviar el token en el encabezado
-                        },
+                            "Authorization": `Bearer ${token}`,
+                            "Content-Type": "application/json"
+                        }
                     });
 
-                    if (!resp.ok) {
-                        const errorData = await resp.json();
-                        throw new Error(errorData.msg || "Error al cerrar sesión.");
-                    }
-
+                    // Limpiar localStorage
                     localStorage.removeItem("token");
+                    localStorage.removeItem("userRole");
+                    localStorage.removeItem("id");
 
-                    // Actualizar el estado global
+                    // Resetear estado global
                     setStore({
+                        ...getStore(),
                         user: {
                             isAuthenticated: false,
                             token: null,
                             role: null,
-                        },
+                            email: null
+                        }
                     });
 
-                    return { msg: "Sesión cerrada correctamente" };
+                    return { success: true };
                 } catch (error) {
-                    console.error("Error en el logout:", error);
+                    console.error("Error en logout:", error);
                     throw error;
                 }
             },
-
             viewContacts: async () => {
                 let store = getStore();
                 try {

@@ -18,7 +18,7 @@ import random
 
 
 api = Blueprint('api', __name__)
-app = Flask(__name__, static_folder='../frontend/build')
+
 
 # Allow CORS requests to this API
 CORS(api, resources={r"/*": {"origins": "*"}}, supports_credentials=True,allow_headers=["Content-Type", "Authorization"])
@@ -33,7 +33,7 @@ client = openai.OpenAI(
 CONVERTER_API_KEY = '43af89a58a6d8fd938bdd176d46766df'  
 BASE_URL = os.environ.get("BASE_URL")
 WEATHERAPI_KEY= os.environ.get("WEATHERAPI_KEY")
-ADMIN_REQUIRED_EMAIL = 'admin@example.com'  
+ADMIN_REQUIRED_EMAIL = 'admin@viasacra.com'  
 GOOGLE_MAPS_API= os.environ.get("GOOGLE_MAPS_API")
 SENDGRID_API_KEY = os.environ.get('SENDGRID_API_KEY')
 s = URLSafeTimedSerializer(os.environ.get('SECRET_KEY'))
@@ -134,7 +134,7 @@ def login():
     email = data.get('email')
     password = data.get('password')
 
-    # Verificar si es un User
+    
     user_exists = User.query.filter_by(email=email).first()
     if user_exists:
         valid_password = check_password_hash(user_exists.password, password)
@@ -150,10 +150,10 @@ def login():
         if email != ADMIN_REQUIRED_EMAIL:
             return jsonify({"message": "Acceso denegado. Correo de admin no autorizado."}), 403
 
-        valid_password = check_password_hash(admin_exists.password, password)
+        valid_password = admin_exists.password
         if valid_password:
             access_token = create_access_token(identity={'email': email, 'role': 'admin'})
-            return jsonify({"token": access_token, "role": "admin"}), 200
+            return jsonify({"token": access_token, "role": "admin", "id":admin_exists.id}), 200
         else:
             return jsonify({"message": "Contraseña inválida."}), 401
 
@@ -334,16 +334,11 @@ def add_contact():
 
 
 @api.route('/logout', methods=['POST'])
-# @jwt_required()
+@jwt_required()
 def logout():
-    try:
-        jti = get_jwt()["jti"]
-
-        delete_tokens.add(jti)
-
-        return jsonify({"msg": "You have been logged out"}), 200
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
+    jti = get_jwt()["jti"]
+    delete_tokens.add(jti)
+    return jsonify({"msg": "You have been logged-out"}), 200
 
 @api.route('/editcontact/<int:id>', methods=['PUT'])
 def edit_contact(id):
@@ -498,4 +493,23 @@ def reset_password():
     user.reset_code = None  
     db.session.commit()
 
-    return jsonify({"message": "Contraseña restablecida exitosamente"}), 200
+    return jsonify({"message": "Contraseña restablecida exitosamente"}), 200 
+
+@api.route('/users', methods=['GET'])
+@jwt_required()
+def get_all_users():
+    try:
+        current_user = get_jwt_identity()
+        if current_user['role'] != 'admin':
+            return jsonify({"error": "Acceso no autorizado"}), 403
+        
+        # Obtener todos los usuarios
+        users = User.query.all()
+        
+        # Serializar los datos de los usuarios
+        users_data = [user.serialize() for user in users]
+        
+        return jsonify(users_data), 200
+        
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500

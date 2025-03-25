@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { Context } from "../store/appContext";
 import AddContact from "../component/AddContact.jsx";
 import ViewContact from "../component/ViewContact.jsx";
+import "../../styles/home.css"
 
 const ContactList = () => {
   const { actions } = useContext(Context);
@@ -29,7 +30,7 @@ const ContactList = () => {
               Ver contactos
             </button>
           </div>
-          <div className="">
+          <div >
               {view === "view" && <ViewContact />}
           </div>
         </div>

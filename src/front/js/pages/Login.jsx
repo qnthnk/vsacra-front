@@ -3,11 +3,11 @@ import { Context } from '../store/appContext';
 import { useNavigate } from 'react-router-dom';
 import './../../styles/Login.css';
 
-const Login = () => {
+const Login = ({ setToken }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const { actions } = useContext(Context);
+  const { store, actions } = useContext(Context);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -20,22 +20,25 @@ const Login = () => {
 
     setError('');
 
-    const payload = { email, password };
-
     try {
-      const response = await actions.login(payload);
+      const response = await actions.login({ email, password });
 
       if (response?.token) {
-        localStorage.setItem('token', response.token);
+        // Actualizar el token en el Layout
+        if (setToken) setToken(response.token);
 
-        // Redirección según el rol del usuario
-        navigate(response.role === 'admin' ? '/admin-dashboard' : '/home');
+        // Redirigir basado en el rol del usuario
+        const redirectPath = store.user.role === 'admin' ? '/admin-dashboard' : '/home';
+
+        // Dos métodos de redirección para asegurar el funcionamiento
+        navigate(redirectPath, { replace: true });
+        window.location.href = redirectPath;
       } else {
-        setError('Error al iniciar sesión. Verifica tus credenciales.');
+        setError('Credenciales incorrectas o error en el servidor');
       }
     } catch (error) {
       console.error('Error en el login:', error);
-      setError('Ocurrió un error al iniciar sesión. Inténtalo de nuevo.');
+      setError(error.message || 'Ocurrió un error al iniciar sesión. Inténtalo de nuevo.');
     }
   };
 
