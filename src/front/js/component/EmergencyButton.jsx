@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { Context } from '../store/appContext';
+import Swal from 'sweetalert2';
 
 const EmergencyButton = ({ userId }) => {
     const { actions } = useContext(Context);
@@ -9,7 +10,7 @@ const EmergencyButton = ({ userId }) => {
 
     const handleEmergencia = () => {
         setLoading(true);
-        setShowCountdown(false); // Cerrar modal cuando inicie la emergencia
+        setShowCountdown(false);
 
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
@@ -19,20 +20,20 @@ const EmergencyButton = ({ userId }) => {
 
                     try {
                         await actions.sendEmergencyCoordinates(latitude, longitude);
-                        alert("Coordenadas enviadas correctamente.");
+                        Swal.fire("Coordenadas enviadas correctamente.");
                     } catch (error) {
-                        alert(error.message || "Hubo un error al enviar las coordenadas.");
+                        Swal.fire(error.message || "Hubo un error al enviar las coordenadas.");
                     } finally {
                         setLoading(false);
                     }
                 },
                 (error) => {
-                    alert("No se pudo obtener la ubicación.");
+                    Swal.fire("No se pudo obtener la ubicación.");
                     setLoading(false);
                 }
             );
         } else {
-            alert("Geolocalización no soportada en este navegador.");
+            Swal.fire("Geolocalización no soportada en este navegador.");
             setLoading(false);
         }
     };
@@ -50,10 +51,21 @@ const EmergencyButton = ({ userId }) => {
         <>
             <button
                 onClick={() => {
-                    if (window.confirm("¿Estás seguro de que quieres enviar una alerta de EMERGENCIA a todos tus contactos?")) {
-                        setShowCountdown(true);
-                        setCountdown(5);
-                    }
+                    Swal.fire({
+                        title: "¿Estás seguro?",
+                        text: "Se enviará una alerta de EMERGENCIA a todos tus contactos.",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#d33",
+                        cancelButtonColor: "#3085d6",
+                        confirmButtonText: "Sí, enviar alerta",
+                        cancelButtonText: "Cancelar",
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            setShowCountdown(true);
+                            setCountdown(5);
+                        }
+                    });
                 }}
                 className="login-buttonesEmergencia"
                 disabled={loading}
@@ -70,7 +82,6 @@ const EmergencyButton = ({ userId }) => {
                     </div>
                 </div>
             )}
-
         </>
     );
 };

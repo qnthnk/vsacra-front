@@ -5,6 +5,8 @@ import statesData from './../../../../states.json';
 import citiesData from './../../../../cities.json';
 import './../../styles/Register.css';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
+
 
 const Register = () => {
   const { store, actions } = useContext(Context);
@@ -126,7 +128,7 @@ const Register = () => {
 
     // Validar el formulario
     if (!validateForm()) {
-      alert("Por favor complete los campos faltantes. Para continuar, revise su solicitud");
+      Swal.fire("Por favor complete los campos faltantes. Para continuar, revise su solicitud");
       console.log("Errores en el formulario:", errors);
       return;
     }
@@ -134,11 +136,11 @@ const Register = () => {
     try {
       await actions.register(formData);
       console.log("Formulario enviado:", formData);
-      alert("Te has registrado! Redirigiéndote a login.")
+      Swal.fire("Te has registrado! Redirigiéndote a login.")
       navigate('/login');
     } catch (error) {
       console.log("Error en el registro:", error);
-      alert("Hubo un error en el registro. Por favor, inténtalo de nuevo.");
+      Swal.fire("Hubo un error en el registro. Por favor, inténtalo de nuevo.");
     }
   };
   const handleCountryChange = (e) => {
