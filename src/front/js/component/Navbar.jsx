@@ -104,6 +104,7 @@ const Navbar = () => {
                 Login
                 </a>
               </li> */}
+
                 {/* <li>
                   <a className="nav-link" href="/chat">
                     Mensajeria
@@ -119,6 +120,8 @@ const Navbar = () => {
                     Contact List
                   </a>
                 </li>
+
+
                 <li>
                   <a className="nav-link" href="/freq-asked-questions">
                     Tips
