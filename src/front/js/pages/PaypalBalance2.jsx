@@ -7,7 +7,7 @@ const PaypalBalance2 = () => {
   const navigate = useNavigate();
 
   const handleDonateClick = () => {
-    setShowModal(true); // Muestra el modal
+    setShowModal(true); // Muestra el dgsds modal
   };
 
   const handleGoToLogin = () => {

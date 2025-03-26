@@ -27,6 +27,7 @@ import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
 import ResetPassword from "./component/ResetPassword.jsx";
 import ForgotPassword from "./component/ForgotPassword.jsx";
+import PaypalBalance2 from "./pages/PaypalBalance2.jsx"
 
 const Layout = () => {
     const [token, setToken] = useState(localStorage.getItem("token"));
@@ -81,13 +82,16 @@ const Layout = () => {
                         <Route path="/reset-password" element={<ResetPassword />} />
                         <Route path="/forgot-password" element={<ForgotPassword />} />
                         <Route path="*" element={<Navigate to="/login" replace />} />
+                        <Route path="/paypal-balance" element={<PaypalBalance />} />
+
                     </Routes>
                 ) : (
                     <>
-                        <Navbar style={{ position: "sticky", top: 0, zIndex: 1000 }} />
+                        <Navbar style={{ position: "fixed-top", top: 0, zIndex: 1000 }} />
                         <div style={{ flex: 1, overflowY: "auto" }}>
                             <Routes>
                                 <Route path="/" element={<Navigate to="/home" replace />} />
+                                <Route path="/paypal-balance2" element={<PaypalBalance2 />} />
                                 <Route path="/home" element={<Home />} />
                                 <Route path="/chat" element={<Chat />} />
                                 <Route path="/help-places" element={<HelpPlaces />} />
@@ -97,7 +101,6 @@ const Layout = () => {
                                 <Route path="/chatbot" element={<ChatBot />} />
                                 <Route path="/contact-list" element={<ContactList />} />
                                 <Route path="/immigration-requirements" element={<ImmigrationRequirements />} />
-                                <Route path="/paypal-balance" element={<PaypalBalance />} />
                                 <Route path="/freq-asked-questions" element={<FreqAskedQuestions />} />
                                 <Route path="/emergency" element={<Emergency />} />
                                 <Route path="/stats-and-reports" element={<StatsAndReports />} />

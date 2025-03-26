@@ -224,7 +224,7 @@ const Register = () => {
               {errors.birthdate && <p className="error">{errors.birthdate}</p>}
               <input className='inputs' type="text" name="home_country" placeholder='Pais de Nacimiento' value={formData.home_country} onChange={handleChange} />
               {errors.home_country && <p className="error">{errors.home_country}</p>}
-              <button className='login-button' onClick={() => { const isValid = validateForm(step); if (isValid) handleNext(); }}>Siguiente</button>
+              <button className='login-buttont' onClick={() => { const isValid = validateForm(step); if (isValid) handleNext(); }}>Siguiente</button>
             </div>
           )}
           {step === 2 && (
@@ -240,8 +240,8 @@ const Register = () => {
               {errors.state && <p className="error">{errors.state}</p>}
               <input className='inputs' type="text" name="city" placeholder='Ciudad' value={formData.city} onChange={handleChange} />
               {errors.city && <p className="error">{errors.city}</p>}
-              <button className='login-button' onClick={handleBack}>Atrás</button>
-              <button className='login-button' onClick={() => { const isValid = validateForm(step); if (isValid) handleNext(); }}>Siguiente</button>
+              <button className='login-buttont' onClick={handleBack}>Atrás</button>
+              <button className='login-buttont' onClick={() => { const isValid = validateForm(step); if (isValid) handleNext(); }}>Siguiente</button>
             </div>
           )}
           {step === 3 && (
@@ -254,8 +254,8 @@ const Register = () => {
               <input className='inputs' type="text" name="facebook" placeholder='Facebook' value={formData.facebook} onChange={handleChange} />
               <input className='inputs' type="text" name="instagram" placeholder='Instagram' value={formData.instagram} onChange={handleChange} />
               <input className='inputs' type="text" name="x" placeholder='Twitter o X' value={formData.x} onChange={handleChange} />
-              <button className='login-button' onClick={handleBack}>Atrás</button>
-              <button className='login-button' onClick={() => { const isValid = validateForm(step); if (isValid) handleNext(); }}>Siguiente</button>
+              <button className='login-buttont' onClick={handleBack}>Atrás</button>
+              <button className='login-buttont' onClick={() => { const isValid = validateForm(step); if (isValid) handleNext(); }}>Siguiente</button>
             </div>
           )}
           {step === 4 && (
@@ -267,8 +267,8 @@ const Register = () => {
               {errors.allergy && <p className="error">{errors.allergy}</p>}
               <input className='inputs' type="text" name="disease" placeholder='Enfermedades Crónicas' value={formData.disease} onChange={handleChange} />
               {errors.disease && <p className="error">{errors.disease}</p>}
-              <button className='login-button' onClick={handleBack}>Atrás</button>
-              <button className='login-button' onClick={() => { const isValid = validateForm(step); if (isValid) handleNext(); }}>Siguiente</button>
+              <button className='login-buttont' onClick={handleBack}>Atrás</button>
+              <button className='login-buttont' onClick={() => { const isValid = validateForm(step); if (isValid) handleNext(); }}>Siguiente</button>
             </div>
           )}
           {step === 5 && (
@@ -278,8 +278,8 @@ const Register = () => {
               {errors.country_of_destination && <p className="error">{errors.country_of_destination}</p>}
               <input className='inputs' type="password" name="password" placeholder='Crear contraseña' value={formData.password} onChange={handleChange} />
               {errors.password && <p className="error">{errors.password}</p>}
-              <button className='login-button' onClick={handleBack}>Atrás</button>
-              <button type="submit" className="login-button" onClick={handleSubmit}>Registrarse</button>
+              <button className='login-buttont' onClick={handleBack}>Atrás</button>
+              <button type="submit" className="login-buttont" onClick={handleSubmit}>Registrarse</button>
             </div>
           )}
         </div>

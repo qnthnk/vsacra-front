@@ -9,6 +9,7 @@ import { BsQuestionCircleFill } from "react-icons/bs";
 import { FaLocationDot } from "react-icons/fa6";
 import { MdAddAlert } from "react-icons/md";
 import { MdTipsAndUpdates } from "react-icons/md";
+import { FaQuestionCircle } from "react-icons/fa";
 
 
 
@@ -54,12 +55,12 @@ const Home = () => {
             <h2 className='heading'>Inicio</h2>
             <div className='formis'>
 
-              {/* {token && (
+              {token && (
                 <Link className='login-buttones' to='/chat'>
                   <BsChatSquareTextFill style={{ fontSize: '3em' }} />
                   <p>Mensajería</p>
                 </Link>
-              )} */}
+              )}
               {token && (
                 <Link className='login-buttones' to='/chatbot'>
                   <TbMessageChatbotFilled style={{ fontSize: '3em' }} />
@@ -78,12 +79,12 @@ const Home = () => {
                   <p>Tips</p>
                 </Link>
               )}
-              {/* {token && (
+              {token && (
                 <Link className='login-buttones' to='/help'>
-                  <MdAddAlert style={{ fontSize: '3em' }} />
-                  <p>Contactar Ayuda</p>
+                  <FaQuestionCircle style={{ fontSize: '3em' }} />
+                  <p>FAQ</p>
                 </Link>
-              )} */}
+              )}
               {token && admin && (
                 <Link className='login-buttones' to='/stats-and-reports'>
                   <p>Estadísticas y reportes(ADMIN)</p>

@@ -40,7 +40,14 @@ const Navbar = () => {
 
   return (
     <div>
-      <nav className="navbar bg-body-tertiary fixed-top">
+      <nav className="navbar bg-body-tertiary fixed-top"
+            // style={{  
+            //   background: "rgba(255, 255, 255, 0.5)",
+            //   backdropFilter: "blur(10px)", 
+            //   borderTop: "1px solid rgba(255, 255, 255, 0.18)", 
+            //   boxShadow: "0 0 0 0 rgba(0, 0, 0, 0.1)" 
+            // }}
+      >
         <div className="container-fluid">
           <a
             className="navbar-brand"
@@ -92,15 +99,16 @@ const Navbar = () => {
             <div className="offcanvas-body ">
               <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
                 <li>
-                  <a className="nav-link" href="/about">
-                    About
+                  <a className="nav-link" href="/home">
+                    Inicio
                   </a>
                 </li>
                 <li>
-                  <a className="nav-link" href="/home">
-                    Home
+                  <a className="nav-link" href="/paypal-balance2">
+                    Donar
                   </a>
                 </li>
+
                 {/* <li>
                 <a className="nav-link" href="/login">
                 Login
@@ -112,7 +120,7 @@ const Navbar = () => {
                     Mensajeria
                   </a>
                 </li> */}
-                <li>
+                {/* <li>
                   <a className="nav-link" href="/chatbot">
                     Chatbot
                   </a>
@@ -128,13 +136,13 @@ const Navbar = () => {
                   <a className="nav-link" href="/freq-asked-questions">
                     Tips
                   </a>
-                </li>
+                </li> */}
                 {/* <li>
                   <a className="nav-link" href="/help">
                     Contactar Ayuda
                   </a>
                 </li> */}
-                <li>
+                {/* <li>
                   <a className="nav-link" href="/admin-console">
                     Consola manejo de datos(ADMIN)
                   </a>
@@ -148,7 +156,7 @@ const Navbar = () => {
                   <a className="nav-link" href="/location-view">
                     Vista ubicacion
                   </a>
-                </li>
+                </li> */}
                 {/* <li>
                   <a className="nav-link" href="/help">
                     Contactar Ayuda
