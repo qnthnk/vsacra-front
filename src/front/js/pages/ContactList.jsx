@@ -24,7 +24,7 @@ const ContactList = () => {
           <div className="forms">
             <button
               type="button"
-              className="login-button"
+              className="login-buttont"
               onClick={() => toggleView("view")}
             >
               Ver contactos
@@ -40,7 +40,7 @@ const ContactList = () => {
           <div className="forms">
             <button
               type="button"
-              className="login-button"
+              className="login-buttont"
               onClick={() => toggleView("add")}
             >
               Agregar contacto

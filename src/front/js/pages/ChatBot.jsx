@@ -46,7 +46,7 @@ const ChatBot = () => {
                         value={message}
                         onChange={(e) => setMessage(e.target.value)}
                     />
-                    <button className="login-button" onClick={sendMessage}>Preguntar</button>
+                    <button className="login-buttont" onClick={sendMessage}>Preguntar</button>
                 </label>
                 <div className="forms">
                     <h4 className="input">{GPTResponse}</h4>

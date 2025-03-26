@@ -174,11 +174,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                         Swal.fire('Bienvenido, Admin.'); // Alert para admin
                     } else {
                         Swal.fire('Bienvenido, Usuario.'); // Alert para user
-
-                        alert('Bienvenido. Has ingresado con cuenta de Administrador.'); // Alert para admin
-                    } else {
                         alert(`Bienvenido a Vía Sacra`); // Alert para user
-
                     }
 
 
