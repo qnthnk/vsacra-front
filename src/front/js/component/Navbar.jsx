@@ -3,7 +3,7 @@ import { Context } from '../store/appContext';
 import { useNavigate, Link } from 'react-router-dom';
 import { GiHamburgerMenu } from "react-icons/gi";;
 import "../../styles/home.css";
-import LOGO from "../../img/viasacra.png"
+import LOGO from "../../img/garciaback.png"
 import { RiHome6Fill } from "react-icons/ri";
 import Swal from 'sweetalert2';
 
@@ -57,8 +57,7 @@ const Navbar = () => {
           handleMigrappClick();
         }}
           >
-        <img src={LOGO} alt="Via Sacra" className="logo" style={{ height: "50px" }} />
-        <strong className='heading' style={{ fontFamily: "fantasy" }}> Via Sacra</strong>
+        <img src={LOGO} alt="Via Sacra" className="logo" />
           </Link>
 
           <button className="login-buttonesN" style={{ float: "right" }} onClick={() => {
@@ -68,7 +67,7 @@ const Navbar = () => {
             } else {
               window.location.href = '/login';
             }
-            }}><Link to="/home"><RiHome6Fill style={{ fontSize: "2em" }} /></Link></button>
+            }}><Link to="/home" style={{ textDecoration: 'none', color: 'inherit' }}><RiHome6Fill style={{ fontSize: "2em" }} /></Link></button>
 
 
             <button
@@ -99,74 +98,75 @@ const Navbar = () => {
             <div className="offcanvas-body ">
               <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
               <li>
-              <Link className="nav-link" to="/home">
+              <Link className="nav-link" to="/home" style={{ textDecoration: 'none', color: 'inherit' }}>
               Inicio
               </Link>
               </li>
               <li>
-              <Link className="nav-link" to="/paypal-balance2">
+              <Link className="nav-link" to="/paypal-balance2" style={{ textDecoration: 'none', color: 'inherit' }}>
               Donar
               </Link>
               </li>
 
               <li>
-              <Link className="nav-link" to="/login">
+              <Link className="nav-link" to="/login" style={{ textDecoration: 'none', color: 'inherit' }}>
               Login
               </Link>
               </li>
 
               <li>
-                <Link className="nav-link" to="/chat">
-                Mensajeria
-                </Link>
+              <Link className="nav-link" to="/chat" style={{ textDecoration: 'none', color: 'inherit' }}>
+              Mensajeria
+              </Link>
               </li>
               <li>
-                <Link className="nav-link" to="/chatbot">
-                Chatbot
-                </Link>
+              <Link className="nav-link" to="/chatbot" style={{ textDecoration: 'none', color: 'inherit' }}>
+              Chatbot
+              </Link>
               </li>
               <li>
-                <Link className="nav-link" to="/contact-list">
-                Contact List
-                </Link>
+              <Link className="nav-link" to="/contact-list" style={{ textDecoration: 'none', color: 'inherit' }}>
+              Contact List
+              </Link>
               </li>
 
 
               <li>
-                <Link className="nav-link" to="/freq-asked-questions">
-                Tips
-                </Link>
+              <Link className="nav-link" to="/freq-asked-questions" style={{ textDecoration: 'none', color: 'inherit' }}>
+              Tips
+              </Link>
               </li>
               <li>
-                <Link className="nav-link" to="/help">
-                Contactar Ayuda
-                </Link>
+              <Link className="nav-link" to="/help" style={{ textDecoration: 'none', color: 'inherit' }}>
+              Contactar Ayuda
+              </Link>
               </li>
               <li>
-                <Link className="nav-link" to="/admin-console">
-                Consola manejo de datos(ADMIN)
-                </Link>
+              <Link className="nav-link" to="/admin-console" style={{ textDecoration: 'none', color: 'inherit' }}>
+              Consola manejo de datos(ADMIN)
+              </Link>
               </li>
               <li>
-                <Link className="nav-link" to="/stats-and-reports">
-                Estadisticas y reportes(ADMIN)
-                </Link>
+              <Link className="nav-link" to="/stats-and-reports" style={{ textDecoration: 'none', color: 'inherit' }}>
+              Estadisticas y reportes(ADMIN)
+              </Link>
               </li>
               <li>
-                <Link className="nav-link" to="/location-view">
-                Vista ubicacion
-                </Link>
+              <Link className="nav-link" to="/location-view" style={{ textDecoration: 'none', color: 'inherit' }}>
+              Vista ubicacion
+              </Link>
               </li>
               <li>
-                <Link className="nav-link" to="/help">
-                Contactar Ayuda
-                </Link>
+              <Link className="nav-link" to="/help" style={{ textDecoration: 'none', color: 'inherit' }}>
+              Contactar Ayuda
+              </Link>
               </li>
               <li>
-                <Link
-                className="nav-link"
-                to="/login"
-                onClick={(e) => {
+              <Link
+              className="nav-link"
+              to="/login"
+              style={{ textDecoration: 'none', color: 'inherit' }}
+              onClick={(e) => {
                       e.preventDefault(); // Evita la navegación predeterminada
                       handleLogout(); // Llama a la función de cierre de sesión
                     }}

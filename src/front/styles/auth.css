@@ -168,3 +168,38 @@
         font-size: 24px;
     }
 }
+.demoContainer {
+    max-width: 350px;
+    background: #f297b7;
+    text-align: justify;
+
+    background: linear-gradient(
+        0deg,
+        #f297b7 0%,
+        #f297b7 100%
+    );
+    border-radius: 40px;
+    padding: 25px 35px;
+    border: 5px solid rgb(255, 255, 255);
+    box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 30px 30px -20px;
+    margin: 20px auto;
+    transition: opacity 0.3s, visibility 0.3s;
+}
+
+.demoContainer.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.infoIcon {
+    display: none;
+    font-size: 24px;
+    color: var(--primary-color);
+    text-align: center;
+    margin: 20px auto;
+}
+
+.infoIcon.visible {
+    display: block;
+}
+  
