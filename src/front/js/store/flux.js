@@ -104,6 +104,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
             register: async (dataToSend) => {
                 console.log("Datos enviados para registro:", dataToSend);
+                console.log("url de fetch: ",process.env.BACKEND_URL + "api/signup")
                 try {
                     const resp = await fetch(process.env.BACKEND_URL + "api/signup", {
                         method: 'POST',
