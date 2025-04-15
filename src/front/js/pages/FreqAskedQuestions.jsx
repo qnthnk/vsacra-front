@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 import React, { useState } from 'react';
 import "../../styles/home.css";
 
@@ -10,7 +12,7 @@ const faqs = [
   { question: "Hipotermia", answer: "Si presentas alguno de estos síntomas, es probable que estés sufriendo de hipotermia: Escalofríos, piel pálida y fría, fatiga, confusión, somnolencia, habla lenta, pulso débil y lento, respiración lenta y superficial. Si presentas estos síntomas, busca un lugar cálido, abrígate y toma bebidas calientes." },
   { question: "Golpe de calor", answer: "Si presentas alguno de estos síntomas, es probable que estés sufriendo de un golpe de calor: Temperatura corporal alta, piel roja, caliente y seca, pulso rápido y fuerte, dolor de cabeza, mareos, náuseas, vómito, confusión, desorientación, pérdida de la conciencia. Si presentas estos síntomas, busca un lugar fresco y sombreado, hidrátate y descansa." },
   { question: "Mordedura o picadura de animales venenosos", answer: "Si presentas alguno de estos síntomas, es probable que hayas sido mordido o picado por un animal venenoso: Dolor intenso en la zona de la mordedura o mordedura, hinchazón, enrojecimiento, sangrado, debilidad, mareos, náuseas, vómito, dificultad para respirar, visión borrosa, parálisis, convulsiones. Si presentas estos síntomas, busca ayuda de inmediato." },
-  { question: "Más información", answer: <>Si quieres saber más tips, puedes consultar nuestro <a href="/chatbot">Chatbot</a>.</> },
+  { question: "Más información", answer: <>Si quieres saber más tips, puedes consultar nuestro <Link href="/chatbot">Chatbot</Link>.</> },
   ];
 
 const FreqAskedQuestions = () => {

@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { Context } from '../store/appContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import './../../styles/Login.css';
 
 const Login = ({ setToken }) => {
@@ -69,17 +69,17 @@ const Login = ({ setToken }) => {
           />
           {error && <div className="alert alert-danger">{error}</div>}
           <span className="forgot-password">
-            <a href="/signup" >Regístrate</a>
+            <Link href="/signup" >Regístrate</Link>
           </span>
           <span className="forgot-password">
-            <a href="/forgot-password">Olvidé mi contraseña</a>
+            <Link href="/forgot-password">Olvidé mi contraseña</Link>
           </span>
           <div style={{ textAlign: 'center' }}>
             <input value="Iniciar sesión" type="submit" className="login-buttont" />
           </div>
         </form>
         <span className="login-buttonesN2">
-          <a href="/paypal-balance" style={{ textDecoration: 'none', color: 'white', fontWeight: 'bold' }}>Donar</a>
+          <Link href="/paypal-balance" style={{ textDecoration: 'none', color: 'white', fontWeight: 'bold' }}>Donar</Link>
         </span>
       </div>
     </div>
