@@ -130,7 +130,6 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
 
             login: async (payload) => {
-
                 try {
                     const resp = await fetch(process.env.BACKEND_URL + "api/login", {
                         method: 'POST',
@@ -139,26 +138,26 @@ const getState = ({ getStore, getActions, setStore }) => {
                         },
                         body: JSON.stringify(payload),
                     });
-
+            
                     if (!resp.ok) {
                         const errorData = await resp.json();
                         throw new Error(errorData.message || 'Error al iniciar sesión');
                     }
-
+            
                     const data = await resp.json();
                     const token = data.token;
-
+            
                     if (!token) {
                         throw new Error('No se recibió un token válido');
                     }
-
+            
                     const decodedToken = jwtDecode(token);
                     const userRole = decodedToken.role;
-
+            
                     localStorage.setItem('token', token);
                     localStorage.setItem('userRole', userRole);
                     localStorage.setItem('id', data.id);
-
+            
                     const store = getStore();
                     setStore({
                         ...store,
@@ -169,23 +168,32 @@ const getState = ({ getStore, getActions, setStore }) => {
                             role: userRole,
                         },
                     });
-
-                    if (userRole === 'admin') {
-
-                        Swal.fire('Bienvenido, Admin.'); // Alert para admin
-                    } else {
-                        Swal.fire('Bienvenido, Usuario.'); // Alert para user
-                        alert(`Bienvenido a Vía Sacra`); // Alert para user
-                    }
-
-
-                    return data;
+            
+                    // ✅ SweetAlert según el rol
+                    Swal.fire({
+                        title: '¡Bienvenido!',
+                        text: userRole === 'admin' ? 'Has ingresado como administrador.' : 'Has ingresado como usuario.',
+                        icon: 'success',
+                        confirmButtonText: 'Continuar'
+                    });
+            
+                    // ✨ Se retorna la info útil al componente Login.jsx
+                    return {
+                        token: token,
+                        id: data.id,
+                        role: userRole
+                    };
                 } catch (error) {
                     console.error("Error al iniciar sesión:", error);
-                    Swal.fire(error.message || 'Error al iniciar sesión');
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: error.message || 'Error al iniciar sesión',
+                    });
                     return null;
                 }
             },
+            
 
             getSupportedCurrencies: async () => {
                 try {
