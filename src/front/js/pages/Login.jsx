@@ -74,7 +74,7 @@ const Login = ({ setToken }) => {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-                    <div className='demoContainer'>En Demo no se puede registrar usuario ni recuperar contraseña. </div>
+                    {/* <div className='demoContainer'>En Demo no se puede registrar usuario ni recuperar contraseña. </div>
 
           {error && <div className="alert alert-danger">{error}</div>}
                     <span className="forgot-password">
@@ -82,14 +82,14 @@ const Login = ({ setToken }) => {
           </span>
           <span className="forgot-password">
             <Link href="/login">Olvidé mi contraseña</Link>
-          </span>
+          </span> */}
 
-          {/* <span className="forgot-password">
+          <span className="forgot-password">
             <Link href="/signup" >Regístrate</Link>
           </span>
           <span className="forgot-password">
             <Link href="/forgot-password">Olvidé mi contraseña</Link>
-          </span> */}
+          </span>
           <div style={{ textAlign: 'center' }}>
             <input value="Iniciar sesión" type="submit" className="login-buttont" />
           </div>
