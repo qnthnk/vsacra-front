@@ -85,10 +85,10 @@ const Login = ({ setToken }) => {
           </span> */}
 
           <span className="forgot-password">
-            <Link href="/signup" >Regístrate</Link>
+            <Link to="/signup" >Regístrate</Link>
           </span>
           <span className="forgot-password">
-            <Link href="/forgot-password">Olvidé mi contraseña</Link>
+            <Link to="/forgot-password">Olvidé mi contraseña</Link>
           </span>
           <div style={{ textAlign: 'center' }}>
             <input value="Iniciar sesión" type="submit" className="login-buttont" />
