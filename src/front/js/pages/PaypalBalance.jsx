@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+
 import Swal from 'sweetalert2';
 import '../../styles/Login.css';
+
+import { useNavigate, Link } from 'react-router-dom';
+import "../../styles/Login.css"
+
 
 const PaypalBalance = () => {
   const navigate = useNavigate();

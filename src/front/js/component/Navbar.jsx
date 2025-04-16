@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
 import { Context } from '../store/appContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { GiHamburgerMenu } from "react-icons/gi";;
 import "../../styles/home.css";
-import LOGO from "../../img/viasacra.png"
+import LOGO from "../../img/garciaback.png"
 import { RiHome6Fill } from "react-icons/ri";
 import Swal from 'sweetalert2';
 
@@ -49,17 +49,16 @@ const Navbar = () => {
             // }}
       >
         <div className="container-fluid">
-          <a
-            className="navbar-brand"
-            href="#"
-            onClick={(e) => {
-              e.preventDefault();
-              handleMigrappClick();
-            }}
+          <Link
+        className="navbar-brand"
+        to="#"
+        onClick={(e) => {
+          e.preventDefault();
+          handleMigrappClick();
+        }}
           >
-            <img src={LOGO} alt="Via Sacra" className="logo" style={{ height: "50px" }} />
-            <strong className='heading' style={{ fontFamily: "fantasy" }}> Via Sacra</strong>
-          </a>
+        <img src={LOGO} alt="Via Sacra" className="logo" />
+          </Link>
 
           <button className="login-buttonesN" style={{ float: "right" }} onClick={() => {
             const isLoggedIn = true; // Aquí deberías verificar si el usuario está loggeado correctamente
@@ -68,111 +67,112 @@ const Navbar = () => {
             } else {
               window.location.href = '/login';
             }
-          }}><RiHome6Fill style={{ fontSize: "2em" }} /></button>
+            }}><Link to="/home" style={{ textDecoration: 'none', color: 'inherit' }}><RiHome6Fill style={{ fontSize: "2em" }} /></Link></button>
 
 
-          <button
+            <button
             type="button"
             data-bs-toggle="offcanvas"
             data-bs-target="#offcanvasNavbar"
             style={{ background: 'none', border: 'none' }}
-          >
+            >
             <GiHamburgerMenu className='login-buttonesN' />
-          </button>
-          <div
+            </button>
+            <div
             className="offcanvas offcanvas-end text-bg-dark"
             tabIndex="-1"
             id="offcanvasNavbar"
             aria-labelledby="offcanvasNavbarLabel"
-          >
+            >
             <div className="offcanvas-header">
               <h6 className="navbar-brand" id="offcanvasNavbarLabel">
-                Menu
+              Menu
               </h6>
               <button
-                type="button"
-                className="btn-close btn-close-dark"
-                data-bs-dismiss="offcanvas"
-                aria-label="Close"
+              type="button"
+              className="btn-close btn-close-dark"
+              data-bs-dismiss="offcanvas"
+              aria-label="Close"
               ></button>
             </div>
             <div className="offcanvas-body ">
               <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
-                <li>
-                  <a className="nav-link" href="/home">
-                    Inicio
-                  </a>
-                </li>
-                <li>
-                  <a className="nav-link" href="/paypal-balance2">
-                    Donar
-                  </a>
-                </li>
+              <li>
+              <Link className="nav-link" to="/home" style={{ textDecoration: 'none', color: 'inherit' }}>
+              Inicio
+              </Link>
+              </li>
+              <li>
+              <Link className="nav-link" to="/paypal-balance2" style={{ textDecoration: 'none', color: 'inherit' }}>
+              Donar
+              </Link>
+              </li>
 
-                {/* <li>
-                <a className="nav-link" href="/login">
-                Login
-                </a>
-              </li> */}
+              <li>
+              <Link className="nav-link" to="/login" style={{ textDecoration: 'none', color: 'inherit' }}>
+              Login
+              </Link>
+              </li>
 
-                {/* <li>
-                  <a className="nav-link" href="/chat">
-                    Mensajeria
-                  </a>
-                </li> */}
-                {/* <li>
-                  <a className="nav-link" href="/chatbot">
-                    Chatbot
-                  </a>
-                </li>
-                <li>
-                  <a className="nav-link" href="/contact-list">
-                    Contact List
-                  </a>
-                </li>
+              <li>
+              <Link className="nav-link" to="/chat" style={{ textDecoration: 'none', color: 'inherit' }}>
+              Mensajeria
+              </Link>
+              </li>
+              <li>
+              <Link className="nav-link" to="/chatbot" style={{ textDecoration: 'none', color: 'inherit' }}>
+              Chatbot
+              </Link>
+              </li>
+              <li>
+              <Link className="nav-link" to="/contact-list" style={{ textDecoration: 'none', color: 'inherit' }}>
+              Contact List
+              </Link>
+              </li>
 
 
-                <li>
-                  <a className="nav-link" href="/freq-asked-questions">
-                    Tips
-                  </a>
-                </li> */}
-                {/* <li>
-                  <a className="nav-link" href="/help">
-                    Contactar Ayuda
-                  </a>
-                </li> */}
-                {/* <li>
-                  <a className="nav-link" href="/admin-console">
-                    Consola manejo de datos(ADMIN)
-                  </a>
-                </li>
-                <li>
-                  <a className="nav-link" href="/stats-and-reports">
-                    Estadisticas y reportes(ADMIN)
-                  </a>
-                </li>
-                <li>
-                  <a className="nav-link" href="/location-view">
-                    Vista ubicacion
-                  </a>
-                </li> */}
-                {/* <li>
-                  <a className="nav-link" href="/help">
-                    Contactar Ayuda
-                  </a>
-                </li> */}
-                <li>
-                  <a
-                    className="nav-link"
-                    href="/login"
-                    onClick={(e) => {
+              <li>
+              <Link className="nav-link" to="/freq-asked-questions" style={{ textDecoration: 'none', color: 'inherit' }}>
+              Tips
+              </Link>
+              </li>
+              <li>
+              <Link className="nav-link" to="/help" style={{ textDecoration: 'none', color: 'inherit' }}>
+              Contactar Ayuda
+              </Link>
+              </li>
+              <li>
+              <Link className="nav-link" to="/admin-console" style={{ textDecoration: 'none', color: 'inherit' }}>
+              Consola manejo de datos(ADMIN)
+              </Link>
+              </li>
+              <li>
+              <Link className="nav-link" to="/stats-and-reports" style={{ textDecoration: 'none', color: 'inherit' }}>
+              Estadisticas y reportes(ADMIN)
+              </Link>
+              </li>
+              <li>
+              <Link className="nav-link" to="/location-view" style={{ textDecoration: 'none', color: 'inherit' }}>
+              Vista ubicacion
+              </Link>
+              </li>
+              <li>
+              <Link className="nav-link" to="/help" style={{ textDecoration: 'none', color: 'inherit' }}>
+              Contactar Ayuda
+              </Link>
+              </li>
+              <li>
+              <Link
+              className="nav-link"
+              to="/login"
+              style={{ textDecoration: 'none', color: 'inherit' }}
+              onClick={(e) => {
                       e.preventDefault(); // Evita la navegación predeterminada
                       handleLogout(); // Llama a la función de cierre de sesión
                     }}
                   >
                     Cerrar sesión
-                  </a>
+                  </Link>
                 </li>
               </ul>
             </div>

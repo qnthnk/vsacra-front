@@ -55,45 +55,59 @@ const Home = () => {
             <h2 className='heading'>Inicio</h2>
             <div className='formis'>
 
-              {token && (
+              {/* {token && (
                 <Link className='login-buttones' to='/chat'>
                   <BsChatSquareTextFill style={{ fontSize: '3em' }} />
                   <p>Mensajería</p>
                 </Link>
-              )}
-              {token && (
-                <Link className='login-buttones' to='/chatbot'>
-                  <TbMessageChatbotFilled style={{ fontSize: '3em' }} />
-                  <p>Chatbot</p>
-                </Link>
-              )}
-              {token && (
+              )} */}
+                            {token && (
                 <Link className='login-buttones' to='/contact-list'>
                   <RiContactsFill style={{ fontSize: '3em' }} />
                   <p>Mis contactos</p>
                 </Link>
               )}
               {token && (
-                <Link className='login-buttones' to='/freq-asked-questions'>
-                  <MdTipsAndUpdates style={{ fontSize: '3em' }} />
-                  <p>Tips</p>
+                <Link className='login-buttones' to='/location-view'>
+                  <FaLocationDot style={{ fontSize: '3em' }} />
+                  <p> Vista de ubicación</p>
                 </Link>
               )}
-              {token && (
+              {/* {token && (
                 <Link className='login-buttones' to='/help'>
                   <FaQuestionCircle style={{ fontSize: '3em' }} />
                   <p>FAQ</p>
                 </Link>
+              )} */}
+              {token && (
+                <Link className='login-buttones' to='/freq-asked-questions'>
+                  <MdTipsAndUpdates style={{ fontSize: '3em' }} />
+                  <p>Preguntas Frecuentes</p>
+                </Link>
               )}
+
+              {token && (
+                <Link className='login-buttones' to='/chatbot'>
+                  <TbMessageChatbotFilled style={{ fontSize: '3em' }} />
+                  <p>Chatbot</p>
+                </Link>
+              )}
+                            {token && (
+                <Link className='login-buttones' to='/blog'>
+                  <BsChatSquareTextFill style={{ fontSize: '3em' }} />
+                  <p>Personalizado</p>
+                </Link>
+              )} 
+              {token && (
+                <Link className='login-buttones' to='/blog'>
+                  <BsChatSquareTextFill style={{ fontSize: '3em' }} />
+                  <p>Personalizado</p>
+                </Link>
+              )} 
+
               {token && admin && (
                 <Link className='login-buttones' to='/stats-and-reports'>
                   <p>Estadísticas y reportes(ADMIN)</p>
-                </Link>
-              )}
-              {token && (
-                <Link className='login-buttones' to='/location-view'>
-                  <FaLocationDot style={{ fontSize: '3em' }} />
-                  <p> Vista de ubicación</p>
                 </Link>
               )}
               {token && admin && (

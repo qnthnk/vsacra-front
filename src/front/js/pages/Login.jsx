@@ -1,7 +1,9 @@
 import React, { useState, useContext } from 'react';
 import { Context } from '../store/appContext';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import './../../styles/Login.css';
+import LOGO from '../../img/garciaback.png'
+
 
 const Login = ({ setToken }) => {
   const [email, setEmail] = useState('');
@@ -44,8 +46,13 @@ const Login = ({ setToken }) => {
 
   return (
     <div className='backpage'>
+                <div className='demoContainer'>Los recuadros rosas como este, solo aparecen en esta versión demo para explicar funcionalidades generales. </div>
+
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <img src={LOGO} className='logo' />
+      </div>
       <div className="container">
-        <div className="heading">Login</div>
+        <div className="heading">Ingresar</div>
         <form className="forms" onSubmit={handleSubmit}>
           <input
             placeholder="E-mail"
@@ -67,20 +74,29 @@ const Login = ({ setToken }) => {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
+                    <div className='demoContainer'>En Demo no se puede registrar usuario ni recuperar contraseña. </div>
+
           {error && <div className="alert alert-danger">{error}</div>}
-          <span className="forgot-password">
-            <a href="/signup" >Regístrate</a>
+                    <span className="forgot-password">
+            <Link href="/login" >Regístrate</Link>
           </span>
           <span className="forgot-password">
-            <a href="/forgot-password">Olvidé mi contraseña</a>
+            <Link href="/login">Olvidé mi contraseña</Link>
           </span>
+
+          {/* <span className="forgot-password">
+            <Link href="/signup" >Regístrate</Link>
+          </span>
+          <span className="forgot-password">
+            <Link href="/forgot-password">Olvidé mi contraseña</Link>
+          </span> */}
           <div style={{ textAlign: 'center' }}>
             <input value="Iniciar sesión" type="submit" className="login-buttont" />
           </div>
         </form>
-        <span className="login-buttonesN2">
-          <a href="/paypal-balance" style={{ textDecoration: 'none', color: 'white', fontWeight: 'bold' }}>Donar</a>
-        </span>
+        {/* <span className="login-buttonesN2">
+          <Link href="/paypal-balance" style={{ textDecoration: 'none', color: 'white', fontWeight: 'bold' }}>Donar</Link>
+        </span> */}
       </div>
     </div>
   );
