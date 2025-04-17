@@ -3,6 +3,7 @@ import { Context } from '../store/appContext';
 import { useNavigate, Link } from 'react-router-dom';
 import './../../styles/Login.css';
 import LOGO from '../../img/garciaback.png'
+import { FaInfo } from "react-icons/fa";
 
 
 const Login = ({ setToken }) => {
@@ -45,8 +46,24 @@ const Login = ({ setToken }) => {
   };
 
   return (
-    <div className='backpage'>
-                <div className='demoContainer'>Los recuadros rosas como este, solo aparecen en esta versión demo para explicar funcionalidades generales. </div>
+    <div className='backpage' style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+      <button type="button" className="DemoButton firstClick" style={{ width: "200px", borderRadius: "20px" }} data-bs-toggle="modal" data-bs-target="#exampleModal">
+         Haz click aquí
+      </button>
+      <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+          <div className="modal-content demoContainer">
+            <div className="modal-body">
+              <div className=''>Los recuadros rosas como este, solo aparecen en esta versión demo para explicar funcionalidades generales.
+              <FaInfo className='DemoButton' style={{fontSize: "10px"}} />
+              </div>
+            </div>
+            <div className="modal-content">
+              <button type="button" className="btn btn-warning" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <div style={{ display: 'flex', justifyContent: 'center' }}>
         <img src={LOGO} className='logo' />
@@ -74,18 +91,9 @@ const Login = ({ setToken }) => {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-                    {/* <div className='demoContainer'>En Demo no se puede registrar usuario ni recuperar contraseña. </div>
-
-          {error && <div className="alert alert-danger">{error}</div>}
-                    <span className="forgot-password">
-            <Link href="/login" >Regístrate</Link>
-          </span>
-          <span className="forgot-password">
-            <Link href="/login">Olvidé mi contraseña</Link>
-          </span> */}
 
           <span className="forgot-password">
-            <Link to="/signup" >Regístrate</Link>
+            <Link to="/signup">Regístrate</Link>
           </span>
           <span className="forgot-password">
             <Link to="/forgot-password">Olvidé mi contraseña</Link>
@@ -94,9 +102,6 @@ const Login = ({ setToken }) => {
             <input value="Iniciar sesión" type="submit" className="login-buttont" />
           </div>
         </form>
-        {/* <span className="login-buttonesN2">
-          <Link href="/paypal-balance" style={{ textDecoration: 'none', color: 'white', fontWeight: 'bold' }}>Donar</Link>
-        </span> */}
       </div>
     </div>
   );

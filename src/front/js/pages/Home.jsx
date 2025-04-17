@@ -1,27 +1,16 @@
-import React, { useEffect, useContext, useState } from 'react'
+import React, { useEffect, useContext, useState } from 'react';
 import { Context } from '../store/appContext';
-import { Link } from "react-router-dom";
 import './../../styles/home.css';
-import { BsChatSquareTextFill } from "react-icons/bs";
-import { TbMessageChatbotFilled } from "react-icons/tb";
-import { RiContactsFill } from "react-icons/ri";
-import { BsQuestionCircleFill } from "react-icons/bs";
-import { FaLocationDot } from "react-icons/fa6";
-import { MdAddAlert } from "react-icons/md";
-import { MdTipsAndUpdates } from "react-icons/md";
-import { FaQuestionCircle } from "react-icons/fa";
-
-
-
+import HomeUser from './HomeUser.jsx';
+import HomeAdmin from './HomeAdmin.jsx';
 
 const Home = () => {
-  const admin = JSON.parse(localStorage.getItem('admin'));
   const token = localStorage.getItem('token');
-  const { store, actions } = useContext(Context);
+  const { actions } = useContext(Context);
 
   const [location, setLocation] = useState(null);
   const [error, setError] = useState(null);
-
+  const [isAdmin, setIsAdmin] = useState(false); // Estado para cambiar entre usuario y admin
 
   useEffect(() => {
     if (!navigator.geolocation) {
@@ -29,104 +18,55 @@ const Home = () => {
       return;
     }
 
-    const getLocation = () => {
-
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude } = position.coords;
-          setLocation({ latitud: latitude, longitud: longitude });
-          actions.setUserLocation(latitude, longitude);
-          console.log("ubiv", location);
-        },
-        (error) => {
-          setError("Error al obtener la ubicación: ", error);
-        }
-      );
-
-    };
-
-    getLocation();
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords;
+        setLocation({ latitud: latitude, longitud: longitude });
+        actions.setUserLocation(latitude, longitude);
+        console.log("Ubicación:", location);
+      },
+      (error) => {
+        setError("Error al obtener la ubicación: ", error);
+      }
+    );
   }, []);
+
+  // Función para manejar el cambio del checkbox
+  const handleToggle = () => {
+    setIsAdmin(!isAdmin);
+  };
+
   return (
     <div>
       {token ? (
         <div className='backpage'>
-          <div className='container'>
-            <h2 className='heading'>Inicio</h2>
-            <div className='formis'>
+          <div className='containerH'>
+            <div className="checkbox-wrapper-8 mt-5">
+              <input
+                type="checkbox"
+                id="cb3-8"
+                className="tgl tgl-skewed"
+                checked={isAdmin}
+                onChange={handleToggle}
+              />
+              <label
+                htmlFor="cb3-8"
+                data-tg-on="Admin"
+                data-tg-off="Usuario"
+                className="tgl-btn"
+              ></label>
+            </div>
 
-              {/* {token && (
-                <Link className='login-buttones' to='/chat'>
-                  <BsChatSquareTextFill style={{ fontSize: '3em' }} />
-                  <p>Mensajería</p>
-                </Link>
-              )} */}
-                            {token && (
-                <Link className='login-buttones' to='/contact-list'>
-                  <RiContactsFill style={{ fontSize: '3em' }} />
-                  <p>Mis contactos</p>
-                </Link>
-              )}
-              {token && (
-                <Link className='login-buttones' to='/location-view'>
-                  <FaLocationDot style={{ fontSize: '3em' }} />
-                  <p> Vista de ubicación</p>
-                </Link>
-              )}
-              {/* {token && (
-                <Link className='login-buttones' to='/help'>
-                  <FaQuestionCircle style={{ fontSize: '3em' }} />
-                  <p>FAQ</p>
-                </Link>
-              )} */}
-              {token && (
-                <Link className='login-buttones' to='/freq-asked-questions'>
-                  <MdTipsAndUpdates style={{ fontSize: '3em' }} />
-                  <p>Preguntas Frecuentes</p>
-                </Link>
-              )}
-
-              {token && (
-                <Link className='login-buttones' to='/chatbot'>
-                  <TbMessageChatbotFilled style={{ fontSize: '3em' }} />
-                  <p>Chatbot</p>
-                </Link>
-              )}
-                            {token && (
-                <Link className='login-buttones' to='/blog'>
-                  <BsChatSquareTextFill style={{ fontSize: '3em' }} />
-                  <p>Personalizado</p>
-                </Link>
-              )} 
-              {token && (
-                <Link className='login-buttones' to='/blog'>
-                  <BsChatSquareTextFill style={{ fontSize: '3em' }} />
-                  <p>Personalizado</p>
-                </Link>
-              )} 
-
-              {token && admin && (
-                <Link className='login-buttones' to='/stats-and-reports'>
-                  <p>Estadísticas y reportes(ADMIN)</p>
-                </Link>
-              )}
-              {token && admin && (
-                <Link className='login-buttones' to='/admin-console'>
-                  <p>Consola de manejo de datos(ADMIN)</p>
-                </Link>
-              )}
-
+            <div className="checkbox-wrapper-8">
+            {isAdmin ? <HomeAdmin /> : <HomeUser />}
             </div>
           </div>
         </div>
       ) : (
-        <div>
-          <h1>Por favor inicia sesión</h1>
-          <Link to='/login'>Iniciar sesión</Link>
-        </div>
+        <div>Please log in to access this page.</div>
       )}
     </div>
   );
 };
 
-export default Home
+export default Home;

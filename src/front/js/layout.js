@@ -90,8 +90,8 @@ const Layout = () => {
                         <Navbar style={{ position: "fixed-top", top: 0, zIndex: 1000 }} />
                         <div style={{ flex: 1, overflowY: "auto" }}>
                             <Routes>
-                                <Route path="/" element={<Navigate to="/home" replace />} />
-                                <Route path="/paypal-balance2" element={<PaypalBalance2 />} />
+                            <Route path="/" element={<Home />} />
+                            <Route path="/paypal-balance2" element={<PaypalBalance2 />} />
                                 <Route path="/home" element={<Home />} />
                                 <Route path="/chat" element={<Chat />} />
                                 <Route path="/help-places" element={<HelpPlaces />} />
