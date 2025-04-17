@@ -12,7 +12,6 @@ const Register = () => {
     first_name: '',
     first_last_name: '',
     second_last_name: '',
-    nationality: '',
     gender: '',
     birthdate: '',
     email: '',
@@ -27,9 +26,6 @@ const Register = () => {
     city: '',
     state: '',
     address: '',
-    home_country: '',
-    country_of_residence: '',
-    country_of_destination: '',
     zip_code: '',
     latitude: '',
     longitude: ''

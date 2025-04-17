@@ -16,7 +16,6 @@ const Register = () => {
     first_name: '',
     first_last_name: '',
     second_last_name: '',
-    nationality: '',
     gender: '',
     birthdate: '',
     email: '',
@@ -31,9 +30,6 @@ const Register = () => {
     city: '',
     state: '',
     address: '',
-    home_country: '',
-    country_of_residence: '',
-    country_of_destination: '',
     zip_code: '',
     latitude: '',
     longitude: ''
@@ -49,7 +45,6 @@ const Register = () => {
     if (currentStep === 1) {
       if (!formData.first_name.trim()) newErrors.first_name = genericLegend;
       if (!formData.first_last_name.trim()) newErrors.first_last_name = genericLegend;
-      if (!formData.nationality.trim()) newErrors.nationality = genericLegend;
       if (!formData.gender) newErrors.gender = genericLegend;
       if (!formData.birthdate) {
         newErrors.birthdate = genericLegend;
@@ -58,7 +53,6 @@ const Register = () => {
         let today = new Date();
         if (birthDate > today) newErrors.birthdate = "Seleccione una fecha válida.";
       }
-      if (!formData.home_country.trim()) newErrors.home_country = genericLegend;
     }
 
     if (currentStep === 2) {
@@ -68,7 +62,6 @@ const Register = () => {
       } else if (!/^\d{4,6}$/.test(formData.zip_code)) {
         newErrors.zip_code = "Debe contener al menos 4 dígitos.";
       }
-      if (!formData.country_of_residence.trim()) newErrors.country_of_residence = genericLegend;
       if (!formData.state.trim()) newErrors.state = genericLegend;
       if (!formData.city.trim()) newErrors.city = genericLegend;
     }
@@ -93,7 +86,6 @@ const Register = () => {
     }
 
     if (currentStep === 5) {
-      if (!formData.country_of_destination.trim()) newErrors.country_of_destination = genericLegend;
       if (!formData.password) {
         newErrors.password = genericLegend;
       } else if (formData.password.length > 8) {
@@ -208,8 +200,6 @@ const Register = () => {
               <input className='inputs' type="text" name="first_last_name" placeholder='Apellido 1' value={formData.first_last_name} onChange={handleChange} />
               {errors.first_last_name && <p className="error">{errors.first_last_name}</p>}
               <input className='inputs' type="text" name="second_last_name" placeholder='Apellido 2' value={formData.second_last_name} onChange={handleChange} />
-              <input className='inputs' type="text" name="nationality" placeholder='Nacionalidad' value={formData.nationality} onChange={handleChange} />
-              {errors.nationality && <p className="error">{errors.nationality}</p>}
               <select className='inputs' name="gender" value={formData.gender} onChange={handleChange}>
                 <button className='button' onClick={() => { const isValid = validateForm(step); if (isValid) handleNext(); }}>Siguiente</button>
                 <option >Seleccione una opción</option>
@@ -222,8 +212,6 @@ const Register = () => {
               <label>Fecha de nacimiento</label>
               <input className='inputs' type="date" name="birthdate" placeholder='añadir date' value={formData.birthdate} onChange={handleChange} />
               {errors.birthdate && <p className="error">{errors.birthdate}</p>}
-              <input className='inputs' type="text" name="home_country" placeholder='Pais de Nacimiento' value={formData.home_country} onChange={handleChange} />
-              {errors.home_country && <p className="error">{errors.home_country}</p>}
               <button className='login-buttont' onClick={() => { const isValid = validateForm(step); if (isValid) handleNext(); }}>Siguiente</button>
             </div>
           )}
@@ -234,8 +222,6 @@ const Register = () => {
               {errors.address && <p className="error">{errors.address}</p>}
               <input className='inputs' type="text" name="zip_code" placeholder='Código Postal' value={formData.zip_code} onChange={handleChange} />
               {errors.zip_code && <p className="error">{errors.zip_code}</p>}
-              <input className='inputs' type="text" name="country_of_residence" placeholder='Pais de Residencia' value={formData.country_of_residence} onChange={handleChange} />
-              {errors.country_of_residence && <p className="error">{errors.country_of_residence}</p>}
               <input className='inputs' type="text" name="state" placeholder='Estado' value={formData.state} onChange={handleChange} />
               {errors.state && <p className="error">{errors.state}</p>}
               <input className='inputs' type="text" name="city" placeholder='Ciudad' value={formData.city} onChange={handleChange} />
@@ -274,8 +260,6 @@ const Register = () => {
           {step === 5 && (
             <div>
               <h3 className='heading'>Finalizar registro</h3>
-              <input className='inputs' type="text" name="country_of_destination" placeholder='Pais de Destino' value={formData.country_of_destination} onChange={handleChange} />
-              {errors.country_of_destination && <p className="error">{errors.country_of_destination}</p>}
               <input className='inputs' type="password" name="password" placeholder='Crear contraseña' value={formData.password} onChange={handleChange} />
               {errors.password && <p className="error">{errors.password}</p>}
               <button className='login-buttont' onClick={handleBack}>Atrás</button>
