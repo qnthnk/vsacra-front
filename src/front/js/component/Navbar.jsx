@@ -49,34 +49,21 @@ const Navbar = () => {
             // }}
       >
         <div className="container-fluid">
-          <Link
-        className="navbar-brand"
-        to="#"
-        onClick={(e) => {
-          e.preventDefault();
-          handleMigrappClick();
-        }}
-          >
         <img src={LOGO} alt="Via Sacra" className="logo" />
-          </Link>
 
-          <button className="login-buttonesN" style={{ float: "right" }} onClick={() => {
-            const isLoggedIn = true; // Aquí deberías verificar si el usuario está loggeado correctamente
-            if (isLoggedIn) {
-              window.location.href = '/home';
-            } else {
-              window.location.href = '/login';
-            }
-            }}><Link to="/home" style={{ textDecoration: 'none', color: 'inherit' }}><RiHome6Fill style={{ fontSize: "2em" }} /></Link></button>
+          <button className="login-buttonesN" style={{ float: "right" }}>
+            <Link to="/home" style={{ textDecoration: 'none', color: 'inherit' }}>
+              <RiHome6Fill style={{ fontSize: "2em" }} />
+              </Link></button>
 
 
             <button
             type="button"
             data-bs-toggle="offcanvas"
             data-bs-target="#offcanvasNavbar"
-            style={{ background: 'none', border: 'none' }}
+            className="login-buttonesN"
             >
-            <GiHamburgerMenu className='login-buttonesN' />
+            <GiHamburgerMenu style={{ fontSize: "2em" }}  />
             </button>
             <div
             className="offcanvas offcanvas-end text-bg-dark"
@@ -98,7 +85,7 @@ const Navbar = () => {
             <div className="offcanvas-body ">
               <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
               <li>
-              <Link className="nav-link" to="/home" style={{ textDecoration: 'none', color: 'inherit' }}>
+              <Link className="nav-link" to="/" style={{ textDecoration: 'none', color: 'inherit' }}>
               Inicio
               </Link>
               </li>
