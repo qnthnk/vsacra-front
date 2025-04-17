@@ -49,34 +49,21 @@ const Navbar = () => {
             // }}
       >
         <div className="container-fluid">
-          <Link
-        className="navbar-brand"
-        to="#"
-        onClick={(e) => {
-          e.preventDefault();
-          handleMigrappClick();
-        }}
-          >
         <img src={LOGO} alt="Via Sacra" className="logo" />
-          </Link>
 
-          <button className="login-buttonesN" style={{ float: "right" }} onClick={() => {
-            const isLoggedIn = true; // Aquí deberías verificar si el usuario está loggeado correctamente
-            if (isLoggedIn) {
-              window.location.href = '/home';
-            } else {
-              window.location.href = '/login';
-            }
-            }}><Link to="/home" style={{ textDecoration: 'none', color: 'inherit' }}><RiHome6Fill style={{ fontSize: "2em" }} /></Link></button>
+          <button className="login-buttonesN" style={{ float: "right" }}>
+            <Link to="/home" style={{ textDecoration: 'none', color: 'inherit' }}>
+              <RiHome6Fill style={{ fontSize: "2em" }} />
+              </Link></button>
 
 
             <button
             type="button"
             data-bs-toggle="offcanvas"
             data-bs-target="#offcanvasNavbar"
-            style={{ background: 'none', border: 'none' }}
+            className="login-buttonesN"
             >
-            <GiHamburgerMenu className='login-buttonesN' />
+            <GiHamburgerMenu style={{ fontSize: "2em" }}  />
             </button>
             <div
             className="offcanvas offcanvas-end text-bg-dark"
@@ -97,70 +84,6 @@ const Navbar = () => {
             </div>
             <div className="offcanvas-body ">
               <ul className="navbar-nav justify-content-end flex-grow-1 pe-3">
-              <li>
-              <Link className="nav-link" to="/home" style={{ textDecoration: 'none', color: 'inherit' }}>
-              Inicio
-              </Link>
-              </li>
-              <li>
-              <Link className="nav-link" to="/paypal-balance2" style={{ textDecoration: 'none', color: 'inherit' }}>
-              Donar
-              </Link>
-              </li>
-
-              <li>
-              <Link className="nav-link" to="/login" style={{ textDecoration: 'none', color: 'inherit' }}>
-              Login
-              </Link>
-              </li>
-
-              <li>
-              <Link className="nav-link" to="/chat" style={{ textDecoration: 'none', color: 'inherit' }}>
-              Mensajeria
-              </Link>
-              </li>
-              <li>
-              <Link className="nav-link" to="/chatbot" style={{ textDecoration: 'none', color: 'inherit' }}>
-              Chatbot
-              </Link>
-              </li>
-              <li>
-              <Link className="nav-link" to="/contact-list" style={{ textDecoration: 'none', color: 'inherit' }}>
-              Contact List
-              </Link>
-              </li>
-
-
-              <li>
-              <Link className="nav-link" to="/freq-asked-questions" style={{ textDecoration: 'none', color: 'inherit' }}>
-              Tips
-              </Link>
-              </li>
-              <li>
-              <Link className="nav-link" to="/help" style={{ textDecoration: 'none', color: 'inherit' }}>
-              Contactar Ayuda
-              </Link>
-              </li>
-              <li>
-              <Link className="nav-link" to="/admin-console" style={{ textDecoration: 'none', color: 'inherit' }}>
-              Consola manejo de datos(ADMIN)
-              </Link>
-              </li>
-              <li>
-              <Link className="nav-link" to="/stats-and-reports" style={{ textDecoration: 'none', color: 'inherit' }}>
-              Estadisticas y reportes(ADMIN)
-              </Link>
-              </li>
-              <li>
-              <Link className="nav-link" to="/location-view" style={{ textDecoration: 'none', color: 'inherit' }}>
-              Vista ubicacion
-              </Link>
-              </li>
-              <li>
-              <Link className="nav-link" to="/help" style={{ textDecoration: 'none', color: 'inherit' }}>
-              Contactar Ayuda
-              </Link>
-              </li>
               <li>
               <Link
               className="nav-link"
