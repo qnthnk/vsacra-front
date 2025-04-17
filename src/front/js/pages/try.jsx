@@ -12,6 +12,7 @@ const Register = () => {
     first_name: '',
     first_last_name: '',
     second_last_name: '',
+    curp: '',
     gender: '',
     birthdate: '',
     email: '',
@@ -63,8 +64,9 @@ const Register = () => {
           <div>
             <h3>Datos Personales</h3>
             <input type="text" name="first_name" placeholder="Nombre" value={formData.first_name} onChange={handleChange} />
-            <input type="text" name="first_last_name" placeholder="Apellido 1" value={formData.first_last_name} onChange={handleChange} />
-            <input type="text" name="second_last_name" placeholder="Apellido 2" value={formData.second_last_name} onChange={handleChange} />
+            <input type="text" name="first_last_name" placeholder="Apellido Paterno" value={formData.first_last_name} onChange={handleChange} />
+            <input type="text" name="second_last_name" placeholder="Apellido Materno" value={formData.second_last_name} onChange={handleChange} />
+            <input type="text" name="curp" placeholder="CURP" value={formData.curp} onChange={handleChange} />
             <button onClick={handleNext}>Siguiente</button>
           </div>
         )}

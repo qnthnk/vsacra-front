@@ -16,6 +16,7 @@ const Register = () => {
     first_name: '',
     first_last_name: '',
     second_last_name: '',
+    curp:'',
     gender: '',
     birthdate: '',
     email: '',
@@ -45,6 +46,9 @@ const Register = () => {
     if (currentStep === 1) {
       if (!formData.first_name.trim()) newErrors.first_name = genericLegend;
       if (!formData.first_last_name.trim()) newErrors.first_last_name = genericLegend;
+      if (!formData.second_last_name.trim()) newErrors.second_last_name = genericLegend;
+      if (!formData.curp.trim()) newErrors.curp = genericLegend;
+      if (formData.curp.length < 18) newErrors.curp = "El CURP debe contener 18 caracteres.";
       if (!formData.gender) newErrors.gender = genericLegend;
       if (!formData.birthdate) {
         newErrors.birthdate = genericLegend;
@@ -197,9 +201,12 @@ const Register = () => {
               <h3 className='heading'>Datos Generales</h3>
               <input className='inputs' type="text" name="first_name" placeholder='Nombre' value={formData.first_name} onChange={handleChange} />
               {errors.first_name && <p className="error">{errors.first_name}</p>}
-              <input className='inputs' type="text" name="first_last_name" placeholder='Apellido 1' value={formData.first_last_name} onChange={handleChange} />
+              <input className='inputs' type="text" name="first_last_name" placeholder='Apellido Paterno' value={formData.first_last_name} onChange={handleChange} />
               {errors.first_last_name && <p className="error">{errors.first_last_name}</p>}
-              <input className='inputs' type="text" name="second_last_name" placeholder='Apellido 2' value={formData.second_last_name} onChange={handleChange} />
+              <input className='inputs' type="text" name="second_last_name" placeholder='Apellido Materno' value={formData.second_last_name} onChange={handleChange} />
+              {errors.second_last_name && <p className="error">{errors.second_last_name}</p>}
+              <input className='inputs' type="text" name="curp" placeholder='CURP' value={formData.curp} onChange={handleChange} />
+              {errors.curp && <p className="error">{errors.curp}</p>}
               <select className='inputs' name="gender" value={formData.gender} onChange={handleChange}>
                 <button className='button' onClick={() => { const isValid = validateForm(step); if (isValid) handleNext(); }}>Siguiente</button>
                 <option >Seleccione una opción</option>
