@@ -3,6 +3,7 @@ import { Context } from '../store/appContext';
 import './../../styles/home.css';
 import HomeUser from './HomeUser.jsx';
 import HomeAdmin from './HomeAdmin.jsx';
+import { FaInfo } from "react-icons/fa";
 
 const Home = () => {
   const token = localStorage.getItem('token');
@@ -37,10 +38,27 @@ const Home = () => {
   };
 
   return (
-    <div>
+    <div style={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "100vh" }}>
       {token ? (
-        <div className='backpage'>
+        <div className='backpage' style={{ textAlign: "center" }}>
           <div className='containerH'>
+            {/* MODAL DEMO */}
+            <button type="button" className="DemoButton" style={{ width: "50px", height: "50px", borderRadius: "50%" }} data-bs-toggle="modal" data-bs-target="#exampleModal">
+              <FaInfo className='DemoButton' />
+            </button>
+            <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div className="modal-content demoContainer">
+                  <div className="modal-body">
+                    <div className=''>Debajo de la leyenda de "Usuario" se encuentra un botón que activa el modo Admin. Puedes cambiar las vistas para tener acceso a ambas consolas. Esto es solo para el Demo. Cuando el sistema está en funcionamiento, cada rol de usuario puede ver únicamente las opciones que le corresponden.</div>
+                  </div>
+                  <div className="modal-content">
+                    <button type="button" className="btn btn-warning" data-bs-dismiss="modal">Cerrar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+             {/* MODAL DEMO */}
             <div className="checkbox-wrapper-8 mt-5">
               <input
                 type="checkbox"
@@ -57,8 +75,30 @@ const Home = () => {
               ></label>
             </div>
 
+            <div className="toggle-wrapper">
+              <input className="toggle-checkbox" type="checkbox" checked={isAdmin} onChange={handleToggle} />
+              <div className="toggle-container">  
+                <div className="toggle-button">
+                  <div className="toggle-button-circles-container">
+                    <div className="toggle-button-circle"></div>
+                    <div className="toggle-button-circle"></div>
+                    <div className="toggle-button-circle"></div>
+                    <div className="toggle-button-circle"></div>
+                    <div className="toggle-button-circle"></div>
+                    <div className="toggle-button-circle"></div>
+                    <div className="toggle-button-circle"></div>
+                    <div className="toggle-button-circle"></div>
+                    <div className="toggle-button-circle"></div>
+                    <div className="toggle-button-circle"></div>
+                    <div className="toggle-button-circle"></div>
+                    <div className="toggle-button-circle"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <div className="checkbox-wrapper-8">
-            {isAdmin ? <HomeAdmin /> : <HomeUser />}
+              {isAdmin ? <HomeAdmin /> : <HomeUser />}
             </div>
           </div>
         </div>

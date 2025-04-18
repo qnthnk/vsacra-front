@@ -81,7 +81,7 @@ const HomeUser = () => {
               {token && (
                 <Link className='login-buttones' to='/freq-asked-questions'>
                   <MdTipsAndUpdates style={{ fontSize: '3em' }} />
-                  <p>Preguntas Frecuentes</p>
+                  <p>Entérate</p>
                 </Link>
               )}
 
@@ -92,9 +92,9 @@ const HomeUser = () => {
                 </Link>
               )}
                             {token && (
-                <Link className='login-buttones' to='/blog'>
+                <Link className='login-buttones' to='/complaint'>
                   <BsChatSquareTextFill style={{ fontSize: '3em' }} />
-                  <p>Personalizado</p>
+                  <p>Denuncia Ciudadana</p>
                 </Link>
               )} 
               {token && (

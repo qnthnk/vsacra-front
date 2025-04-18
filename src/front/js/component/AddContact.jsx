@@ -126,9 +126,6 @@ const AddContact = () => {
                     </select>
                     {errors.role && <p className="text-danger">{errors.role}</p>}
                 </div>
-                <div className='demoContainer d-flex justify-content-center' style={{width:"200%"}}>Agregar direcciones reales de email para que reciban el mensaje de emergencia del botón de alerta.</div>
-
-
                 <div className="d-flex justify-content-center">
                     <button type="submit" className="login-buttonesN2" style={{width:"200%"}}>
                         Guardar
