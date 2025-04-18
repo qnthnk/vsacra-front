@@ -129,6 +129,34 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
 
+            complaint: async (complaintToSend) => {
+                console.log("Datos enviados para queja:", complaintToSend);
+                console.log("url de fetch: ",process.env.BACKEND_URL + "api/complaint")
+                try {
+                    const resp = await fetch(process.env.BACKEND_URL + "api/complaint", {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(complaintToSend),
+                    });
+
+                    const data = await resp.json(); // Parsear la respuesta JSON
+
+                    if (!resp.ok) {
+                        // Si la respuesta no es exitosa, lanzar un error con el mensaje del servidor
+                        throw new Error(data.message || 'Error en el registro');
+                    }
+
+                    console.log("Registro exitoso:", data);
+                    return data; // Devuelve los datos para que puedan ser manejados en el componente
+                } catch (error) {
+                    console.error("Error de registro:", error);
+                    throw error; // Lanza el error para que pueda ser manejado en el componente
+                }
+            },
+
+
             login: async (payload) => {
                 try {
                     const resp = await fetch(process.env.BACKEND_URL + "api/login", {

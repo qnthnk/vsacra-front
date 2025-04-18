@@ -4,6 +4,7 @@ import { Context } from "../store/appContext";
 import "../../styles/home.css";
 import { RiHome6Fill } from "react-icons/ri";
 import Swal from 'sweetalert2';
+import { FaInfo } from "react-icons/fa";
 
 
 const libraries = ["places"];
@@ -34,8 +35,27 @@ const LocationView = () => {
     if (!isLoaded) return <p>Cargando mapa...</p>;
 
     return (
-        <div style={{marginTop:"20%", marginBottom:"30%"}}>
-            <div className="containermap">
+       
+        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", textAlign: "center", minHeight: "100vh" }}>
+            <div className="backpage">
+             {/* MODAL DEMO */}
+                    <button type="button" className="DemoButton" style={{ width: "50px", height: "50px", borderRadius: "50%" }} data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                  <FaInfo className='DemoButton' />
+                                </button>
+                                <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                  <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                                    <div className="modal-content demoContainer">
+                                      <div className="modal-body">
+                                        <div className=''>Se presentan al menos 3 tipos de ubicaciones. Pueden ser oficinas de gobierno, bomberos, auxilio, policia o cualquier instalación que se considere prudente. Si son lugares nuevos, se procede a darlos de alta en google para que puedan aparecer </div>
+                                      </div>
+                                      <div className="modal-content">
+                                        <button type="button" className="btn btn-warning" data-bs-dismiss="modal">Cerrar</button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                 {/* MODAL DEMO */}
+            <div className="container p-3">
                 <GoogleMap
                     mapContainerStyle={mapContainerStyle}
                     center={store.userLocation}
@@ -59,9 +79,14 @@ const LocationView = () => {
                         )
                     ))}
                 </GoogleMap>
+            <div className="" style={{ display: "flex", justifyContent: "center", marginTop: "10px" }}>
+                <button className='login-buttonesMap m-1' onClick={() => setSelectedType("hospital")}>Hospitales</button>
+                <button className='login-buttonesMap m-1' onClick={() => setSelectedType("police")}>Policía</button>
+                <button className='login-buttonesMap m-1' onClick={() => setSelectedType("city_hall")}>Gobierno</button>
             </div>
 
-            <div className="containermaplist places-list">
+
+            <div className="container p-2" style={{borderRadius: "none"}}>
                 {store.nearbyPlaces.length > 0 ? (
                     store.nearbyPlaces.map((place, index) => (
                         <div key={index} className="containerData">
@@ -74,19 +99,16 @@ const LocationView = () => {
                         </div>
                     ))
                 ) : (
-                    <p className="heading">Presione la opción que desee para obtener las ubicaciones</p>
+                     // PENDIENTE ARREGLAR ESTILO DEL TEXTO
+                    <p style={{}}>Presione la opción que desee para obtener las ubicaciones</p>
                 )}
             </div>
-
-            <div style={{ display: "flex", justifyContent: "center", marginTop: "10px" }}>
-                <button className='login-buttonesMap' onClick={() => setSelectedType("hospital")}>Hospitales</button>
-                <button className='login-buttonesMap' onClick={() => setSelectedType("police")}>Policía</button>
-                <button className='login-buttonesMap' onClick={() => setSelectedType("city_hall")}>Gobierno</button>
             </div>
-            <br />
-            <br />
+
 
         </div>
+        </div>
+
     );
 };
 
