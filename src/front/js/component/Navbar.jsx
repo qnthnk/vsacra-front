@@ -5,6 +5,7 @@ import { GiHamburgerMenu } from "react-icons/gi";;
 import "../../styles/home.css";
 import LOGO from "../../img/garciaback.png"
 import { RiHome6Fill } from "react-icons/ri";
+import { MdLogout } from "react-icons/md";
 import Swal from 'sweetalert2';
 
 
@@ -57,13 +58,17 @@ const Navbar = () => {
               </Link></button>
 
 
-            <button
-            type="button"
-            data-bs-toggle="offcanvas"
-            data-bs-target="#offcanvasNavbar"
-            className="login-buttonesN"
-            >
-            <GiHamburgerMenu style={{ fontSize: "2em" }}  />
+            <button className="login-buttonesN" style={{ float: "right" }}>
+             <Link
+             to="/login"
+             style={{ textDecoration: 'none', color: 'inherit' }}
+             onClick={(e) => {
+                     e.preventDefault(); // Evita la navegación predeterminada
+                     handleLogout(); // Llama a la función de cierre de sesión
+                   }}
+                 >
+                   <MdLogout style={{ fontSize: "2em" }} />
+                 </Link>
             </button>
             <div
             className="offcanvas offcanvas-end text-bg-dark"

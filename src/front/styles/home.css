@@ -595,7 +595,7 @@
 	backface-visibility: hidden;
 	transition: all 0.2s ease;
 	font-family: sans-serif;
-	background: #888;
+	font-size: large;
   }
   
   .checkbox-wrapper-8 .tgl-skewed + .tgl-btn:after,
@@ -608,8 +608,7 @@
 	position: absolute;
 	line-height: 2em;
 	font-weight: bold;
-	color: #fff;
-	text-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
+	color: #40071C;
   }
   
   .checkbox-wrapper-8 .tgl-skewed + .tgl-btn:after {
@@ -622,17 +621,11 @@
 	content: attr(data-tg-off);
   }
   
-  .checkbox-wrapper-8 .tgl-skewed + .tgl-btn:active {
-	background: #5a4f4f;
-  }
   
   .checkbox-wrapper-8 .tgl-skewed + .tgl-btn:active:before {
 	left: -10%;
   }
   
-  .checkbox-wrapper-8 .tgl-skewed:checked + .tgl-btn {
-	background: #b6b608;
-  }
   
   .checkbox-wrapper-8 .tgl-skewed:checked + .tgl-btn:before {
 	left: -100%;
@@ -644,4 +637,125 @@
   
   .checkbox-wrapper-8 .tgl-skewed:checked + .tgl-btn:active:after {
 	left: 10%;
+  }
+  /* From Uiverse.io by gharsh11032000 */ 
+/* The switch - the box around the slider */
+.switch {
+  font-size: 17px;
+  position: relative;
+  display: inline-block;
+  width: 3.5em;
+  height: 2em;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  border: 2px solid #414141;
+  border-radius: 50px;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 1.4em;
+  width: 1.4em;
+  left: 0.2em;
+  bottom: 0.2em;
+  background-color: white;
+  border-radius: inherit;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+}
+
+.switch input:checked + .slider {
+  box-shadow: 0 0 20px rgba(9, 117, 241, 0.8);
+  border: 2px solid #0974f1;
+}
+
+.switch input:checked + .slider:before {
+  transform: translateX(1.5em);
+}
+/* From Uiverse.io by njesenberger */ 
+.toggle-wrapper {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+	border-radius: .5em;
+	padding: .125em;
+	box-shadow: 0 1px 1px rgb(255 255 255 / .6);
+	/* resize for demo */
+	font-size: 1.5em;
+  }
+  
+  .toggle-checkbox {
+	appearance: none;
+	position: absolute;
+	z-index: 1;
+	border-radius: inherit;
+	width: 100%;
+	height: 100%;
+	/* fix em sizing */
+	font: inherit;
+	opacity: 0;
+	cursor: pointer;
+  }
+  
+  .toggle-container {
+	display: flex;
+	align-items: center;
+	position: relative;
+	border-radius: .375em;
+	width: 3.5em;
+	height: 1.5em;
+	background-color: #c6c3c3;
+	box-shadow: inset 0 0 .0625em .125em rgb(255 255 255 / .2), inset 0 .0625em .125em rgb(0 0 0 / .4);
+	transition: background-color .4s linear;
+  }
+  
+  .toggle-checkbox:checked + .toggle-container {
+	background-color: #b6b60894;
+  }
+  
+  .toggle-button {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: absolute;
+	left: -.775em;
+	border-radius: .3125em;
+	width: 1.375em;
+	height: 1.375em;
+	background-color: #5a4f4f;
+	box-shadow: inset 0 -.0625em .0625em .125em rgb(0 0 0 / .1), inset 0 -.125em .0625em rgb(0 0 0 / .2), inset 0 .1875em .0625em rgb(255 255 255 / .3), 0 .125em .125em rgb(0 0 0 / .5);
+	transition: left .4s;
+  }
+  
+  .toggle-checkbox:checked + .toggle-container > .toggle-button {
+	left: 2.775em;
+  }
+  
+  .toggle-button-circles-container {
+	display: grid;
+	grid-template-columns: repeat(3, min-content);
+	gap: .125em;
+	position: absolute;
+	margin: 0 auto;
+  }
+  
+  .toggle-button-circle {
+	border-radius: 50%;
+	width: .125em;
+	height: .125em;
+	background-image: radial-gradient(circle at 50% 0, #f5f5f5, #c4c4c4);
   }

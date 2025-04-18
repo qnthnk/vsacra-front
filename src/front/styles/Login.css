@@ -520,19 +520,27 @@ body {
 .infoIcon.visible {
     display: block;
 }
-.DemoButton{
+.DemoButton {
 	display: block;
-	width: 50px;
+	width: 80px;
+	height: 80px;
 	text-decoration: none;
-	background: rgb(134, 37, 68);
+	background: rgb(192, 134, 53);
 	color: white;
-	font-size: x-large;
+	font-size:x-large;
 	text-align: center;
-	height: 50px;
 	border-radius: 50%;
-	box-shadow: rgb(134, 37, 68) 0px 20px 10px -15px;
+	box-shadow: rgb(145, 137, 140) 0px 20px 10px -15px;
 	border: none;
 	transition: all 0.2s ease-in-out;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.DemoButton svg {
+	width: 24px; /* Adjust the width of the icon */
+	height: 24px; /* Adjust the height of the icon */
 }
 .firstClick {
 	animation: vibrate 1.2s ;

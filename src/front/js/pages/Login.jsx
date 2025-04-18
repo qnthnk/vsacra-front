@@ -54,9 +54,10 @@ const Login = ({ setToken }) => {
         <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
           <div className="modal-content demoContainer">
             <div className="modal-body">
-              <div className=''>Los recuadros rosas como este, solo aparecen en esta versión demo para explicar funcionalidades generales.
-              <FaInfo className='DemoButton' style={{fontSize: "10px"}} />
+              <div className=''>Bienvenido al DEMO. En cada sección encontrarás un ícono de información, como el que se muestra a continuación. Puedes presionar sobre él para obtener referencias sobre cada función. 
               </div>
+              {/* Hay que ajustar el tamaño del icono dentro del boton y centrarlo */}
+              <FaInfo className='DemoButton' style={{fontSize: "5px"}} />
             </div>
             <div className="modal-content">
               <button type="button" className="btn btn-warning" data-bs-dismiss="modal">Cerrar</button>
