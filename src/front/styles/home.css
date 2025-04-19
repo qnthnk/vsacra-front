@@ -8,6 +8,7 @@
 	margin-top: 7%;
 }
 
+
 .containerH {
 	max-width: 350px;
 	background: linear-gradient(0deg,
@@ -83,7 +84,7 @@
 	text-align: center;
 	font-weight: 900;
 	font-size: 35px;
-	color:#d9a577;
+	color: #d9a577;
 	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 
 }
@@ -164,11 +165,12 @@
 	transform: scale(1.15);
 	box-shadow: #D9CCE0 0px 15px 10px -10px;
 }
+
 .Login-buttonesAdmin {
 	display: block;
 	width: 120px;
 	text-decoration: none;
-	background:#b6b6089a;
+	background: #b6b6089a;
 	color: white;
 	padding-block: 15px;
 	margin: 20px auto;
@@ -487,73 +489,73 @@
 	width: 220px;
 	height: 90px;
 }
+
 .demoContainer {
-    max-width: 350px;
+	max-width: 350px;
 	text-align: center;
-    border-color: #f297b7;
-    border-width: medium;
-	background: linear-gradient(
-	  0deg,
-	  rgb(255, 255, 255) 0%,
-	  rgb(244, 247, 251) 100%
-	);
-    border-radius: 40px;
-    padding: 25px 35px;
-    border: 5px solid rgb(255, 255, 255);
-    box-shadow: rgba(167, 28, 58, 0.878) 0px 30px 30px -20px;
-    margin: 20px auto;
-    transition: opacity 0.3s, visibility 0.3s;
+	border-color: #f297b7;
+	border-width: medium;
+	background: linear-gradient(0deg,
+			rgb(255, 255, 255) 0%,
+			rgb(244, 247, 251) 100%);
+	border-radius: 40px;
+	padding: 25px 35px;
+	border: 5px solid rgb(255, 255, 255);
+	box-shadow: rgba(167, 28, 58, 0.878) 0px 30px 30px -20px;
+	margin: 20px auto;
+	transition: opacity 0.3s, visibility 0.3s;
 }
 
 .demoContainer.hidden {
-    opacity: 0;
-    visibility: hidden;
+	opacity: 0;
+	visibility: hidden;
 }
 
 .infoIcon {
-    display: none;
-    font-size: 24px;
-    color: var(--primary-color);
-    text-align: center;
-    margin: 20px auto;
+	display: none;
+	font-size: 24px;
+	color: var(--primary-color);
+	text-align: center;
+	margin: 20px auto;
 }
 
 .infoIcon.visible {
-    display: block;
+	display: block;
 }
-/* From Uiverse.io by Shoh2008 */ 
+
+/* From Uiverse.io by Shoh2008 */
 .checkbox-wrapper-8 .tgl {
 	display: none;
-  }
-  
-  .checkbox-wrapper-8 .tgl,
-	.checkbox-wrapper-8 .tgl:after,
-	.checkbox-wrapper-8 .tgl:before,
-	.checkbox-wrapper-8 .tgl *,
-	.checkbox-wrapper-8 .tgl *:after,
-	.checkbox-wrapper-8 .tgl *:before,
-	.checkbox-wrapper-8 .tgl + .tgl-btn {
+}
+
+.checkbox-wrapper-8 .tgl,
+.checkbox-wrapper-8 .tgl:after,
+.checkbox-wrapper-8 .tgl:before,
+.checkbox-wrapper-8 .tgl *,
+.checkbox-wrapper-8 .tgl *:after,
+.checkbox-wrapper-8 .tgl *:before,
+.checkbox-wrapper-8 .tgl+.tgl-btn {
 	box-sizing: border-box;
-  }
-  
-  .checkbox-wrapper-8 .tgl::-moz-selection,
-	.checkbox-wrapper-8 .tgl:after::-moz-selection,
-	.checkbox-wrapper-8 .tgl:before::-moz-selection,
-	.checkbox-wrapper-8 .tgl *::-moz-selection,
-	.checkbox-wrapper-8 .tgl *:after::-moz-selection,
-	.checkbox-wrapper-8 .tgl *:before::-moz-selection,
-	.checkbox-wrapper-8 .tgl + .tgl-btn::-moz-selection,
-	.checkbox-wrapper-8 .tgl::selection,
-	.checkbox-wrapper-8 .tgl:after::selection,
-	.checkbox-wrapper-8 .tgl:before::selection,
-	.checkbox-wrapper-8 .tgl *::selection,
-	.checkbox-wrapper-8 .tgl *:after::selection,
-	.checkbox-wrapper-8 .tgl *:before::selection,
-	.checkbox-wrapper-8 .tgl + .tgl-btn::selection {
+}
+
+.checkbox-wrapper-8 .tgl::-moz-selection,
+.checkbox-wrapper-8 .tgl:after::-moz-selection,
+.checkbox-wrapper-8 .tgl:before::-moz-selection,
+.checkbox-wrapper-8 .tgl *::-moz-selection,
+.checkbox-wrapper-8 .tgl *:after::-moz-selection,
+.checkbox-wrapper-8 .tgl *:before::-moz-selection,
+.checkbox-wrapper-8 .tgl+.tgl-btn::-moz-selection,
+.checkbox-wrapper-8 .tgl::selection,
+.checkbox-wrapper-8 .tgl:after::selection,
+.checkbox-wrapper-8 .tgl:before::selection,
+.checkbox-wrapper-8 .tgl *::selection,
+.checkbox-wrapper-8 .tgl *:after::selection,
+.checkbox-wrapper-8 .tgl *:before::selection,
+.checkbox-wrapper-8 .tgl+.tgl-btn::selection {
 	background: none;
-  }
-  
-  .checkbox-wrapper-8 .tgl + .tgl-btn {
+}
+
+.checkbox-wrapper-8 .tgl+.tgl-btn {
 	outline: 0;
 	display: block;
 	width: 7em;
@@ -565,30 +567,30 @@
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
-  }
-  
-  .checkbox-wrapper-8 .tgl + .tgl-btn:after,
-	.checkbox-wrapper-8 .tgl + .tgl-btn:before {
+}
+
+.checkbox-wrapper-8 .tgl+.tgl-btn:after,
+.checkbox-wrapper-8 .tgl+.tgl-btn:before {
 	position: relative;
 	display: block;
 	content: "";
 	width: 50%;
 	height: 100%;
-  }
-  
-  .checkbox-wrapper-8 .tgl + .tgl-btn:after {
+}
+
+.checkbox-wrapper-8 .tgl+.tgl-btn:after {
 	left: 0;
-  }
-  
-  .checkbox-wrapper-8 .tgl + .tgl-btn:before {
+}
+
+.checkbox-wrapper-8 .tgl+.tgl-btn:before {
 	display: none;
-  }
-  
-  .checkbox-wrapper-8 .tgl:checked + .tgl-btn:after {
+}
+
+.checkbox-wrapper-8 .tgl:checked+.tgl-btn:after {
 	left: 50%;
-  }
-  
-  .checkbox-wrapper-8 .tgl-skewed + .tgl-btn {
+}
+
+.checkbox-wrapper-8 .tgl-skewed+.tgl-btn {
 	overflow: hidden;
 	transform: skew(-10deg);
 	-webkit-backface-visibility: hidden;
@@ -596,10 +598,10 @@
 	transition: all 0.2s ease;
 	font-family: sans-serif;
 	font-size: large;
-  }
-  
-  .checkbox-wrapper-8 .tgl-skewed + .tgl-btn:after,
-	.checkbox-wrapper-8 .tgl-skewed + .tgl-btn:before {
+}
+
+.checkbox-wrapper-8 .tgl-skewed+.tgl-btn:after,
+.checkbox-wrapper-8 .tgl-skewed+.tgl-btn:before {
 	transform: skew(10deg);
 	display: inline-block;
 	transition: all 0.2s ease;
@@ -609,83 +611,85 @@
 	line-height: 2em;
 	font-weight: bold;
 	color: #40071C;
-  }
-  
-  .checkbox-wrapper-8 .tgl-skewed + .tgl-btn:after {
+}
+
+.checkbox-wrapper-8 .tgl-skewed+.tgl-btn:after {
 	left: 100%;
 	content: attr(data-tg-on);
-  }
-  
-  .checkbox-wrapper-8 .tgl-skewed + .tgl-btn:before {
+}
+
+.checkbox-wrapper-8 .tgl-skewed+.tgl-btn:before {
 	left: 0;
 	content: attr(data-tg-off);
-  }
-  
-  
-  .checkbox-wrapper-8 .tgl-skewed + .tgl-btn:active:before {
+}
+
+
+.checkbox-wrapper-8 .tgl-skewed+.tgl-btn:active:before {
 	left: -10%;
-  }
-  
-  
-  .checkbox-wrapper-8 .tgl-skewed:checked + .tgl-btn:before {
+}
+
+
+.checkbox-wrapper-8 .tgl-skewed:checked+.tgl-btn:before {
 	left: -100%;
-  }
-  
-  .checkbox-wrapper-8 .tgl-skewed:checked + .tgl-btn:after {
+}
+
+.checkbox-wrapper-8 .tgl-skewed:checked+.tgl-btn:after {
 	left: 0;
-  }
-  
-  .checkbox-wrapper-8 .tgl-skewed:checked + .tgl-btn:active:after {
+}
+
+.checkbox-wrapper-8 .tgl-skewed:checked+.tgl-btn:active:after {
 	left: 10%;
-  }
-  /* From Uiverse.io by gharsh11032000 */ 
+}
+
+/* From Uiverse.io by gharsh11032000 */
 /* The switch - the box around the slider */
 .switch {
-  font-size: 17px;
-  position: relative;
-  display: inline-block;
-  width: 3.5em;
-  height: 2em;
+	font-size: 17px;
+	position: relative;
+	display: inline-block;
+	width: 3.5em;
+	height: 2em;
 }
 
 /* Hide default HTML checkbox */
 .switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
+	opacity: 0;
+	width: 0;
+	height: 0;
 }
 
 /* The slider */
 .slider {
-  position: absolute;
-  cursor: pointer;
-  inset: 0;
-  border: 2px solid #414141;
-  border-radius: 50px;
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+	position: absolute;
+	cursor: pointer;
+	inset: 0;
+	border: 2px solid #414141;
+	border-radius: 50px;
+	transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .slider:before {
-  position: absolute;
-  content: "";
-  height: 1.4em;
-  width: 1.4em;
-  left: 0.2em;
-  bottom: 0.2em;
-  background-color: white;
-  border-radius: inherit;
-  transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+	position: absolute;
+	content: "";
+	height: 1.4em;
+	width: 1.4em;
+	left: 0.2em;
+	bottom: 0.2em;
+	background-color: white;
+	border-radius: inherit;
+	transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
 }
 
-.switch input:checked + .slider {
-  box-shadow: 0 0 20px rgba(9, 117, 241, 0.8);
-  border: 2px solid #0974f1;
+.switch input:checked+.slider {
+	box-shadow: 0 0 20px rgba(9, 117, 241, 0.8);
+	border: 2px solid #0974f1;
 }
 
-.switch input:checked + .slider:before {
-  transform: translateX(1.5em);
+.switch input:checked+.slider:before {
+	transform: translateX(1.5em);
 }
-/* From Uiverse.io by njesenberger */ 
+
+/* From Uiverse.io by njesenberger */
 .toggle-wrapper {
 	display: flex;
 	justify-content: center;
@@ -696,9 +700,9 @@
 	box-shadow: 0 1px 1px rgb(255 255 255 / .6);
 	/* resize for demo */
 	font-size: 1.5em;
-  }
-  
-  .toggle-checkbox {
+}
+
+.toggle-checkbox {
 	appearance: none;
 	position: absolute;
 	z-index: 1;
@@ -709,9 +713,9 @@
 	font: inherit;
 	opacity: 0;
 	cursor: pointer;
-  }
-  
-  .toggle-container {
+}
+
+.toggle-container {
 	display: flex;
 	align-items: center;
 	position: relative;
@@ -721,13 +725,13 @@
 	background-color: #c6c3c3;
 	box-shadow: inset 0 0 .0625em .125em rgb(255 255 255 / .2), inset 0 .0625em .125em rgb(0 0 0 / .4);
 	transition: background-color .4s linear;
-  }
-  
-  .toggle-checkbox:checked + .toggle-container {
+}
+
+.toggle-checkbox:checked+.toggle-container {
 	background-color: #b6b60894;
-  }
-  
-  .toggle-button {
+}
+
+.toggle-button {
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -739,23 +743,24 @@
 	background-color: #5a4f4f;
 	box-shadow: inset 0 -.0625em .0625em .125em rgb(0 0 0 / .1), inset 0 -.125em .0625em rgb(0 0 0 / .2), inset 0 .1875em .0625em rgb(255 255 255 / .3), 0 .125em .125em rgb(0 0 0 / .5);
 	transition: left .4s;
-  }
-  
-  .toggle-checkbox:checked + .toggle-container > .toggle-button {
+}
+
+.toggle-checkbox:checked+.toggle-container>.toggle-button {
 	left: 2.775em;
-  }
-  
-  .toggle-button-circles-container {
+}
+
+.toggle-button-circles-container {
 	display: grid;
 	grid-template-columns: repeat(3, min-content);
 	gap: .125em;
 	position: absolute;
 	margin: 0 auto;
-  }
-  
-  .toggle-button-circle {
+}
+
+.toggle-button-circle {
 	border-radius: 50%;
 	width: .125em;
 	height: .125em;
 	background-image: radial-gradient(circle at 50% 0, #f5f5f5, #c4c4c4);
-  }
+
+}
