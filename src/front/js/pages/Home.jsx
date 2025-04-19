@@ -58,7 +58,7 @@ const Home = () => {
                 </div>
               </div>
             </div>
-             {/* MODAL DEMO */}
+            {/* MODAL DEMO */}
             <div className="checkbox-wrapper-8 mt-5">
               <input
                 type="checkbox"
@@ -77,7 +77,7 @@ const Home = () => {
 
             <div className="toggle-wrapper">
               <input className="toggle-checkbox" type="checkbox" checked={isAdmin} onChange={handleToggle} />
-              <div className="toggle-container">  
+              <div className="toggle-container">
                 <div className="toggle-button">
                   <div className="toggle-button-circles-container">
                     <div className="toggle-button-circle"></div>
