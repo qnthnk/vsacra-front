@@ -1,7 +1,7 @@
 /* Estilos generales para ambos componentes */
 /* Estilos base */
 :root {
-    --primary-color: #bb01a6;
+    --primary-color: rgb(134, 37, 68);
     --primary-hover: #9d018a;
     --secondary-color: #1249cb;
     --secondary-hover: #0d3aa3;
@@ -16,9 +16,8 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Poppins', sans-serif;
 }
-
 /* Contenedor principal */
 .auth-container {
     display: flex;
@@ -168,6 +167,13 @@
         font-size: 24px;
     }
 }
+
+@media (min-width: 768px) and (max-width: 1024px) {
+    .auth-card {
+        max-width: 600px;
+    }
+}
+
 .demoContainer {
     max-width: 350px;
     text-align: center;
