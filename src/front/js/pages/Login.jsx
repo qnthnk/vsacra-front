@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Context } from '../store/appContext';
 import { useNavigate, Link } from 'react-router-dom';
 import './../../styles/Login.css';
@@ -12,6 +12,14 @@ const Login = ({ setToken }) => {
   const [error, setError] = useState('');
   const { store, actions } = useContext(Context);
   const navigate = useNavigate();
+
+useEffect(() => {
+    if (store.user?.isAuthenticated) {
+        const redirectPath = store.user.role === 'admin' ? '/admin-dashboard' : '/home';
+        navigate(redirectPath, { replace: true });
+    }
+}, [store.user, navigate]);
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -46,7 +54,8 @@ const Login = ({ setToken }) => {
   };
 
   return (
-    <div className='backpage' style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+    <div className='backpage'>
+      <div className='containerH'>
       <button type="button" className="DemoButton firstClick" style={{ width: "200px", borderRadius: "20px" }} data-bs-toggle="modal" data-bs-target="#exampleModal">
          Haz click aquí
       </button>
@@ -103,6 +112,7 @@ const Login = ({ setToken }) => {
             <input value="Iniciar sesión" type="submit" className="login-buttont" />
           </div>
         </form>
+      </div>
       </div>
     </div>
   );

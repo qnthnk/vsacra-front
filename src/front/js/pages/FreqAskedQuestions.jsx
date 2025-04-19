@@ -22,6 +22,7 @@ const FreqAskedQuestions = () => {
 
   return (
     <div className='backpage'>
+      <div className='containerH'>
       {/* MODAL DEMO */}
                   <button type="button" className="DemoButton" style={{ width: "50px", height: "50px", borderRadius: "50%" }} data-bs-toggle="modal" data-bs-target="#exampleModal">
                     <FaInfo className='DemoButton' />
@@ -53,6 +54,7 @@ const FreqAskedQuestions = () => {
             </div>
           </div>
         ))}
+        </div>
         </div>
       </div>
     </div>);

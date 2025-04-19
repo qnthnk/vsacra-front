@@ -19,9 +19,9 @@ const ContactList = () => {
   };
 
   return (
-    <div style={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "100vh" }}>
 
     <div className="backpage">
+      <div className="containerH">
         {/* MODAL DEMO */}
         <button type="button" className="DemoButton" style={{ width: "50px", height: "50px", borderRadius: "50%" }} data-bs-toggle="modal" data-bs-target="#exampleModal">
                       <FaInfo className='DemoButton' />

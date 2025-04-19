@@ -190,8 +190,8 @@ const Register = () => {
 
   return (
     <div className='backpage'>
-      <br />
-      <br />
+      <div className='containerH'>
+      
       <h3 className='heading'>Completa el siguiente formulario para inscribirte</h3>
 
       <div className="container">
@@ -277,6 +277,7 @@ const Register = () => {
       </div>
       <br />
       <br />
+    </div>
     </div>
   );
 };

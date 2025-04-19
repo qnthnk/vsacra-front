@@ -19,7 +19,7 @@ const Help = () => {
 
   return (
     <div className='backpage'>
-          <div className='containerFAQ'>
+          <div className='containerH'>
             <h2 className='heading'>Preguntas Frecuentes</h2>
             <div>
         {faqs.map((faq, index) => (
