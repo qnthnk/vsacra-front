@@ -558,3 +558,32 @@ body {
 .firstClick:hover {
 	animation: none;
 }
+
+.DemoButton.firstClick {
+	width: 100%;
+	max-width: 200px;
+  }
+  
+  
+  .logo {
+	width: 100%;
+	max-width: 250px;
+	height: auto;
+	margin: 20px 0;
+  }
+  
+  
+  .container {
+	padding: 25px 35px;
+	margin: 20px auto;
+	width: 90%; /* agregado */
+	max-width: 350px;
+  }
+  
+  
+  @media (min-width: 768px) and (max-width: 1024px) {
+	.container {
+	  max-width: 500px;
+	}
+  }
+  
