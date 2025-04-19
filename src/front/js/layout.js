@@ -61,17 +61,6 @@ const Layout = () => {
     }, [token]);
 
 
-    useEffect(() => {
-        if (store.user?.isAuthenticated) {
-            const currentPath = window.location.pathname;
-            const isAuthPath = ['/login', '/signup', '/forgot-password'].includes(currentPath);
-
-            if (isAuthPath) {
-                const redirectPath = store.user.role === 'admin' ? '/admin-dashboard' : '/home';
-                window.location.href = redirectPath;
-            }
-        }
-    }, [store.user]);
 
     return (
         <BrowserRouter>

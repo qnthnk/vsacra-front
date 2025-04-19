@@ -1,23 +1,24 @@
 /* Estilos base (originales) */
 .backpage {
 	width: 100%;
-	min-height: calc(100vh - 80px);
+	height: 80vh;
 	/* Adjust 100px according to the height of your navbar and footer */
 	display: grid;
-	place-content: center;
-	margin-top: 7%;
+	margin-top: 10vh;
+	margin-bottom: 10vh;
+	overflow: hidden;
+	overscroll-behavior: none;
+}
+html, body {
+	overflow: hidden;
 }
 
 
-.containerH {
-	max-width: 350px;
-	background: linear-gradient(0deg,
-			rgb(244, 247, 251) 0%,
-			rgb(255, 255, 255) 100%);
-	border-radius: 40px;
-	padding: 25px 35px;
-	border: 5px solid rgb(255, 255, 255);
-	margin: 20px auto;
+.backpage .containerH {
+	max-width: 100%;
+	max-height: 100vh;
+	padding: 5px 15px;
+	overflow-y: auto;
 }
 
 .containerData {
@@ -137,16 +138,16 @@
 
 .formis .login-buttones {
 	display: block;
-	width: 120px;
+	width: 110px;
 	text-decoration: none;
 	background: #D9CCE0;
 	color: white;
 	padding-block: 15px;
-	margin: 20px auto;
+	margin: 10px auto;
 	text-align: center;
-	height: 120px;
+	height: 110px;
 	word-wrap: break-word;
-	border-radius: 20px;
+	border-radius: 40px;
 	box-shadow: #D9CCE0 0px 20px 10px -15px;
 	border: none;
 	transition: all 0.2s ease-in-out;
@@ -168,16 +169,16 @@
 
 .Login-buttonesAdmin {
 	display: block;
-	width: 120px;
+	width: 110px;
 	text-decoration: none;
 	background: #b6b6089a;
 	color: white;
 	padding-block: 15px;
-	margin: 20px auto;
+	margin: 10px auto;
 	text-align: center;
-	height: 120px;
+	height: 110px;
 	word-wrap: break-word;
-	border-radius: 20px;
+	border-radius: 40px;
 	box-shadow: #b6b6089a 0px 20px 10px -15px;
 	border: none;
 	transition: all 0.2s ease-in-out;

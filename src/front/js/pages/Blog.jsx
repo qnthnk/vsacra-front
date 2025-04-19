@@ -3,7 +3,7 @@ import React from 'react'
 const Blog = () => {
   return (
     <div className='backpage'>
-      <div className='container'>
+      <div className='containerH'>
         <p className='heading'>Personalizado</p>
         <div className='containerMap'>
           <h3 className='' style={{textAlign:"center"}}>

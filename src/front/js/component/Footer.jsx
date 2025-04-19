@@ -16,14 +16,6 @@ const Footer = () => {
   return (
     <>
       <div className="container-fluid card">
-        <div className=''>
-          <div className='buttons'>
-            <Calculator />
-            <Weather />
-            <CurrencyConverter />
-          </div>
-        </div>
-
         <div className='buttons'>
           <EmergencyButton />
         </div>
