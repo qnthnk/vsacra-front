@@ -176,4 +176,63 @@
 .infoIcon.visible {
     display: block;
 }
+
+.backpage {
+	width: 100%;
+	padding: 20px;
+	overflow-x: hidden;
+	display: flex;
+	justify-content: center;
+  }
+  
+  .containerH {
+	width: 100%;
+	padding: 15px;
+	box-sizing: border-box;
+  }
+  
+  .container {
+	width: 100%;
+	max-width: 350px;
+	margin: 0 auto;
+  }
+  
+  @media (min-width: 768px) {
+	.container {
+	  max-width: 600px;
+	  padding: 35px 45px;
+	}
+  
+	.inputs {
+	  font-size: 16px;
+	}
+  
+	.login-buttont {
+	  font-size: 16px;
+	  padding: 15px 20px;
+	}
+  }
+  
+  @media (min-width: 1024px) {
+	.container {
+	  max-width: 700px;
+	}
+  }
+  
+  @media (max-width: 360px) {
+	.container {
+	  padding: 15px;
+	  border-radius: 20px;
+	}
+  
+	.inputs {
+	  padding: 10px;
+	  font-size: 14px;
+	}
+  
+	.login-buttont {
+	  padding: 10px;
+	  font-size: 14px;
+	}
+  }
   

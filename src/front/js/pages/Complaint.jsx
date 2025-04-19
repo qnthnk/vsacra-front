@@ -41,6 +41,23 @@ const Complaint = () => {
         }
     };
 
+    const uploadImageToCloudinary = async (base64Image) => {
+        const data = new FormData();
+        data.append("file", base64Image);
+        data.append("upload_preset", "complaint_upload");
+        data.append("cloud_name", "dtxgs0qsc");
+      
+        const response = await fetch("https://api.cloudinary.com/v1_1/dtxgs0qsc/image/upload", {
+          method: "POST",
+          body: data,
+        });
+      
+        const result = await response.json();
+        return result.secure_url;
+      };
+      
+
+
     const validateForm = () => {
         const errors = {};
 
@@ -73,6 +90,13 @@ const Complaint = () => {
         }
 
         try {
+            const imageUrl = await uploadImageToCloudinary(image);
+
+            const complaintToSend = {
+                ...complaintData,
+                url_image_complaint: imageUrl
+              };
+
             await actions.complaint(complaintToSend);
             console.log("Formulario enviado:", complaintToSend);
             Swal.fire("Denuncia enviada con éxito.");
@@ -182,7 +206,7 @@ const Complaint = () => {
                             )}
                         </div>
                     </div>
-                    <button type="submit" className="login-buttont" onClick={handleSubmit}>Registrarse</button>
+                    <button type="submit" className="login-buttont" onClick={handleSubmit}>Enviar</button>
                 </div>
             </div>
             </div>
