@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
-
 import Swal from 'sweetalert2';
-import '../../styles/Login.css';
-
 import { useNavigate, Link } from 'react-router-dom';
-import "../../styles/Login.css"
+import "../../styles/PaypalBalance.css"
 
 
 const PaypalBalance = () => {
@@ -42,74 +39,100 @@ const PaypalBalance = () => {
   };
 
   return (
-    <div className="backpagenn">
-      <div className="containerc">
-        <div className="contents">
-          <div className="cardContainerc">
-            <div className="creditCardc">
-              <div className="creditCardFront">
-                <div className="cardNumber">•••• •••• •••• ••••</div>
-                <div className="cardDetails">
-                  <div className="cardHolder">
-                    <div className="label">NOMBRE COMPLETO</div>
-                    <div id="card-holder-name">JUAN PEREZ</div>
-                  </div>
-                  <div className="cardExpiration">
-                    <div className="label">VENCIMIENTO</div>
-                    <div id="card-expiration-date">MM/AA</div>
-                  </div>
-                </div>
-              </div>
-              <div className="creditCardBack">
-                <div className="cvvStrip"></div>
-                <div className="cvvNumber" id="card-cvv">123</div>
-              </div>
+    <div className="paypal-page">
+      <div className="paypal-container">
+        <div className="paypal-card">
+          <div className="cardNumber">•••• •••• •••• ••••</div>
+          <div className="cardDetails">
+            <div className="cardHolder">
+              <div className="label">NOMBRE COMPLETO</div>
+              <div id="card-holder-name">JUAN PEREZ</div>
+            </div>
+            <div className="cardExpiration">
+              <div className="label">VENCIMIENTO</div>
+              <div id="card-expiration-date">MM/AA</div>
             </div>
           </div>
-          <div className="formContainer slideFadeIn">
-            <form id="payment-form" onSubmit={handleDonate}>
-              <div className="formGroup">
-                <label htmlFor="money">Cantidad en dólares</label>
-                <select style={{ width: "100%", textAlign: "center", fontWeight: 'bolder', height: "50px", fontSize: '20' }} id="money">
-                  <option value="10">$10</option>
-                  <option value="20">$20</option>
-                  <option value="50">$50</option>
-                  <option value="100">$100</option>
-                </select>
-              </div>
-              <div className="formGroup">
-                <label htmlFor="card-number">Número de tarjeta</label>
-                <input type="text" id="card-number" placeholder="1234 5678 9012 3456" maxLength="19" value={cardNumber} onChange={(e) => setCardNumber(e.target.value)} />
-              </div>
-              <div className="formGroup">
-                <label htmlFor="card-name">Nombre completo</label>
-                <input type="text" id="card-name" placeholder="John Doe" value={cardName} onChange={(e) => setCardName(e.target.value)} />
-              </div>
-              <div className="formGroup">
-                <label htmlFor="card-expiry">Fecha de vencimiento</label>
-                <input type="text" id="card-expiry" placeholder="MM/YY" maxLength="5" value={cardExpiry} onChange={(e) => setCardExpiry(e.target.value)} />
-              </div>
-              <div className="formGroup">
-                <label htmlFor="card-cvv">CVV</label>
-                <input type="password" id="card-cvv" placeholder="123" maxLength="3" value={cardCVV} onChange={(e) => setCardCVV(e.target.value)} />
-              </div>
-              <button type="submit">Donar</button>
-            </form>
-            <button
-              onClick={() => {
-                Swal.fire({
-                  title: 'Prueba de SweetAlert2',
-                  text: 'Este es un mensaje de prueba independiente.',
-                  icon: 'success'
-                });
-              }}
-              style={{ marginTop: '20px' }}
-            >
-              Probar SweetAlert
-            </button>
-          </div>
-          <button className='login-buttonesN2' style={{ width: "50%" }} onClick={() => navigate('/login')}>Regresar</button>
+          <div className="cvvStrip" />
+          <div className="cvvNumber" id="card-cvv">123</div>
         </div>
+
+        <form className="paypal-form" onSubmit={handleDonate}>
+          <div>
+            <label htmlFor="money">Cantidad en dólares</label>
+            <select
+              id="money"
+              style={{
+                width: "100%",
+                textAlign: "center",
+                fontWeight: 'bolder',
+                height: "50px"
+              }}
+            >
+              <option value="10">$10</option>
+              <option value="20">$20</option>
+              <option value="50">$50</option>
+              <option value="100">$100</option>
+            </select>
+          </div>
+
+          <div>
+            <label htmlFor="card-number">Número de tarjeta</label>
+            <input
+              type="text"
+              id="card-number"
+              placeholder="1234 5678 9012 3456"
+              maxLength="19"
+              value={cardNumber}
+              onChange={(e) => setCardNumber(e.target.value)}
+            />
+          </div>
+
+          <div>
+            <label htmlFor="card-name">Nombre completo</label>
+            <input
+              type="text"
+              id="card-name"
+              placeholder="John Doe"
+              value={cardName}
+              onChange={(e) => setCardName(e.target.value)}
+            />
+          </div>
+
+          <div>
+            <label htmlFor="card-expiry">Fecha de vencimiento</label>
+            <input
+              type="text"
+              id="card-expiry"
+              placeholder="MM/YY"
+              maxLength="5"
+              value={cardExpiry}
+              onChange={(e) => setCardExpiry(e.target.value)}
+            />
+          </div>
+
+          <div>
+            <label htmlFor="card-cvv">CVV</label>
+            <input
+              type="password"
+              id="card-cvv"
+              placeholder="123"
+              maxLength="3"
+              value={cardCVV}
+              onChange={(e) => setCardCVV(e.target.value)}
+            />
+          </div>
+
+          <button type="submit">Donar</button>
+        </form>
+
+        <button
+          className='login-buttonesN2'
+          style={{ width: "50%" }}
+          onClick={() => navigate('/login')}
+        >
+          Regresar
+        </button>
       </div>
     </div>
   );
