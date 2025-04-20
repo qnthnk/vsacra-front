@@ -80,8 +80,8 @@ const Layout = () => {
                         <Navbar style={{ position: "fixed-top", top: 0, zIndex: 1000 }} />
                         <div style={{ flex: 1, overflowY: "auto" }}>
                             <Routes>
-                            <Route path="/" element={<Navigate to="/home" replace />} />
-                            <Route path="/paypal-balance2" element={<PaypalBalance2 />} />
+                                <Route path="/" element={<Navigate to="/home" replace />} />
+                                <Route path="/paypal-balance2" element={<PaypalBalance2 />} />
                                 <Route path="/home" element={<Home />} />
                                 <Route path="/chat" element={<Chat />} />
                                 <Route path="/help-places" element={<HelpPlaces />} />
@@ -99,7 +99,7 @@ const Layout = () => {
                                 <Route path="/admin-console" element={<AdminConsole />} />
                                 <Route path="/complaint" element={<Complaint />} />
                                 <Route path="/dashboard-edition" element={<DashboardEdition />} />
-                                <Route path="*" element={<Navigate to="/home" replace />} />
+                                <Route path="*" element={<Navigate to="/login" replace />} />
                             </Routes>
                         </div>
                         <Footer style={{ position: "sticky", bottom: 0, zIndex: 1000 }} />

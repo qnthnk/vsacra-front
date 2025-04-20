@@ -25,7 +25,8 @@ const getState = ({ getStore, getActions, setStore }) => {
 
         },
         actions: {
-
+           
+            
             // Use getActions to call a function within a fuction
             getAllUsers: async () => {
                 try {
@@ -104,7 +105,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             },
             register: async (dataToSend) => {
                 console.log("Datos enviados para registro:", dataToSend);
-                console.log("url de fetch: ",process.env.BACKEND_URL + "api/signup")
+                console.log("url de fetch: ", process.env.BACKEND_URL + "api/signup")
                 try {
                     const resp = await fetch(process.env.BACKEND_URL + "api/signup", {
                         method: 'POST',
@@ -131,7 +132,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
             complaint: async (complaintToSend) => {
                 console.log("Datos enviados para queja:", complaintToSend);
-                console.log("url de fetch: ",process.env.BACKEND_URL + "api/complaint")
+                console.log("url de fetch: ", process.env.BACKEND_URL + "api/complaint")
                 try {
                     const resp = await fetch(process.env.BACKEND_URL + "api/complaint", {
                         method: 'POST',
@@ -166,26 +167,26 @@ const getState = ({ getStore, getActions, setStore }) => {
                         },
                         body: JSON.stringify(payload),
                     });
-            
+
                     if (!resp.ok) {
                         const errorData = await resp.json();
                         throw new Error(errorData.message || 'Error al iniciar sesión');
                     }
-            
+
                     const data = await resp.json();
                     const token = data.token;
-            
+
                     if (!token) {
                         throw new Error('No se recibió un token válido');
                     }
-            
+
                     const decodedToken = jwtDecode(token);
                     const userRole = decodedToken.role;
-            
+
                     localStorage.setItem('token', token);
                     localStorage.setItem('userRole', userRole);
                     localStorage.setItem('id', data.id);
-            
+
                     const store = getStore();
                     setStore({
                         ...store,
@@ -196,7 +197,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                             role: userRole,
                         },
                     });
-            
+
                     // ✅ SweetAlert según el rol
                     Swal.fire({
                         title: '¡Bienvenido!',
@@ -204,7 +205,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                         icon: 'success',
                         confirmButtonText: 'Continuar'
                     });
-            
+
                     // ✨ Se retorna la info útil al componente Login.jsx
                     return {
                         token: token,
@@ -221,7 +222,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     return null;
                 }
             },
-            
+
 
             getSupportedCurrencies: async () => {
                 try {
