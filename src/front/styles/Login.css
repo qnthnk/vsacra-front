@@ -558,3 +558,75 @@ body {
 .firstClick:hover {
 	animation: none;
 }
+
+.DemoButton.firstClick {
+	width: 100%;
+	max-width: 200px;
+  }
+  
+  
+  .logo {
+	width: 100%;
+	max-width: 250px;
+	height: auto;
+	margin: 20px 0;
+  }
+  
+  
+  .container {
+	padding: 25px 35px;
+	margin: 20px auto;
+	width: 90%; /* agregado */
+	max-width: 350px;
+  }
+  
+  
+  @media (min-width: 768px) and (max-width: 1024px) {
+	.container {
+	  max-width: 500px;
+	}
+  }
+  
+@media (min-width: 768px) {
+	.container {
+	  max-width: 500px;
+	  padding: 35px 45px;
+	}
+  
+	.input {
+	  font-size: 16px;
+	  padding: 18px 22px;
+	}
+  
+	.login-buttont {
+	  font-size: 16px;
+	  padding-block: 15px;
+	}
+  
+	.heading {
+	  font-size: 36px;
+	}
+  }
+  
+  @media (min-width: 1024px) {
+	.container {
+	  max-width: 700px;
+	}
+  }
+  
+  @media (max-width: 360px) {
+	.container {
+	  padding: 15px;
+	}
+  
+	.input {
+	  padding: 12px 16px;
+	  font-size: 14px;
+	}
+  
+	.login-buttont {
+	  padding-block: 12px;
+	  font-size: 14px;
+	}
+  }
+  
