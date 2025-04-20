@@ -11,7 +11,7 @@ const Home = () => {
 
   const [location, setLocation] = useState(null);
   const [error, setError] = useState(null);
-  const [isAdmin, setIsAdmin] = useState(false); // Estado para cambiar entre usuario y admin
+  const [isAdmin, setIsAdmin] = useState(false); 
 
   useEffect(() => {
     if (!navigator.geolocation) {
