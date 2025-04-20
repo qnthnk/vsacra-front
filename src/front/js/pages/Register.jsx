@@ -30,10 +30,10 @@ const Register = () => {
     disease: '',
     city: '',
     state: '',
-    colonia_mex: '',
-    house_number: '',
+    colonia_mex: 'none',
+    house_number: 'none',
     street: '',
-    seccion: '',
+    seccion: 'none',
     zip_code: '',
     latitude: '',
     longitude: ''
@@ -55,7 +55,7 @@ const Register = () => {
     }
 
     if (currentStep === 2) {
-      if (!formData.address.trim()) newErrors.address = genericLegend;
+      if (!formData.street.trim()) newErrors.street = genericLegend;
       if (!formData.zip_code.trim()) {
         newErrors.zip_code = genericLegend;
       } else if (!/^\d{4,6}$/.test(formData.zip_code)) {
@@ -192,7 +192,7 @@ const Register = () => {
 
       const fullYear = year < 30 ? `20${year}` : `19${year}`;
       const birthdate = `${fullYear}-${month}-${day}`;
-      const gender = genderChar === 'H' ? 'Hombre' : 'Mujer';
+      const gender = genderChar.toUpperCase() === 'H' ? 'Hombre' : 'Mujer';
 
       return { birthdate, gender };
     }
@@ -236,8 +236,8 @@ const Register = () => {
           {step === 2 && (
             <div>
               <h3 className='heading'>Dirección</h3>
-              <input className='inputs' type="text" name="address" placeholder='Dirección completa' value={formData.address} onChange={handleChange} />
-              {errors.address && <p className="error">{errors.address}</p>}
+              <input className='inputs' type="text" name="street" placeholder='Dirección completa' value={formData.street} onChange={handleChange} />
+              {errors.street && <p className="error">{errors.street}</p>}
               <input className='inputs' type="text" name="zip_code" placeholder='Código Postal' value={formData.zip_code} onChange={handleChange} />
               {errors.zip_code && <p className="error">{errors.zip_code}</p>}
               <input className='inputs' type="text" name="state" placeholder='Estado' value={formData.state} onChange={handleChange} />
