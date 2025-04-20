@@ -16,7 +16,7 @@ const Register = () => {
     first_name: '',
     first_last_name: '',
     second_last_name: '',
-    curp:'',
+    curp: '',
     gender: '',
     birthdate: '',
     email: '',
@@ -30,7 +30,10 @@ const Register = () => {
     disease: '',
     city: '',
     state: '',
-    address: '',
+    colonia_mex: '',
+    house_number: '',
+    street: '',
+    seccion: '',
     zip_code: '',
     latitude: '',
     longitude: ''
@@ -49,14 +52,6 @@ const Register = () => {
       if (!formData.second_last_name.trim()) newErrors.second_last_name = genericLegend;
       if (!formData.curp.trim()) newErrors.curp = genericLegend;
       if (formData.curp.length < 18) newErrors.curp = "El CURP debe contener 18 caracteres.";
-      if (!formData.gender) newErrors.gender = genericLegend;
-      if (!formData.birthdate) {
-        newErrors.birthdate = genericLegend;
-      } else {
-        let birthDate = new Date(formData.birthdate);
-        let today = new Date();
-        if (birthDate > today) newErrors.birthdate = "Seleccione una fecha válida.";
-      }
     }
 
     if (currentStep === 2) {
@@ -188,6 +183,34 @@ const Register = () => {
   }, []);
 
 
+  const extractBirthdateAndGenderFromCURP = (curp) => {
+    if (curp.length === 18) {
+      const year = parseInt(curp.substring(4, 6), 10);
+      const month = curp.substring(6, 8);
+      const day = curp.substring(8, 10);
+      const genderChar = curp[10];
+
+      const fullYear = year < 30 ? `20${year}` : `19${year}`;
+      const birthdate = `${fullYear}-${month}-${day}`;
+      const gender = genderChar === 'H' ? 'Hombre' : 'Mujer';
+
+      return { birthdate, gender };
+    }
+    return { birthdate: '', gender: '' };
+  };
+
+  const handleCURPChange = (e) => {
+    const { name, value } = e.target;
+    const { birthdate, gender } = extractBirthdateAndGenderFromCURP(value);
+
+    setFormData({
+      ...formData,
+      [name]: value,
+      birthdate,
+      gender
+    });
+  };
+
   return (
     <div className='backpage'>
       <div className='containerH'>
@@ -205,20 +228,8 @@ const Register = () => {
               {errors.first_last_name && <p className="error">{errors.first_last_name}</p>}
               <input className='inputs' type="text" name="second_last_name" placeholder='Apellido Materno' value={formData.second_last_name} onChange={handleChange} />
               {errors.second_last_name && <p className="error">{errors.second_last_name}</p>}
-              <input className='inputs' type="text" name="curp" placeholder='CURP' value={formData.curp} onChange={handleChange} />
+              <input className='inputs' type="text" name="curp" placeholder='CURP' value={formData.curp} onChange={handleCURPChange} />
               {errors.curp && <p className="error">{errors.curp}</p>}
-              <select className='inputs' name="gender" value={formData.gender} onChange={handleChange}>
-                <button className='button' onClick={() => { const isValid = validateForm(step); if (isValid) handleNext(); }}>Siguiente</button>
-                <option >Seleccione una opción</option>
-                <option value="male">Masculino</option>
-                <option value="female">Femenino</option>
-                <option value="other">Otro</option>
-              </select>
-              {errors.gender && <p className="error">{errors.gender}</p>}
-              <br />
-              <label>Fecha de nacimiento</label>
-              <input className='inputs' type="date" name="birthdate" placeholder='añadir date' value={formData.birthdate} onChange={handleChange} />
-              {errors.birthdate && <p className="error">{errors.birthdate}</p>}
               <button className='login-buttont' onClick={() => { const isValid = validateForm(step); if (isValid) handleNext(); }}>Siguiente</button>
             </div>
           )}
