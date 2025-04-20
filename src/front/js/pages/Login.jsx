@@ -13,12 +13,12 @@ const Login = ({ setToken }) => {
   const { store, actions } = useContext(Context);
   const navigate = useNavigate();
 
-useEffect(() => {
+  useEffect(() => {
     if (store.user?.isAuthenticated) {
-        const redirectPath = store.user.role === 'admin' ? '/admin-dashboard' : '/home';
-        navigate(redirectPath, { replace: true });
+      const redirectPath = store.user.role === 'admin' ? '/admin-dashboard' : '/home';
+      navigate(redirectPath, { replace: true });
     }
-}, [store.user, navigate]);
+  }, [store.user, navigate]);
 
 
   const handleSubmit = async (e) => {
@@ -56,63 +56,63 @@ useEffect(() => {
   return (
     <div className='backpage'>
       <div className='containerH'>
-      <button type="button" className="DemoButton firstClick" style={{ width: "200px", borderRadius: "20px" }} data-bs-toggle="modal" data-bs-target="#exampleModal">
-         Haz click aquí
-      </button>
-      <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-          <div className="modal-content demoContainer">
-            <div className="modal-body">
-              <div className=''>Bienvenido al DEMO. En cada sección encontrarás un ícono de información, como el que se muestra a continuación. Puedes presionar sobre él para obtener referencias sobre cada función. 
+        <button type="button" className="DemoButton firstClick" style={{ width: "200px", borderRadius: "20px" }} data-bs-toggle="modal" data-bs-target="#exampleModal">
+          Haz click aquí
+        </button>
+        <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div className="modal-content demoContainer">
+              <div className="modal-body">
+                <div className=''>Bienvenido al DEMO. En cada sección encontrarás un ícono de información, como el que se muestra a continuación. Puedes presionar sobre él para obtener referencias sobre cada función.
+                </div>
+                {/* Hay que ajustar el tamaño del icono dentro del boton y centrarlo */}
+                <FaInfo className='DemoButton' style={{ fontSize: "5px" }} />
               </div>
-              {/* Hay que ajustar el tamaño del icono dentro del boton y centrarlo */}
-              <FaInfo className='DemoButton' style={{fontSize: "5px"}} />
-            </div>
-            <div className="modal-content">
-              <button type="button" className="btn btn-warning" data-bs-dismiss="modal">Cerrar</button>
+              <div className="modal-content">
+                <button type="button" className="btn btn-warning" data-bs-dismiss="modal">Cerrar</button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
-        <img src={LOGO} className='logo' />
-      </div>
-      <div className="container">
-        <div className="heading">Ingresar</div>
-        <form className="forms" onSubmit={handleSubmit}>
-          <input
-            placeholder="E-mail"
-            id="email"
-            name="email"
-            type="email"
-            className="input"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-          <input
-            placeholder="Password"
-            id="password"
-            name="password"
-            type="password"
-            className="input"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <img src={LOGO} className='logo' />
+        </div>
+        <div className="container">
+          <div className="heading">Ingresar</div>
+          <form className="forms" onSubmit={handleSubmit}>
+            <input
+              placeholder="E-mail"
+              id="email"
+              name="email"
+              type="email"
+              className="input"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+            <input
+              placeholder="Password"
+              id="password"
+              name="password"
+              type="password"
+              className="input"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
 
-          <span className="forgot-password">
-            <Link to="/signup">Regístrate</Link>
-          </span>
-          <span className="forgot-password">
-            <Link to="/forgot-password">Olvidé mi contraseña</Link>
-          </span>
-          <div style={{ textAlign: 'center' }}>
-            <input value="Iniciar sesión" type="submit" className="login-buttont" />
-          </div>
-        </form>
-      </div>
+            <span className="forgot-password">
+              <Link to="/signup">Regístrate</Link>
+            </span>
+            <span className="forgot-password">
+              <Link to="/forgot-password">Olvidé mi contraseña</Link>
+            </span>
+            <div style={{ textAlign: 'center' }}>
+              <input value="Iniciar sesión" type="submit" className="login-buttont" />
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );
