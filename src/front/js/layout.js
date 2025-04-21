@@ -70,12 +70,7 @@ const Layout = () => {
 
                 {/* </Routes> */}
                 {/* ) : ( */}
-                {/* <Navbar 
-                        // style={{ position: "fixed-top", top: 0, zIndex: 1000 }} 
-                        />
-                        <div 
-                        // style={{ flex: 1, overflowY: "auto" }}
-                        > */}
+                <Navbar />
                 <Routes>
                     <Route path="/login" element={<Login  />} />
                     <Route path="/signup" element={<Register />} />

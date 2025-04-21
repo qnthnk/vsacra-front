@@ -54,10 +54,67 @@ const Login = () => {
   };
 
   return (
+
     <div className='backpage'>
       <div className='containerH'>
+        
+
+       
+        <div className="main">
+        <div className="mainInner">
+          
+
+        <div className="login">
+          <div className="heading" style={{color:"white", marginTop:"20px"}}>Ingresar</div>
+          <form className="form" onSubmit={handleSubmit}>
+            <input
+              placeholder="E-mail"
+              id="email"
+              name="email"
+              type="email"
+              className="inputlog"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+            <input
+              placeholder="Password"
+              id="password"
+              name="password"
+              type="password"
+              className="inputlog"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+            <div className="loginNew" style={{marginTop: "-20px"}}>
+              <button value="Iniciar sesión" type="submit" >Ingresar</button>
+          <button >
+              <Link to="/signup">Regístrate</Link>
+            </button>
+            <span >
+              <Link style={{ color: "white", marginTop: "10px", textDecoration: "none" }} to="/forgot-password">Olvidé mi contraseña</Link>
+            </span>
+            </div>
+            </form>
+            </div>
+            </div>
+          <div className="register">
+            <form className="form">
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <img src={LOGO} className='logo' />
+        </div>
+         
+            </form>
+            </div>
+
+            
+
+        
+        </div>
+        <br />
         <button type="button" className="DemoButton firstClick" style={{ width: "200px", borderRadius: "20px" }} data-bs-toggle="modal" data-bs-target="#exampleModal">
-          Haz click aquí
+          Versión Demo CLICK
         </button>
         <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
           <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
@@ -74,45 +131,7 @@ const Login = () => {
             </div>
           </div>
         </div>
-
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <img src={LOGO} className='logo' />
-        </div>
-        <div className="container">
-          <div className="heading">Ingresar</div>
-          <form className="forms" onSubmit={handleSubmit}>
-            <input
-              placeholder="E-mail"
-              id="email"
-              name="email"
-              type="email"
-              className="input"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-            <input
-              placeholder="Password"
-              id="password"
-              name="password"
-              type="password"
-              className="input"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-
-            <span className="forgot-password">
-              <Link to="/signup">Regístrate</Link>
-            </span>
-            <span className="forgot-password">
-              <Link to="/forgot-password">Olvidé mi contraseña</Link>
-            </span>
-            <div style={{ textAlign: 'center' }}>
-              <input value="Iniciar sesión" type="submit" className="login-buttont" />
-            </div>
-          </form>
-        </div>
+      
       </div>
     </div>
   );
