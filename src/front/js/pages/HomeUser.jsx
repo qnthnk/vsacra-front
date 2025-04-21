@@ -63,7 +63,7 @@ const HomeUser = () => {
                             {token && (
                 <Link className='login-buttones' to='/contact-list'>
                   <RiContactsFill style={{ fontSize: '4em' }} />
-                  <p className='button-text'>Mis contactos</p>
+                  <p className='button-text'>Contactos</p>
                 </Link>
               )}
               {token && (
