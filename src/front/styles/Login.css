@@ -630,3 +630,167 @@ body {
 	}
   }
   
+  /* From Uiverse.io by alexruix */ 
+.main {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	background-color: rgb(134, 37, 68);
+	height: 520px;
+	width: clamp(50vw, 60vw, 70vw);
+	overflow: hidden;
+	border-radius: 60% / 10%;
+	box-shadow: 7px 7px 10px 3px #24004628;
+	margin: 0 auto; /* Centers horizontally */
+  }
+  .mainInner {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	background: rgba(214, 172, 186, 0.6);
+	backdrop-filter: blur(10px) saturate(100%);
+	-webkit-backdrop-filter: blur(10px) saturate(100%);
+	background-color: rgba(255, 255, 255, 0.1);
+	height: 67%;
+	width: clamp(35vw, 45vw, 55vw);
+	overflow: hidden;
+	border-radius: 60% / 10%;
+	box-shadow: 7px 7px 10px 3px #24004628;
+	margin: 0 auto; /* Centers horizontally */
+  }
+  
+  
+  .form {
+	display: flex;
+	flex-direction: column;
+	gap: 14px;
+	padding: 24px;
+  }
+  
+  /*checkbox to switch from sign up to login*/
+  #chk {
+	display: none;
+  }
+  
+  /*Login*/
+  .login {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	
+  }
+  
+  .login label {
+	margin: 25% 0 5%;
+  }
+  
+  label {
+	color: #fff;
+	font-size: 2rem;
+	justify-content: center;
+	display: flex;
+	font-weight: bold;
+	cursor: pointer;
+	transition: .5s ease-in-out;
+  }
+  
+.inputlog {
+	width: clamp(15vw, 25vw, 35vw);
+	height: 40px;
+	background: #fffcfc;
+	padding: 10px;
+	border: none;
+	outline: none;
+	border-radius: 4px;
+	margin: 0 auto; /* Centers horizontally */
+	display: block; /* Ensures it's treated as a block element for centering */
+}
+  
+  /*Register*/
+  .register {
+	background: linear-gradient(135deg, #d4d4d4, #f5f5f5, #b0b0b0);
+	box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.8), inset 0 -1px 2px rgba(0, 0, 0, 0.1);
+	border-radius: 10% / 30%;
+	transform: translateY(5%);
+	transition: .8s ease-in-out;
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	height: 0%;
+	animation: expandHeight 0.8s ease-in-out forwards;
+}
+
+/* Define the keyframes outside of the class */
+@keyframes expandHeight {
+	from {
+		height: 0%;
+	}
+	to {
+		height: 35%;
+	}
+}
+
+/* Trigger animation on page load */
+.register {
+	animation: expandHeight 0.8s ease-in-out forwards;
+	height: 38%; /* Ensure it remains at 40% after animation */
+}
+  
+  .register label {
+	color: #573b8a;
+	transform: scale(.6);
+  }
+  
+  #chk:checked ~ .register {
+	transform: translateY(-60%);
+  }
+  
+  #chk:checked ~ .register label {
+	transform: scale(1);
+	margin: 10% 0 5%;
+  }
+  
+  #chk:checked ~ .login label {
+	transform: scale(.6);
+	margin: 5% 0 5%;
+  }   
+/*Button*/
+.form button {
+	width: clamp(15vw, 15vw, 25vw);
+	height: 40px;
+	color: #fff;
+	background: rgb(208,92,146);
+	font-size: 1rem;
+	font-weight: bold;
+	border: none;
+	border-radius: 10% / 30%;
+	cursor: pointer;
+	transition: .2s ease-in;
+	text-decoration: none;
+	margin-bottom: 5px;
+}
+
+.form button a {
+	color: inherit; /* Inherits the button's text color */
+	text-decoration: none; /* Removes the underline */
+}
+
+.form button a:hover {
+	text-decoration: none; /* Ensures underline doesn't appear on hover */
+}
+  
+  .form button:hover {
+	background-color: #6d44b8;
+  }
+  .loginNew {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	list-style: none;
+	width: 100%;
+	height: 100%;
+	border-radius: 40px;
+	padding: 25px 35px;
+	  }
+  
