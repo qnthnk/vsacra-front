@@ -42,15 +42,15 @@ const Navbar = () => {
   return (
     <div>
       <nav className="navbar bg-body-tertiary fixed-top"
-            // style={{  
-            //   background: "rgba(255, 255, 255, 0.5)",
-            //   backdropFilter: "blur(10px)", 
-            //   borderTop: "1px solid rgba(255, 255, 255, 0.18)", 
-            //   boxShadow: "0 0 0 0 rgba(0, 0, 0, 0.1)" 
-            // }}
+            style={{  
+              background: "rgba(255, 255, 255, 0.5)",
+              backdropFilter: "blur(15px)", 
+              borderTop: "1px solid rgba(255, 255, 255, 0.18)", 
+              boxShadow: "0 0 0 0 rgba(0, 0, 0, 0.1)" 
+            }}
       >
         <div className="container-fluid">
-        <img src={LOGO} alt="Via Sacra" className="logo" />
+        <img src={LOGO} alt="Via Sacra" className="logoNav" />
 
           <button className="login-buttonesN" style={{ float: "right" }}>
             <Link to="/home" style={{ textDecoration: 'none', color: 'inherit' }}>

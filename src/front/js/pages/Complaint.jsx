@@ -46,16 +46,16 @@ const Complaint = () => {
         data.append("file", base64Image);
         data.append("upload_preset", "complaint_upload");
         data.append("cloud_name", "dtxgs0qsc");
-      
+
         const response = await fetch("https://api.cloudinary.com/v1_1/dtxgs0qsc/image/upload", {
-          method: "POST",
-          body: data,
+            method: "POST",
+            body: data,
         });
-      
+
         const result = await response.json();
         return result.secure_url;
-      };
-      
+    };
+
 
 
     const validateForm = () => {
@@ -95,7 +95,7 @@ const Complaint = () => {
             const complaintToSend = {
                 ...complaintData,
                 url_image_complaint: imageUrl
-              };
+            };
 
             await actions.complaint(complaintToSend);
             console.log("Formulario enviado:", complaintToSend);
@@ -133,82 +133,82 @@ const Complaint = () => {
     }, []);
 
     return (
-        <div className='backpage'>
+        <div className='containerRMC'>
             <div className='containerH'>
-            {/* MODAL DEMO */}
-            <button type="button" className="DemoButton" style={{ width: "50px", height: "50px", borderRadius: "50%" }} data-bs-toggle="modal" data-bs-target="#exampleModal">
-                <FaInfo className='DemoButton' />
-            </button>
-            <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                    <div className="modal-content demoContainer">
-                        <div className="modal-body">
-                            <div>Se puede entrenar para dar respuestas orientadas al discurso de la administración, como por ejemplo las acciones de gobierno actuales o los actos que se están investigando de las administraciones pasadas. Para este Demo, solo funciona como ChatGPT de consulta generalizada</div>
-                        </div>
-                        <div className="modal-content">
-                            <button type="button" className="btn btn-warning" data-bs-dismiss="modal">Cerrar</button>
+                {/* MODAL DEMO */}
+                <button type="button" className="DemoButton" style={{ width: "50px", height: "50px", borderRadius: "50%" }} data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    <FaInfo className='DemoButton' />
+                </button>
+                <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                        <div className="modal-content demoContainer">
+                            <div className="modal-body">
+                                <div>Se puede entrenar para dar respuestas orientadas al discurso de la administración, como por ejemplo las acciones de gobierno actuales o los actos que se están investigando de las administraciones pasadas. Para este Demo, solo funciona como ChatGPT de consulta generalizada</div>
+                            </div>
+                            <div className="modal-content">
+                                <button type="button" className="btn btn-warning" data-bs-dismiss="modal">Cerrar</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            {/* MODAL DEMO */}
-            <div className='container'>
-                <p className='heading'>Denuncia Ciudadana</p>
-                <div>
-                    <div style={{ marginBottom: "20px" }}>
-                        <label htmlFor="cause" style={{ display: "block", marginBottom: "5px" }}>Motivo:</label>
-                        <input
-                            type="text"
-                            id="cause"
-                            name="cause"
-                            value={complaintData.cause}
-                            onChange={handleChange}
-                            style={{ width: "100%", padding: "8px", border: "1px solid #ccc", borderRadius: "4px" }}
-                        />
-                    </div>
-                    <div style={{ marginBottom: "20px" }}>
-                        <label htmlFor="complaint_comment" style={{ display: "block", marginBottom: "5px" }}>Comentario:</label>
-                        <textarea
-                            id="complaint_comment"
-                            name="complaint_comment"
-                            value={complaintData.complaint_comment}
-                            onChange={handleChange}
-                            style={{ width: "100%", padding: "8px", border: "1px solid #ccc", borderRadius: "4px", minHeight: "100px" }}
-                        />
-                    </div>
-                    <div style={{ textAlign: "center" }}>
-                        <input type="file" accept="image/*" capture="camera" onChange={handleImageUpload} />
-                        <div style={{ marginTop: "20px" }}>
-                            {image ? (
-                                <img src={image}
-                                    alt="Uploaded"
-                                    style={{
-                                        maxWidth: "100%",
-                                        maxHeight: "300px",
-                                        border: "1px solid #ccc",
-                                        padding: "10px"
-                                    }}
-                                />
-                            ) : (
-                                <div
-                                    style={{
-                                        width: "100%",
-                                        height: "300px",
-                                        border: "1px solid #ccc",
-                                        display: "flex",
-                                        alignItems: "center",
-                                        justifyContent: "center",
-                                        backgroundColor: "#f9f9f9"
-                                    }}
-                                >
-                                    <span style={{ color: "#aaa" }}>No image uploaded</span>
-                                </div>
-                            )}
+                {/* MODAL DEMO */}
+                <div className='container'>
+                    <p className='heading'>Denuncia Ciudadana</p>
+                    <div>
+                        <div style={{ marginBottom: "20px" }}>
+                            <label htmlFor="cause" style={{ display: "block", marginBottom: "5px" }}>Motivo:</label>
+                            <input
+                                type="text"
+                                id="cause"
+                                name="cause"
+                                value={complaintData.cause}
+                                onChange={handleChange}
+                                style={{ width: "100%", padding: "8px", border: "1px solid #ccc", borderRadius: "4px" }}
+                            />
                         </div>
+                        <div style={{ marginBottom: "20px" }}>
+                            <label htmlFor="complaint_comment" style={{ display: "block", marginBottom: "5px" }}>Comentario:</label>
+                            <textarea
+                                id="complaint_comment"
+                                name="complaint_comment"
+                                value={complaintData.complaint_comment}
+                                onChange={handleChange}
+                                style={{ width: "100%", padding: "8px", border: "1px solid #ccc", borderRadius: "4px", minHeight: "100px" }}
+                            />
+                        </div>
+                        <div style={{ textAlign: "center" }}>
+                            <input type="file" accept="image/*" capture="camera" onChange={handleImageUpload} />
+                            <div style={{ marginTop: "20px" }}>
+                                {image ? (
+                                    <img src={image}
+                                        alt="Uploaded"
+                                        style={{
+                                            maxWidth: "100%",
+                                            maxHeight: "300px",
+                                            border: "1px solid #ccc",
+                                            padding: "10px"
+                                        }}
+                                    />
+                                ) : (
+                                    <div
+                                        style={{
+                                            width: "100%",
+                                            height: "300px",
+                                            border: "1px solid #ccc",
+                                            display: "flex",
+                                            alignItems: "center",
+                                            justifyContent: "center",
+                                            backgroundColor: "#f9f9f9"
+                                        }}
+                                    >
+                                        <span style={{ color: "#aaa" }}>No image uploaded</span>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                        <button type="submit" className="login-buttont" onClick={handleSubmit}>Enviar</button>
                     </div>
-                    <button type="submit" className="login-buttont" onClick={handleSubmit}>Enviar</button>
                 </div>
-            </div>
             </div>
         </div>
     )
