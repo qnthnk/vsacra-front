@@ -1,6 +1,8 @@
 .containerRMC {
     padding: 20px;
     font-family: 'Roboto', sans-serif;
+    margin-top: 60px; /* Adjust the value as needed for the navbar */
+    margin-bottom: 40px; /* Adjust the value as needed for the footer */
   }
   
   .titleRMC {
