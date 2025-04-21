@@ -6,7 +6,7 @@ import LOGO from '../../img/garciaback.png'
 import { FaInfo } from "react-icons/fa";
 
 
-const Login = ({ setToken }) => {
+const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -35,8 +35,7 @@ const Login = ({ setToken }) => {
       const response = await actions.login({ email, password });
 
       if (response?.token) {
-        // Actualizar el token en el Layout
-        if (setToken) setToken(response.token);
+      //   if (setToken) setToken(response.token);
 
         // Redirigir basado en el rol del usuario
         const redirectPath = store.user.role === 'admin' ? '/admin-dashboard' : '/home';
@@ -44,7 +43,6 @@ const Login = ({ setToken }) => {
         // Dos métodos de redirección para asegurar el funcionamiento
         navigate(redirectPath);
         // navigate(redirectPath, { replace: true });
-
         // window.location.href = redirectPath;
       } else {
         setError('Credenciales incorrectas o error en el servidor');
