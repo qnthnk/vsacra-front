@@ -62,14 +62,14 @@ const HomeUser = () => {
               )} */}
                             {token && (
                 <Link className='login-buttones' to='/contact-list'>
-                  <RiContactsFill style={{ fontSize: '3em' }} />
-                  <p>Mis contactos</p>
+                  <RiContactsFill style={{ fontSize: '4em' }} />
+                  <p className='button-text'>Mis contactos</p>
                 </Link>
               )}
               {token && (
                 <Link className='login-buttones' to='/location-view'>
-                  <FaLocationDot style={{ fontSize: '3em' }} />
-                  <p> Vista de ubicación</p>
+                  <FaLocationDot style={{ fontSize: '4em' }} />
+                  <p className='button-text'> Lugares</p>
                 </Link>
               )}
               {/* {token && (
@@ -80,27 +80,27 @@ const HomeUser = () => {
               )} */}
               {token && (
                 <Link className='login-buttones' to='/freq-asked-questions'>
-                  <MdTipsAndUpdates style={{ fontSize: '3em' }} />
-                  <p>Entérate</p>
+                  <MdTipsAndUpdates style={{ fontSize: '4em' }} />
+                  <p className='button-text'>Entérate</p>
                 </Link>
               )}
 
               {token && (
                 <Link className='login-buttones' to='/chatbot'>
-                  <TbMessageChatbotFilled style={{ fontSize: '3em' }} />
-                  <p>Chatbot</p>
+                  <TbMessageChatbotFilled style={{ fontSize: '4em' }} />
+                  <p className='button-text'>Chatbot</p>
                 </Link>
               )}
                             {token && (
                 <Link className='login-buttones' to='/complaint'>
-                  <BsChatSquareTextFill style={{ fontSize: '3em' }} />
-                  <p>Denuncia Ciudadana</p>
+                  <BsChatSquareTextFill style={{ fontSize: '4em' }} />
+                  <p className='button-text'>Denuncia</p>
                 </Link>
               )} 
               {token && (
                 <Link className='login-buttones' to='/blog'>
-                  <BsChatSquareTextFill style={{ fontSize: '3em' }} />
-                  <p>Personalizado</p>
+                  <BsChatSquareTextFill style={{ fontSize: '4em' }} />
+                  <p className='button-text'>Personalizado</p>
                 </Link>
               )} 
 

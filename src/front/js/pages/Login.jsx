@@ -55,7 +55,7 @@ const Login = () => {
 
   return (
 
-    <div className='backpage'>
+    <div className='containerRMC'>
       <div className='containerH'>
         
 
@@ -65,10 +65,10 @@ const Login = () => {
           
 
         <div className="login">
-          <div className="heading" style={{color:"white", marginTop:"20px"}}>Ingresar</div>
+          <div className="heading" style={{color:"white", marginTop:"20px"}}>Escudo</div>
           <form className="form" onSubmit={handleSubmit}>
             <input
-              placeholder="E-mail"
+              placeholder="Correo electrónico"
               id="email"
               name="email"
               type="email"
@@ -78,7 +78,7 @@ const Login = () => {
               required
             />
             <input
-              placeholder="Password"
+              placeholder="Contraseña"
               id="password"
               name="password"
               type="password"
@@ -89,12 +89,13 @@ const Login = () => {
             />
             <div className="loginNew" style={{marginTop: "-20px"}}>
               <button value="Iniciar sesión" type="submit" >Ingresar</button>
-          <button >
-              <Link to="/signup">Regístrate</Link>
-            </button>
             <span >
-              <Link style={{ color: "white", marginTop: "10px", textDecoration: "none" }} to="/forgot-password">Olvidé mi contraseña</Link>
+              <Link className='forgot-password' to="/forgot-password">Olvidé mi contraseña</Link>
             </span>
+            <span >
+              <Link className='forgot-password' style={{fontSize:'x-large'}} to="/signup">Regístrate</Link>
+            </span>
+
             </div>
             </form>
             </div>
@@ -121,9 +122,9 @@ const Login = () => {
             <div className="modal-content demoContainer">
               <div className="modal-body">
                 <div className=''>Bienvenido al DEMO. En cada sección encontrarás un ícono de información, como el que se muestra a continuación. Puedes presionar sobre él para obtener referencias sobre cada función.
-                </div>
-                {/* Hay que ajustar el tamaño del icono dentro del boton y centrarlo */}
-                <FaInfo className='DemoButton' style={{ fontSize: "5px" }} />
+                </div >
+                {/* Ajustar el tamaño del icono */}
+                <FaInfo className='DemoButton'  />
               </div>
               <div className="modal-content">
                 <button type="button" className="btn btn-warning" data-bs-dismiss="modal">Cerrar</button>

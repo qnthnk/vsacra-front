@@ -2,14 +2,12 @@ import React, { useEffect, useContext, useState } from 'react'
 import { Context } from '../store/appContext';
 import { Link } from "react-router-dom";
 import './../../styles/home.css';
-import { BsChatSquareTextFill } from "react-icons/bs";
 import { TbMessageChatbotFilled } from "react-icons/tb";
-import { RiContactsFill } from "react-icons/ri";
-import { BsQuestionCircleFill } from "react-icons/bs";
-import { FaLocationDot } from "react-icons/fa6";
-import { MdAddAlert } from "react-icons/md";
-import { MdTipsAndUpdates } from "react-icons/md";
-import { FaQuestionCircle } from "react-icons/fa";
+import { FaChartPie } from "react-icons/fa";
+import { LiaMapSolid } from "react-icons/lia";
+import { MdOutlineDashboardCustomize } from "react-icons/md";
+import { FaAddressCard } from "react-icons/fa";
+import { TbReportSearch } from "react-icons/tb";
 
 
 
@@ -51,44 +49,44 @@ const HomeAdmin = () => {
     <div>
       {token ? (
         <>
-          <h2 className='headingH'>Inicio Admin</h2>
+          <h2 className='headingH'>Inicio</h2>
           <div className='formis'>
 
                             {token && (
                 <Link className='Login-buttonesAdmin' to='/admin-console'>
-                  <RiContactsFill style={{ fontSize: '3em' }} />
-                  <p>Consola</p>
+                  <MdOutlineDashboardCustomize style={{ fontSize: '4em' }} />
+                  <p className='button-text'>Consola</p>
                 </Link>
               )}
               {token && (
                 <Link className='Login-buttonesAdmin' to='/dashboard-edition'>
-                  <FaLocationDot style={{ fontSize: '3em' }} />
-                  <p> Vista de ubicación</p>
+                  <LiaMapSolid style={{ fontSize: '4em' }} />
+                  <p className='button-text'> Mapas</p>
                 </Link>
               )}
               {token && (
                 <Link className='Login-buttonesAdmin' to='/stats-and-reports'>
-                  <MdTipsAndUpdates style={{ fontSize: '3em' }} />
-                  <p>Estadísticas y reportes</p>
+                  <FaChartPie style={{ fontSize: '4em' }} />
+                  <p className='button-text'>Estadísticas</p>
                 </Link>
               )}
 
               {token && (
                 <Link className='Login-buttonesAdmin' to='/chatbot'>
-                  <TbMessageChatbotFilled style={{ fontSize: '3em' }} />
-                  <p>Chatbot</p>
+                  <TbMessageChatbotFilled style={{ fontSize: '4em' }} />
+                  <p className='button-text'>Chatbot</p>
                 </Link>
               )}
                             {token && (
                 <Link className='Login-buttonesAdmin' to='/blog'>
-                  <BsChatSquareTextFill style={{ fontSize: '3em' }} />
-                  <p>Ficha de usuario</p>
+                  <FaAddressCard style={{ fontSize: '4em' }} />
+                  <p className='button-text'>Expedientes</p>
                 </Link>
               )} 
               {token && (
                 <Link className='Login-buttonesAdmin' to='/blog'>
-                  <BsChatSquareTextFill style={{ fontSize: '3em' }} />
-                  <p>Personalizado</p>
+                  <TbReportSearch style={{ fontSize: '4em' }} />
+                  <p className='button-text'>Reportes</p>
                 </Link>
               )} 
 

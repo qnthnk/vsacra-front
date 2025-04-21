@@ -55,7 +55,7 @@ const DashboardAdminSocioDem = () => {
     ];
 
     return (
-        <div className='backpage'>
+        <div className='containerRMC'>
             <div className="containerH">
                 <h2 className="heading">Estadísticas</h2>
 

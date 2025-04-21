@@ -2,14 +2,14 @@ import React from 'react'
 
 const Blog = () => {
   return (
-    <div className='backpage'>
+    <div className='containerRMC'>
       <div className='containerH'>
         <p className='heading'>Personalizado</p>
         <div className='containerMap'>
-          <h3 className='' style={{textAlign:"center"}}>
+          <h3 className='' style={{ textAlign: "center" }}>
             Se pueden agregar las funciones que se requieran:
           </h3>
-          <br/>
+          <br />
           <ul>
             <li><h4>Información sobre pago de derechos.</h4></li>
             <li><h4>Alta de reportes ciudadanos.</h4></li>
@@ -17,7 +17,7 @@ const Blog = () => {
             <li><h4>Noticias relevantes sobre las acciones de Gobierno.</h4></li>
           </ul>
         </div>
-    </div>
+      </div>
     </div>
   )
 }

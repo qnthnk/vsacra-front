@@ -310,7 +310,7 @@ const Register = () => {
   }, []);
 
   return (
-    <div className='backpage'>
+    <div className='containerRMC'>
       <div className='containerH'>
         <h3 className='heading'>Completa el siguiente formulario para inscribirte</h3>
         <div className="container">
