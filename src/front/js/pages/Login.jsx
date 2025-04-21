@@ -40,10 +40,12 @@ const Login = ({ setToken }) => {
 
         // Redirigir basado en el rol del usuario
         const redirectPath = store.user.role === 'admin' ? '/admin-dashboard' : '/home';
-
+        console.log('Redirigiendo a:', redirectPath);
         // Dos métodos de redirección para asegurar el funcionamiento
-        navigate(redirectPath, { replace: true });
-        window.location.href = redirectPath;
+        navigate(redirectPath);
+        // navigate(redirectPath, { replace: true });
+
+        // window.location.href = redirectPath;
       } else {
         setError('Credenciales incorrectas o error en el servidor');
       }
