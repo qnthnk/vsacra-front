@@ -1,5 +1,6 @@
 import React, { useEffect, useContext, useState } from 'react';
 import { Context } from '../store/appContext';
+import { Navigate } from 'react-router-dom';
 import './../../styles/home.css';
 import HomeUser from './HomeUser.jsx';
 import HomeAdmin from './HomeAdmin.jsx';
@@ -103,7 +104,7 @@ const Home = () => {
           </div>
         </div>
       ) : (
-        <div>Please log in to access this page.</div>
+        <Navigate to="/login" />
       )}
       </>
   );
