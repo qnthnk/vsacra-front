@@ -65,46 +65,42 @@ const Layout = () => {
     return (
         <BrowserRouter>
             <ScrollToTop>
-                {!token ? (
-                    <Routes>
-                        <Route path="/login" element={<Login setToken={setToken} />} />
-                        <Route path="/signup" element={<Register />} />
-                        <Route path="/reset-password" element={<ResetPassword />} />
-                        <Route path="/forgot-password" element={<ForgotPassword />} />
-                        <Route path="*" element={<Navigate to="/login" replace />} />
-                        <Route path="/paypal-balance" element={<PaypalBalance />} />
+                {/* {!token ? ( */}
+                {/* <Routes> */}
 
-                    </Routes>
-                ) : (
-                    <>
-                        <Navbar style={{ position: "fixed-top", top: 0, zIndex: 1000 }} />
-                        <div style={{ flex: 1, overflowY: "auto" }}>
-                            <Routes>
-                                <Route path="/" element={<Navigate to="/home" replace />} />
-                                <Route path="/paypal-balance2" element={<PaypalBalance2 />} />
-                                <Route path="/home" element={<Home />} />
-                                <Route path="/chat" element={<Chat />} />
-                                <Route path="/help-places" element={<HelpPlaces />} />
-                                <Route path="/embassies" element={<Embassies />} />
-                                <Route path="/blog" element={<Blog />} />
-                                <Route path="/gadgets" element={<Gadgets />} />
-                                <Route path="/chatbot" element={<ChatBot />} />
-                                <Route path="/contact-list" element={<ContactList />} />
-                                <Route path="/immigration-requirements" element={<ImmigrationRequirements />} />
-                                <Route path="/freq-asked-questions" element={<FreqAskedQuestions />} />
-                                <Route path="/emergency" element={<Emergency />} />
-                                <Route path="/stats-and-reports" element={<StatsAndReports />} />
-                                <Route path="/help" element={<Help />} />
-                                <Route path="/location-view" element={<LocationView />} />
-                                <Route path="/admin-console" element={<AdminConsole />} />
-                                <Route path="/complaint" element={<Complaint />} />
-                                <Route path="/dashboard-edition" element={<DashboardEdition />} />
-                                <Route path="*" element={<Navigate to="/login" replace />} />
-                            </Routes>
-                        </div>
-                        <Footer style={{ position: "sticky", bottom: 0, zIndex: 1000 }} />
-                    </>
-                )}
+                {/* </Routes> */}
+                {/* ) : ( */}
+                <Navbar />
+                <Routes>
+                    <Route path="/login" element={<Login  />} />
+                    <Route path="/signup" element={<Register />} />
+                    <Route path="/reset-password" element={<ResetPassword />} />
+                    <Route path="/forgot-password" element={<ForgotPassword />} />
+                    <Route path="/paypal-balance" element={<PaypalBalance />} />
+                    <Route path="/" element={<Navigate to="/home" replace />} />
+                    <Route path="/paypal-balance2" element={<PaypalBalance2 />} />
+                    <Route path="/home" element={<Home />} />
+                    <Route path="/chat" element={<Chat />} />
+                    <Route path="/help-places" element={<HelpPlaces />} />
+                    <Route path="/embassies" element={<Embassies />} />
+                    <Route path="/blog" element={<Blog />} />
+                    <Route path="/gadgets" element={<Gadgets />} />
+                    <Route path="/chatbot" element={<ChatBot />} />
+                    <Route path="/contact-list" element={<ContactList />} />
+                    <Route path="/immigration-requirements" element={<ImmigrationRequirements />} />
+                    <Route path="/freq-asked-questions" element={<FreqAskedQuestions />} />
+                    <Route path="/emergency" element={<Emergency />} />
+                    <Route path="/stats-and-reports" element={<StatsAndReports />} />
+                    <Route path="/help" element={<Help />} />
+                    <Route path="/location-view" element={<LocationView />} />
+                    <Route path="/admin-console" element={<AdminConsole />} />
+                    <Route path="/complaint" element={<Complaint />} />
+                    <Route path="/dashboard-edition" element={<DashboardEdition />} />
+                    <Route path="*" element={<Navigate to="/login" replace />} />
+                </Routes>
+                {/* </div> */}
+                <Footer style={{ position: "sticky", bottom: 0, zIndex: 1000 }} />
+                {/* )} */}
             </ScrollToTop>
         </BrowserRouter>
     );

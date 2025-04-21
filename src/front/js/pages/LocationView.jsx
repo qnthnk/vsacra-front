@@ -35,7 +35,7 @@ const LocationView = () => {
     if (!isLoaded) return <p>Cargando mapa...</p>;
 
     return (
-        <div className="backpage">
+        <div className="containerRMC">
             <div className="containerH">
                 {!isLoaded ? (
                     <div style={{

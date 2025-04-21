@@ -8,7 +8,7 @@ const faqs = [
   { question: "¿Por qué me pidieron acceso a mi ubicación?", answer: "En caso de una emergencia, tu ubicación será enviada a los contactos que hayas registrado para que puedan ayudarte a obtener auxilio en conjunto con las autoridades correspondientes." },
   { question: "¿Qué pasa si oprimo el botón de emergencia?", answer: "Tus contactos recibirán al instante un mensaje de correo en el cuál se les indica que estas en peligro y que se pongan en contacto contigo o con las autoridades para apresurar tu auxilio." },
 
-  ];
+];
 
 const Help = () => {
   const [openIndex, setOpenIndex] = useState(null);
@@ -18,21 +18,21 @@ const Help = () => {
   };
 
   return (
-    <div className='backpage'>
-          <div className='containerH'>
-            <h2 className='heading'>Preguntas Frecuentes</h2>
-            <div>
-        {faqs.map((faq, index) => (
-          <div  key={index}>
-            <div className='login-buttonesFAQ' onClick={() => toggleFAQ(index)} >
-              <h5 >{faq.question}</h5>
+    <div className='containerRMC'>
+      <div className='containerH'>
+        <h2 className='heading'>Preguntas Frecuentes</h2>
+        <div>
+          {faqs.map((faq, index) => (
+            <div key={index}>
+              <div className='login-buttonesFAQ' onClick={() => toggleFAQ(index)} >
+                <h5 >{faq.question}</h5>
+              </div>
+
+              <div className={`collapse ${openIndex === index ? 'show' : ''}`}>
+                <div className="containerAnswer">{faq.answer}</div>
+              </div>
             </div>
-            
-            <div className={`collapse ${openIndex === index ? 'show' : ''}`}>
-              <div className="containerAnswer">{faq.answer}</div>
-            </div>
-          </div>
-        ))}
+          ))}
         </div>
       </div>
     </div>);

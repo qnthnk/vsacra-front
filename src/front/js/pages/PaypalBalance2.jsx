@@ -38,7 +38,7 @@ const PaypalBalance = () => {
   };
 
   return (
-    <div className="backpagenn">
+    <div className="containerRMCnn">
       <div className="containerc">
         <div className="contents">
           <div className="cardContainerc">

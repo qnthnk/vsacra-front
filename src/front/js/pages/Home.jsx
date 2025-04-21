@@ -1,5 +1,6 @@
 import React, { useEffect, useContext, useState } from 'react';
 import { Context } from '../store/appContext';
+import { Navigate } from 'react-router-dom';
 import './../../styles/home.css';
 import HomeUser from './HomeUser.jsx';
 import HomeAdmin from './HomeAdmin.jsx';
@@ -11,7 +12,7 @@ const Home = () => {
 
   const [location, setLocation] = useState(null);
   const [error, setError] = useState(null);
-  const [isAdmin, setIsAdmin] = useState(false); 
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
     if (!navigator.geolocation) {
@@ -40,10 +41,10 @@ const Home = () => {
   return (
     <>
       {token ? (
-        <div className='backpage'>
+        <div className='containerRMC'>
           <div className='containerH'>
             {/* MODAL DEMO */}
-            <button type="button" className="DemoButton" style={{ width: "50px", height: "50px", borderRadius: "50%" }} data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <button type="button" className="DemoButton" style={{ width: "50px", height: "50px", borderRadius: "50%", marginBottom:'-50px' }} data-bs-toggle="modal" data-bs-target="#exampleModal">
               <FaInfo className='DemoButton' />
             </button>
             <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -58,43 +59,22 @@ const Home = () => {
                 </div>
               </div>
             </div>
-            {/* MODAL DEMO */}
-            <div className="checkbox-wrapper-8 mt-5">
-              <input
-                type="checkbox"
-                id="cb3-8"
-                className="tgl tgl-skewed"
-                checked={isAdmin}
-                onChange={handleToggle}
-              />
-              <label
-                htmlFor="cb3-8"
-                data-tg-on="Admin"
-                data-tg-off="Usuario"
-                className="tgl-btn"
-              ></label>
-            </div>
-
-            <div className="toggle-wrapper">
-              <input className="toggle-checkbox" type="checkbox" checked={isAdmin} onChange={handleToggle} />
-              <div className="toggle-container">
-                <div className="toggle-button">
-                  <div className="toggle-button-circles-container">
-                    <div className="toggle-button-circle"></div>
-                    <div className="toggle-button-circle"></div>
-                    <div className="toggle-button-circle"></div>
-                    <div className="toggle-button-circle"></div>
-                    <div className="toggle-button-circle"></div>
-                    <div className="toggle-button-circle"></div>
-                    <div className="toggle-button-circle"></div>
-                    <div className="toggle-button-circle"></div>
-                    <div className="toggle-button-circle"></div>
-                    <div className="toggle-button-circle"></div>
-                    <div className="toggle-button-circle"></div>
-                    <div className="toggle-button-circle"></div>
-                  </div>
-                </div>
-              </div>
+            <div className="d-flex justify-content-center mt-5">
+              <button className="checkbox-wrapper-8" style={{ marginTop: '20px', borderRadius: '20px', backgroundColor: 'rgba(255, 255, 255, 0.5)', backdropFilter: 'blur(15px)', width: '170px' }}>
+                <input
+                  type="checkbox"
+                  id="cb3-8"
+                  className="tgl tgl-skewed"
+                  checked={isAdmin}
+                  onChange={handleToggle}
+                />
+                <label
+                  htmlFor="cb3-8"
+                  data-tg-on="Modo Admin"
+                  data-tg-off="Modo Usuario"
+                  className="tgl-btn"
+                ></label>
+              </button>
             </div>
 
             <div className="checkbox-wrapper-8">
@@ -103,9 +83,9 @@ const Home = () => {
           </div>
         </div>
       ) : (
-        <div>Please log in to access this page.</div>
+        <Navigate to="/login" />
       )}
-      </>
+    </>
   );
 };
 
