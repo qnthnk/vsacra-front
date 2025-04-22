@@ -53,67 +53,96 @@ const HomeUser = () => {
         <>
           <h2 className='headingH'>Inicio</h2>
           <div className='formis'>
+            {token && (
+              <button className='buttonPearl'>
+                <Link className='wrap' to='/contact-list'>
+                  
+                  <p>
+                    <span><RiContactsFill style={{ fontSize: '3em' }} /></span>
+                    <span>Contactos</span>
+                    
+                  </p>
+                </Link>
+              </button>
+            )}
+            {token && (
+                            <button className='buttonPearl'>
 
-              {/* {token && (
-                <Link className='login-buttones' to='/chat'>
-                  <BsChatSquareTextFill style={{ fontSize: '3em' }} />
-                  <p>Mensajería</p>
-                </Link>
-              )} */}
-                            {token && (
-                <Link className='login-buttones' to='/contact-list'>
-                  <RiContactsFill style={{ fontSize: '4em' }} />
-                  <p className='button-text'>Contactos</p>
-                </Link>
-              )}
-              {token && (
-                <Link className='login-buttones' to='/location-view'>
-                  <FaLocationDot style={{ fontSize: '4em' }} />
-                  <p className='button-text'> Lugares</p>
-                </Link>
-              )}
-              {/* {token && (
+              <Link className='wrap' to='/location-view'>
+              <p>
+                    <span>
+                <FaLocationDot style={{ fontSize: '3em' }} />
+                </span>
+                    <span>Lugares</span>
+                    
+                  </p>
+              </Link>
+              </button>
+            )}
+            {/* {token && (
                 <Link className='login-buttones' to='/help'>
                   <FaQuestionCircle style={{ fontSize: '3em' }} />
                   <p>FAQ</p>
                 </Link>
               )} */}
-              {token && (
-                <Link className='login-buttones' to='/freq-asked-questions'>
-                  <MdTipsAndUpdates style={{ fontSize: '4em' }} />
-                  <p className='button-text'>Entérate</p>
-                </Link>
-              )}
+            {token && (
+                            <button className='buttonPearl'>
 
-              {token && (
-                <Link className='login-buttones' to='/chatbot'>
-                  <TbMessageChatbotFilled style={{ fontSize: '4em' }} />
-                  <p className='button-text'>Chatbot</p>
-                </Link>
-              )}
-                            {token && (
-                <Link className='login-buttones' to='/complaint'>
-                  <BsChatSquareTextFill style={{ fontSize: '4em' }} />
-                  <p className='button-text'>Denuncia</p>
-                </Link>
-              )} 
-              {token && (
-                <Link className='login-buttones' to='/blog'>
-                  <BsChatSquareTextFill style={{ fontSize: '4em' }} />
-                  <p className='button-text'>Personalizado</p>
-                </Link>
-              )} 
+              <Link className='wrap' to='/freq-asked-questions'>
+              <p>
+                    <span>
+                <MdTipsAndUpdates style={{ fontSize: '3em' }} />
+                </span>
+                    <span>Entérate</span>
+                    
+                  </p>
+              </Link>
+              </button>
+            )}
 
-              {token && admin && (
-                <Link className='login-buttones' to='/stats-and-reports'>
-                  <p>Estadísticas y reportes(ADMIN)</p>
-                </Link>
-              )}
-              {token && admin && (
-                <Link className='login-buttones' to='/admin-console'>
-                  <p>Consola de manejo de datos(ADMIN)</p>
-                </Link>
-              )}
+            {token && (
+                            <button className='buttonPearl'>
+
+              <Link className='wrap' to='/chatbot'>
+              <p>
+                    <span>
+                <TbMessageChatbotFilled style={{ fontSize: '3em' }} />
+                </span>
+                    <span>Chatbot</span>
+                    
+                  </p>
+              </Link>
+              </button>
+            )}
+            {token && (
+                            <button className='buttonPearl'>
+
+              <Link className='wrap' to='/complaint'>
+              <p>
+                    <span>
+                <BsChatSquareTextFill style={{ fontSize: '3em' }} />
+                </span>
+                    <span>Denuncia</span>
+                    
+                  </p>
+              </Link>
+              </button>
+            )}
+            {token && (
+                            <button className='buttonPearl'>
+
+              <Link className='wrap' to='/blog'>
+              <p>
+                    <span>
+                <BsChatSquareTextFill style={{ fontSize: '3em' }} />
+                </span>
+                    <span>Personalizado</span>
+                    
+                  </p>
+              </Link>
+              </button>
+            )}
+
 
           </div>
         </>

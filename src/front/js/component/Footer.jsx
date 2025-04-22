@@ -15,7 +15,7 @@ const Footer = () => {
 
   return (
     <>
-      <div className="container-fluid card">
+      <div className="container-fluid card fixed-bottom">
         <div className='buttons'>
           <EmergencyButton />
         </div>

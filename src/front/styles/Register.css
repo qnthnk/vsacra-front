@@ -175,12 +175,11 @@
 }
 
 .containerRMC {
-	width: 100%;
-	padding: 20px;
-	overflow-x: hidden;
-	display: flex;
-	justify-content: center;
-}
+    padding: 20px;
+    font-family: 'Roboto', sans-serif;
+    margin-top: 70px; /* Adjust the value as needed for the navbar */
+    margin-bottom: 20px; /* Adjust the value as needed for the footer */
+  }
 
 .containerH {
 	width: 100%;

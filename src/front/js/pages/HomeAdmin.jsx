@@ -52,55 +52,67 @@ const HomeAdmin = () => {
           <h2 className='headingH'>Inicio</h2>
           <div className='formis'>
 
-                            {token && (
-                <Link className='Login-buttonesAdmin' to='/admin-console'>
-                  <MdOutlineDashboardCustomize style={{ fontSize: '4em' }} />
-                  <p className='button-text'>Consola</p>
+            {token && (
+                <button className='buttonPearlAdmin'>
+                <Link className='wrap' to='/admin-console'>
+                  <p>
+                  <span><MdOutlineDashboardCustomize style={{ fontSize: '3em' }} /></span>
+                  <span>Consola</span>
+                  </p>
                 </Link>
-              )}
-              {token && (
-                <Link className='Login-buttonesAdmin' to='/dashboard-edition'>
-                  <LiaMapSolid style={{ fontSize: '4em' }} />
-                  <p className='button-text'> Mapas</p>
-                </Link>
-              )}
-              {token && (
-                <Link className='Login-buttonesAdmin' to='/stats-and-reports'>
-                  <FaChartPie style={{ fontSize: '4em' }} />
-                  <p className='button-text'>Estadísticas</p>
-                </Link>
-              )}
+                </button>
+            )}
+            {token && (
+              <button className='buttonPearlAdmin'>
+              <Link className='wrap' to='/dashboard-edition'>
+                <p>
+                <span><LiaMapSolid  style={{ fontSize: '3em' }} /></span>
+                <span> Mapas</span>
+                </p>
+              </Link>
+              </button>
+            )}
+            {token && (
+              <button className='buttonPearlAdmin'>
+              <Link className='wrap' to='/stats-and-reports'>
+                <p>
+                <span><FaChartPie style={{ fontSize: '3em' }} /></span>
+                <span> Estadística</span>
+                </p>
+              </Link>
+              </button>
+            )}
 
-              {token && (
-                <Link className='Login-buttonesAdmin' to='/chatbot'>
-                  <TbMessageChatbotFilled style={{ fontSize: '4em' }} />
-                  <p className='button-text'>Chatbot</p>
-                </Link>
-              )}
-                            {token && (
-                <Link className='Login-buttonesAdmin' to='/blog'>
-                  <FaAddressCard style={{ fontSize: '4em' }} />
-                  <p className='button-text'>Expedientes</p>
-                </Link>
-              )} 
-              {token && (
-                <Link className='Login-buttonesAdmin' to='/blog'>
-                  <TbReportSearch style={{ fontSize: '4em' }} />
-                  <p className='button-text'>Reportes</p>
-                </Link>
-              )} 
-
-              {/* {token && admin && (
-                <Link className='Login-buttonesAdmin' to='/stats-and-reports'>
-                  <p>Estadísticas y reportes(ADMIN)</p>
-                </Link>
-              )}
-              {token && admin && (
-                <Link className='Login-buttonesAdmin' to='/admin-console'>
-                  <p>Consola de manejo de datos(ADMIN)</p>
-                </Link>
-              )} */}
-
+            {token && (
+              <button className='buttonPearlAdmin'>
+              <Link className='wrap' to='/chatbot'>
+                <p>
+                <span><TbMessageChatbotFilled   style={{ fontSize: '3em' }} /></span>
+                <span> Chatbot</span>
+                </p>
+              </Link>
+              </button>
+            )}
+            {token && (
+              <button className='buttonPearlAdmin'>
+              <Link className='wrap' to='//blog'>
+                <p>
+                <span><FaAddressCard   style={{ fontSize: '3em' }} /></span>
+                <span> Expediente</span>
+                </p>
+              </Link>
+              </button>
+            )}
+            {token && (
+              <button className='buttonPearlAdmin'>
+              <Link className='wrap' to='/blog'>
+                <p>
+                <span><TbReportSearch  style={{ fontSize: '3em' }} /></span>
+                <span>Reportes</span>
+                </p>
+              </Link>
+              </button>
+            )}
           </div>
         </>
       ) : (
