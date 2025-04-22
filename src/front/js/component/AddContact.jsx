@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Context } from "../store/appContext.js";
-import "../../styles/home.css"
+import "../../styles/ContactList.css"
 
 const AddContact = () => {
     const { actions } = useContext(Context);
@@ -63,10 +63,10 @@ const AddContact = () => {
     };
 
     return (
-        <div className="formis">
+        <div>
+            <div className="heroContact" style={{backgroundColor: "rgb(255, 255, 255)", backdropFilter: "blur(15px)"}}>
 
-            <form onSubmit={handleAdd}>
-                <div className="mb-3">
+            <form className='formContact' onSubmit={handleAdd}>
 
                     <input
                         type="text"
@@ -74,45 +74,35 @@ const AddContact = () => {
                         value={payload.full_name}
                         onChange={handleChange}
                         placeholder="Nombre completo"
-                        className="input d-flex justify-content-center"
-                        style={{width:"200%"}}
+                        className="inputContacts"
                     />
                     {errors.full_name && <p className="text-danger">{errors.full_name}</p>}
-                </div>
 
-                <div className="mb-3">
                     <input
                         type="email"
                         name="email"
                         value={payload.email}
                         onChange={handleChange}
                         placeholder="Email"
-                        className="input d-flex justify-content-center"
-                        style={{width:"200%"}}
+                        className="inputContacts"
                     />
                     {errors.email && <p className="text-danger">{errors.email}</p>}
-                </div>
 
-                <div className="mb-3">
                     <input
                         type="text"
                         name="phone_number"
                         value={payload.phone_number}
                         onChange={handleChange}
                         placeholder="Teléfono"
-                        className="input d-flex justify-content-center"
-                        style={{width:"200%"}}
+                        className="inputContacts"
                     />
                     {errors.phone_number && <p className="text-danger">{errors.phone_number}</p>}
-                </div>
 
-                <div className="mb-3">
                     <select
                         name="role"
                         value={payload.role}
                         onChange={handleChange}
-                        className="input d-flex justify-content-center"
-                        style={{width:"200%"}}
+                        className="inputContacts"
                     >
                         <option value="">Seleccione un parentezco</option>
                         <option value="Conyuge">Cónyugue</option>
@@ -125,13 +115,13 @@ const AddContact = () => {
                         <option value="Representante legal">Representante legal</option>
                     </select>
                     {errors.role && <p className="text-danger">{errors.role}</p>}
-                </div>
                 <div className="d-flex justify-content-center">
-                    <button type="submit" className="login-buttonesN2" style={{width:"200%"}}>
+                    <button type="submit" className="buttonPearl" style={{width:"120px", height:"50px", borderRadius:"20px", color:'white'}}>
                         Guardar
                     </button>
                 </div>
             </form>
+            </div>
         </div>
     );
 };

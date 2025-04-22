@@ -71,6 +71,8 @@ const EmergencyButton = () => {
         Swal.fire({
             title: '¡Alerta enviada!',
             html: `
+            <div className="containerRMCs">
+      <div className="containerHs">
                 <div style="text-align: left;">
                     <p>Se notificó a <strong>${contactsNotified} contactos</strong>.</p>
                     <p><strong>Tu ubicación actual:</strong></p>
@@ -86,6 +88,8 @@ const EmergencyButton = () => {
                     <p style="margin-top: 15px; font-size: 0.9em; color: #555;">
                         Los contactos recibieron tus datos médicos importantes.
                     </p>
+                </div>
+                </div>
                 </div>
             `,
             icon: 'success',
@@ -153,27 +157,29 @@ const EmergencyButton = () => {
                         }
                     });
                 }}
-                className={`login-buttonesEmergencia ${loading ? 'disabled' : ''}`}
+                className={`buttonPearlW ${loading ? 'disabled' : ''}`}
                 disabled={loading}
             >
                 <i className="fas fa-exclamation-triangle me-2"></i>
                 {loading ? 'Enviando...' : 'Botón de Emergencia'}
+                <i className="fas fa-exclamation-triangle me-2"></i>
             </button>
 
             {showCountdown && (
                 <div className="modal-overlay">
-                    <div className="modal-contentE">
-                        <h2>Enviando alerta en...</h2>
-                        <p className="countdown">{countdown}</p>
+                    <div className="modal-contentE" style={{ borderRadius: '50px' }}>
+                        <h1>Enviando alerta en...{countdown}</h1>
+                        <p className="countdown">
                         <button
-                            className="btn btn-outline-secondary mt-3"
+                            className="buttonPearlAdmin"
+                            style={{color: 'white', height: '100px', width: '150px', borderRadius: '50px'}}
                             onClick={() => {
                                 setShowCountdown(false);
                                 setCountdown(5);
                             }}
                         >
                             Cancelar
-                        </button>
+                        </button></p>
                     </div>
                 </div>
             )}
