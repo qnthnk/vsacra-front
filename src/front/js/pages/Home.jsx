@@ -44,21 +44,14 @@ const Home = () => {
         <div className='containerRMC'>
           <div className='containerH'>
             {/* MODAL DEMO */}
-            <button type="button" className="DemoButton" style={{ width: "50px", height: "50px", borderRadius: "50%", marginBottom:'-50px' }} data-bs-toggle="modal" data-bs-target="#exampleModal">
+            <button type="button" 
+            className="DemoButton " 
+            style={{ width: "50px", height: "50px", borderRadius: "50%"}} 
+            data-bs-toggle="modal" 
+            data-bs-target="#exampleModal">
               <FaInfo className='DemoButton' />
             </button>
-            <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-              <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                <div className="modal-content demoContainer">
-                  <div className="modal-body">
-                    <div className=''>Debajo de la leyenda de "Usuario" se encuentra un botón que activa el modo Admin. Puedes cambiar las vistas para tener acceso a ambas consolas. Esto es solo para el Demo. Cuando el sistema está en funcionamiento, cada rol de usuario puede ver únicamente las opciones que le corresponden.</div>
-                  </div>
-                  <div className="modal-content">
-                    <button type="button" className="btn btn-warning" data-bs-dismiss="modal">Cerrar</button>
-                  </div>
-                </div>
-              </div>
-            </div>
+           
             <div className="d-flex justify-content-center mt-5">
               <button className="checkbox-wrapper-8" style={{ marginTop: '20px', borderRadius: '20px', backgroundColor: 'rgba(255, 255, 255, 0.5)', backdropFilter: 'blur(15px)', width: '170px' }}>
                 <input
@@ -81,6 +74,18 @@ const Home = () => {
               {isAdmin ? <HomeAdmin /> : <HomeUser />}
             </div>
           </div>
+          <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                <div className="modal-content demoContainer">
+                  <div className="modal-body">
+                    <div className=''>Debajo de la leyenda de "Usuario" se encuentra un botón que activa el modo Admin. Puedes cambiar las vistas para tener acceso a ambas consolas. Esto es solo para el Demo. Cuando el sistema está en funcionamiento, cada rol de usuario puede ver únicamente las opciones que le corresponden.</div>
+                  </div>
+                  <div className="modal-content">
+                    <button type="button" className="btn btn-warning" data-bs-dismiss="modal">Cerrar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
         </div>
       ) : (
         <Navigate to="/login" />
