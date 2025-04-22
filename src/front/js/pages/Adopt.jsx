@@ -1,25 +1,17 @@
 import React, { useState } from "react";
 import "../../styles/ContactList.css";
 import { FaInfo } from "react-icons/fa";
-import Dog1 from "../../img/adopt/IMG_4713.JPG";
-import Dog2 from "../../img/adopt/IMG_4714.JPG";
-import Dog3 from "../../img/adopt/IMG_4715.JPG";
-import Dog4 from "../../img/adopt/IMG_4716.JPG";
-import Dog5 from "../../img/adopt/IMG_4717.JPG";
-import Dog6 from "../../img/adopt/IMG_4718.JPG";
-import Dog7 from "../../img/adopt/IMG_4719.JPG";
-import Dog8 from "../../img/adopt/IMG_4720.JPG";
-import Dog9 from "../../img/adopt/IMG_4721.JPG";
-import Dog10 from "../../img/adopt/IMG_4722.JPG";
-import Dog11 from "../../img/adopt/IMG_4723.JPG";
-import Dog12 from "../../img/adopt/IMG_4724.JPG";
-import Dog13 from "../../img/adopt/IMG_4725.JPG";
-import Dog14 from "../../img/adopt/IMG_4726.JPG";
-import Dog15 from "../../img/adopt/IMG_4727.JPG";
-import Dog16 from "../../img/adopt/IMG_4728.JPG";
-import Dog17 from "../../img/adopt/IMG_4729.JPG";
-import Dog18 from "../../img/adopt/IMG_4730.JPG";
-import Dog19 from "../../img/adopt/IMG_4731.JPG";
+import Dog1 from "../../img/adopt/dog1.jpg";
+import Dog2 from "../../img/adopt/dog2.jpg";
+import Dog3 from "../../img/adopt/dog3.jpg";
+import Dog4 from "../../img/adopt/dog4.jpg";
+import Dog5 from "../../img/adopt/dog5.jpg";
+import Dog6 from "../../img/adopt/dog6.jpg";
+import Dog7 from "../../img/adopt/dog7.jpg";
+import Dog8 from "../../img/adopt/dog8.jpg";
+import Dog9 from "../../img/adopt/dog9.jpg";
+import Dog10 from "../../img/adopt/dog10.jpg";
+import Dog11 from "../../img/adopt/dog11.jpg";
 
 const dogs = [
     { question: "", answer: "", image: Dog1 },
@@ -32,15 +24,8 @@ const dogs = [
     { question: "", answer: "", image: Dog8 },
     { question: "", answer: "", image: Dog9 },
     { question: "", answer: "", image: Dog10 },
-    { question: "", answer: "", image: Dog11 },
-    { question: "", answer: "", image: Dog12 },
-    { question: "", answer: "", image: Dog13 },
-    { question: "", answer: "", image: Dog14 },
-    { question: "", answer: "", image: Dog15 },
-    { question: "", answer: "", image: Dog16 },
-    { question: "", answer: "", image: Dog17 },
-    { question: "", answer: "", image: Dog18 },
-    { question: "", answer: "", image: Dog19 },
+    { question: "", answer: "", image: Dog11 }
+
 
    
 ]
