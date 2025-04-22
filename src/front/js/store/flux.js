@@ -358,11 +358,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 
                     // 4. Enviar al backend
                     const token = localStorage.getItem("token");
-                    const response = await fetch(`${process.env.BACKEND_URL}api/emergencyalert`, {
+                    const response = await fetch(`${process.env.BACKEND_URL}api/emergency-alert`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${token}`
                         },
                         body: JSON.stringify(coordinates),
                     });
@@ -381,10 +380,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     };
 
                 } catch (error) {
-                    console.error("Error en sendEmergencyCoordinates:", {
-                        message: error.message,
-                        stack: error.stack
-                    });
+                    console.error("Error en sendEmergencyCoordinates:");
 
                     // Mensajes amigables para el usuario
                     let userMessage = "Error al enviar alerta";
