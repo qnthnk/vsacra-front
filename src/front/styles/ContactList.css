@@ -4,12 +4,11 @@
 	display: grid;
 	place-items: center;
 	/* Centers content both horizontally and vertically */
+    font-family: 'Roboto', sans-serif;
+    margin-top: 70px; /* Adjust the value as needed for the navbar */
+    margin-bottom: 20px; /* Adjust the value as needed for the footer */
 }
 
-html,
-body {
-	overflow: hidden;
-}
 
 
 .containerRMCs .containerH {
@@ -55,7 +54,7 @@ body {
 	font-size: inherit;
 }
 
-.inputContact:active {
+.inputContact:focus {
 	background-color: rgb(134, 37, 68); /* Change background color when active */
 	color: #f7f7f7;
 	transform: translateY(-2px) ease-in-out;
