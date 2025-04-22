@@ -132,6 +132,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
 
+
             complaint: async (complaintToSend) => {
                 console.log("Datos enviados para queja:", complaintToSend);
                 console.log("url de fetch: ", process.env.BACKEND_URL + "api/complaint")
@@ -327,27 +328,71 @@ const getState = ({ getStore, getActions, setStore }) => {
                 }
             },
 
-            sendEmergencyCoordinates: async (latitude, longitude) => {
-                let id = localStorage.getItem('id')
+            sendEmergencyCoordinates: async () => {
                 try {
-                    const resp = await fetch(process.env.BACKEND_URL + "api/emergency", {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-
-                        },
-                        body: JSON.stringify({ 'latitude': latitude, 'longitude': longitude, 'id': id }),
-                    });
-
-                    if (!resp.ok) {
-                        throw new Error('Error al enviar las coordenadas de emergencia');
+                    // 1. Obtener el ID del usuario desde localStorage
+                    const user_id = localStorage.getItem('id');
+                    if (!user_id) {
+                        throw new Error('No se pudo identificar al usuario');
                     }
 
-                    const data = await resp.json();
-                    Swal.fire(data.message || "Coordenadas enviadas correctamente.");
+                    // 2. Obtener la ubicación usando la API de geolocalización
+                    const position = await new Promise((resolve, reject) => {
+                        if (!navigator.geolocation) {
+                            reject(new Error('Geolocalización no soportada por el navegador'));
+                        } else {
+                            navigator.geolocation.getCurrentPosition(resolve, reject, {
+                                enableHighAccuracy: true,
+                                timeout: 10000,  // 10 segundos de espera
+                                maximumAge: 0      // No usar caché
+                            });
+                        }
+                    });
+
+                    // 3. Preparar datos para enviar al backend
+                    const coordinates = {
+                        latitude: position.coords.latitude.toString(),
+                        longitude: position.coords.longitude.toString(),
+                        id: user_id
+                    };
+
+                    // 4. Enviar al backend
+                    const token = localStorage.getItem("token");
+                    const response = await fetch(`${process.env.BACKEND_URL}api/emergency-alert`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(coordinates),
+                    });
+
+                    // 5. Manejar respuesta
+                    if (!response.ok) {
+                        const errorData = await response.json();
+                        throw new Error(errorData.message || 'Error al enviar alerta');
+                    }
+
+                    const data = await response.json();
+                    return {
+                        success: true,
+                        contacts_notified: data.contacts_notified,
+                        location: coordinates
+                    };
+
                 } catch (error) {
-                    console.error("Error al enviar las coordenadas de emergencia:", error);
-                    Swal.fire(error.message || "Hubo un error al enviar las coordenadas de emergencia.");
+                    console.error("Error en sendEmergencyCoordinates:");
+
+                    // Mensajes amigables para el usuario
+                    let userMessage = "Error al enviar alerta";
+                    if (error.message.includes("Geolocalización no soportada")) {
+                        userMessage = "Tu navegador no soporta geolocalización";
+                    } else if (error.message.includes("timeout")) {
+                        userMessage = "Tiempo de espera agotado al obtener ubicación";
+                    } else if (error.message.includes("denied")) {
+                        userMessage = "Permiso de ubicación denegado";
+                    }
+
+                    throw new Error(userMessage);
                 }
             },
 
