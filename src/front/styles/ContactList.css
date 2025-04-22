@@ -4,7 +4,6 @@
 	display: grid;
 	place-items: center;
 	/* Centers content both horizontally and vertically */
-	overflow: hidden;
 }
 
 html,

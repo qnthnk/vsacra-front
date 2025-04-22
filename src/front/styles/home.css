@@ -5,8 +5,9 @@
 	display: grid;
 	place-items: center;
 	/* Centers content both horizontally and vertically */
-	overflow: hidden;
-	overscroll-behavior: none;
+    font-family: 'Roboto', sans-serif;
+    margin-top: 70px; /* Adjust the value as needed for the navbar */
+    margin-bottom: 20px; /* Adjust the value as needed for the footer */
 }
 
 html,
@@ -875,8 +876,8 @@ body {
 	outline: none;
 	cursor: pointer;
 	border: 0;
-	width: 100px;
-	height: 100px;
+	width: 120px;
+	height: 120px;
 	position: relative;
 	border-radius: 50%;
 	background-color: var(--bg);
@@ -907,8 +908,8 @@ body {
 	--bg: rgb(134, 37, 68);
 	cursor: pointer;
 	border: 0;
-	width: 100px;
-	height: 100px;
+	width: 120px;
+	height: 120px;
 	animation: pendulum 1.2s ease-in-out;
 }
 
@@ -938,8 +939,8 @@ body {
 	align-items: center;
 	justify-content: center;
 	align-items: center;
-	width: 100px;
-	height: 100px;
+	width: 120px;
+	height: 120px;
 	font-size:x-large;
 	text-align: center;
 	font-weight: 500;
@@ -957,8 +958,8 @@ body {
 	outline: none;
 	cursor: pointer;
 	border: 0;
-	width: 100px;
-	height: 100px;
+	width: 120px;
+	height: 120px;
 	position: relative;
 	border-radius: 50%;
 	background-color: var(--bg);
@@ -988,8 +989,8 @@ body {
 	--white: #f9ffe7;
 	cursor: pointer;
 	border: 0;
-	width: 100px;
-	height: 100px;
+	width: 120px;
+	height: 120px;
 	animation: pendulum 1.2s ease-in-out;
 }
 
@@ -1019,8 +1020,8 @@ body {
 	align-items: center;
 	justify-content: center;
 	align-items: center;
-	width: 100px;
-	height: 100px;
+	width: 120px;
+	height: 120px;
 	font-size:x-large;
 	text-align: center;
 	font-weight: 500;

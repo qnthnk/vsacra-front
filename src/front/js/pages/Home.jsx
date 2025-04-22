@@ -42,7 +42,7 @@ const Home = () => {
     <>
       {token ? (
         <div className='containerRMC'>
-          <div className='containerH'>https://www.tuempresa.gob.mx/sas/archivodigital/naLWtBuEBlT1hTLSZyJx4FplyGQCCZbujxTkYeiF_8602815012293671502771133.png
+          <div className='containerH'>
             {/* MODAL DEMO */}
             <button type="button" className="DemoButton" style={{ width: "50px", height: "50px", borderRadius: "50%", marginBottom:'-50px' }} data-bs-toggle="modal" data-bs-target="#exampleModal">
               <FaInfo className='DemoButton' />
