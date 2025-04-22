@@ -10,6 +10,8 @@ const EmergencyButton = () => {
     const [countdown, setCountdown] = useState(5);
     const [geolocationError, setGeolocationError] = useState(null);
 
+    
+
     const getLocation = () => {
         return new Promise((resolve, reject) => {
             if (!navigator.geolocation) {
@@ -57,7 +59,7 @@ const EmergencyButton = () => {
                 throw new Error('No se pudo identificar al usuario');
             }
 
-            const result = await actions.sendEmergencyCoordinates(latitude, longitude, user_id);
+            const result = await actions.sendTwilioAlert(latitude, longitude);
 
             showSuccessAlert(latitude, longitude, result.contacts_notified);
         } catch (error) {

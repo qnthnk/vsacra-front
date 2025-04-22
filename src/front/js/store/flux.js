@@ -264,6 +264,28 @@ const getState = ({ getStore, getActions, setStore }) => {
                     console.error('Error al convertir divisas:', error);
                 }
             },
+            sendTwilioAlert: async (latitude, longitude) => {
+                const user_id = localStorage.getItem('id');
+                try {
+                    const resp = await fetch(`${process.env.BACKEND_URL}api/send-alert`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({ latitude, longitude, user_id })
+                    });
+            
+                    const data = await resp.json();
+            
+                    if (!resp.ok) throw new Error(data.error || "Error al enviar alerta");
+            
+                    return data; // contiene contacts_notified
+                } catch (error) {
+                    console.error("Error al enviar alerta de Twilio:", error);
+                    throw error;
+                }
+            },
+            
 
             getMessage: async () => {
                 try {
@@ -358,10 +380,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 
                     // 4. Enviar al backend
                     const token = localStorage.getItem("token");
-                    const response = await fetch(`${process.env.BACKEND_URL}api/emergency-alert`, {
+                    const response = await fetch(process.env.BACKEND_URL + "api/emergency-alert", {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
                         },
                         body: JSON.stringify(coordinates),
                     });
@@ -373,6 +396,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     }
 
                     const data = await response.json();
+                    console.log("Respuesta del servidor:", response);
                     return {
                         success: true,
                         contacts_notified: data.contacts_notified,
