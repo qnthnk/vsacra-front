@@ -358,10 +358,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 
                     // 4. Enviar al backend
                     const token = localStorage.getItem("token");
-                    const response = await fetch(`${process.env.BACKEND_URL}api/emergency-alert`, {
+                    const response = await fetch(process.env.BACKEND_URL + "api/emergency-alert", {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
                         },
                         body: JSON.stringify(coordinates),
                     });
@@ -373,6 +374,7 @@ const getState = ({ getStore, getActions, setStore }) => {
                     }
 
                     const data = await response.json();
+                    console.log("Respuesta del servidor:", response);
                     return {
                         success: true,
                         contacts_notified: data.contacts_notified,
