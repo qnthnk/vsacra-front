@@ -10,6 +10,7 @@ import { FaLocationDot } from "react-icons/fa6";
 import { MdAddAlert } from "react-icons/md";
 import { MdTipsAndUpdates } from "react-icons/md";
 import { FaQuestionCircle } from "react-icons/fa";
+import { PiPawPrintFill } from "react-icons/pi";
 
 
 
@@ -131,12 +132,12 @@ const HomeUser = () => {
             {token && (
                             <button className='buttonPearl'>
 
-              <Link className='wrap' to='/blog'>
+              <Link className='wrap' to='/adopt'>
               <p>
                     <span>
-                <BsChatSquareTextFill style={{ fontSize: '3em' }} />
+                <PiPawPrintFill style={{ fontSize: '3em' }} />
                 </span>
-                    <span>Personalizado</span>
+                    <span>Adopta</span>
                     
                   </p>
               </Link>
