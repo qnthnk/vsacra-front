@@ -20,7 +20,6 @@ import Dog16 from "../../img/adopt/IMG_4728.jpg";
 import Dog17 from "../../img/adopt/IMG_4729.jpg";
 import Dog18 from "../../img/adopt/IMG_4730.jpg";
 import Dog19 from "../../img/adopt/IMG_4731.jpg";
-import Dog20 from "../../img/adopt/IMG_4732.jpg";
 
 const dogs = [
     { question: "", answer: "", image: Dog1 },
@@ -42,7 +41,6 @@ const dogs = [
     { question: "", answer: "", image: Dog17 },
     { question: "", answer: "", image: Dog18 },
     { question: "", answer: "", image: Dog19 },
-    { question: "", answer: "", image: Dog20 }
 
    
 ]
