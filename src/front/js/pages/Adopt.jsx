@@ -1,25 +1,25 @@
 import React, { useState } from "react";
 import "../../styles/ContactList.css";
 import { FaInfo } from "react-icons/fa";
-import Dog1 from "../../img/adopt/IMG_4713.jpg";
-import Dog2 from "../../img/adopt/IMG_4714.jpg";
-import Dog3 from "../../img/adopt/IMG_4715.jpg";
-import Dog4 from "../../img/adopt/IMG_4716.jpg";
-import Dog5 from "../../img/adopt/IMG_4717.jpg";
-import Dog6 from "../../img/adopt/IMG_4718.jpg";
-import Dog7 from "../../img/adopt/IMG_4719.jpg";
-import Dog8 from "../../img/adopt/IMG_4720.jpg";
-import Dog9 from "../../img/adopt/IMG_4721.jpg";
-import Dog10 from "../../img/adopt/IMG_4722.jpg";
-import Dog11 from "../../img/adopt/IMG_4723.jpg";
-import Dog12 from "../../img/adopt/IMG_4724.jpg";
-import Dog13 from "../../img/adopt/IMG_4725.jpg";
-import Dog14 from "../../img/adopt/IMG_4726.jpg";
-import Dog15 from "../../img/adopt/IMG_4727.jpg";
-import Dog16 from "../../img/adopt/IMG_4728.jpg";
-import Dog17 from "../../img/adopt/IMG_4729.jpg";
-import Dog18 from "../../img/adopt/IMG_4730.jpg";
-import Dog19 from "../../img/adopt/IMG_4731.jpg";
+import Dog1 from "../../img/adopt/IMG_4713.JPG";
+import Dog2 from "../../img/adopt/IMG_4714.JPG";
+import Dog3 from "../../img/adopt/IMG_4715.JPG";
+import Dog4 from "../../img/adopt/IMG_4716.JPG";
+import Dog5 from "../../img/adopt/IMG_4717.JPG";
+import Dog6 from "../../img/adopt/IMG_4718.JPG";
+import Dog7 from "../../img/adopt/IMG_4719.JPG";
+import Dog8 from "../../img/adopt/IMG_4720.JPG";
+import Dog9 from "../../img/adopt/IMG_4721.JPG";
+import Dog10 from "../../img/adopt/IMG_4722.JPG";
+import Dog11 from "../../img/adopt/IMG_4723.JPG";
+import Dog12 from "../../img/adopt/IMG_4724.JPG";
+import Dog13 from "../../img/adopt/IMG_4725.JPG";
+import Dog14 from "../../img/adopt/IMG_4726.JPG";
+import Dog15 from "../../img/adopt/IMG_4727.JPG";
+import Dog16 from "../../img/adopt/IMG_4728.JPG";
+import Dog17 from "../../img/adopt/IMG_4729.JPG";
+import Dog18 from "../../img/adopt/IMG_4730.JPG";
+import Dog19 from "../../img/adopt/IMG_4731.JPG";
 
 const dogs = [
     { question: "", answer: "", image: Dog1 },
