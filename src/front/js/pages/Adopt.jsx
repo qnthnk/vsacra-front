@@ -59,10 +59,10 @@ const Adopt = () => {
                   <div className='heroContact'>
                   <form className="formContact">
                     <h2 className='heading'>Adopta</h2>
-                    <div style={{ overflowY: "auto", maxHeight: "50vh", minWidth: "55vw" }}>
+                    <div style={{ overflowY: "auto", maxHeight: "50vh", minWidth: "65vw" }}>
                       {dogs.map((dog, index) => (
                         <div key={index}>
-                          <div className='inputContact submit' style={{width:"55vw"}} onClick={() => toggleFAQ(index)} >
+                          <div className='inputContact submit' style={{width:"65vw"}} onClick={() => toggleFAQ(index)} >
                             <img src={dog.image} style={{width:"50vw" ,borderRadius:"20px"}} />
                           </div>
           
