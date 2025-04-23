@@ -138,7 +138,7 @@ const Complaint = () => {
           <div className='heroContact'>
             <form className="formContact">
               <h2 className='heading'>Denuncia Ciudadana</h2>
-              <div style={{ overflowY: "auto", maxHeight: "50vh", minWidth: "65vw", textAlign: "center" }}>
+              <div style={{ overflowY: "auto", maxHeight: "50vh", minWidth: "50vw", textAlign: "center" }}>
                         <div style={{ marginBottom: "20px" }}>
                             <select
                                 id="cause"

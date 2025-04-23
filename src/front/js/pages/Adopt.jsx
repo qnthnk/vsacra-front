@@ -31,6 +31,7 @@ const dogs = [
 ]
 const Adopt = () => {
   const [openIndex, setOpenIndex] = useState(null);
+  const [modalImage, setModalImage] = useState(null);
   
     const toggleFAQ = (index) => {
       setOpenIndex(openIndex === index ? null : index);
@@ -39,21 +40,54 @@ const Adopt = () => {
     return (
       <div className='containerRMCs' style={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "100vh" }}>
       <div className='containerHs' style={{ textAlign: "center" }}>
-        <div className='heroContact'>
-        <form className="formContact">
-          <h2 className='heading'>Adopta</h2>
-          <div style={{ overflowY: "auto", maxHeight: "50vh", minWidth: "65vw", margin: "0 auto" }}>
-          {dogs.map((dog, index) => (
-            <div key={index} style={{ marginBottom: "20px" }}>
-            <div className='inputContact submit' style={{ width: "65vw", margin: "0 auto" }} onClick={() => toggleFAQ(index)}>
-              <img src={dog.image} style={{ width: "50vw", borderRadius: "20px" }} />
-            </div>
-            </div>
-          ))}
-          </div>
-        </form>
-        </div>
+      <div className='heroContact'>
+      <form className="formContact">
+      <h2 className='heading'>Adopta</h2>
+      <div style={{ overflowY: "auto", maxHeight: "50vh", width: "90%", margin: "0 auto" }}>
+      {dogs.map((dog, index) => (
+      <div key={index} style={{ marginBottom: "20px" }}>
+      <div
+        className='inputContact submit'
+        style={{ width: "100%", margin: "0 auto" }}
+        onClick={() => toggleFAQ(index)}
+      >
+        <img
+        src={dog.image}
+        style={{ width: "100%", maxWidth: "600px", borderRadius: "20px", cursor: "pointer" }}
+        onClick={() => setModalImage(dog.image)}
+        />
       </div>
+      </div>
+      ))}
+      </div>
+      </form>
+      </div>
+      </div>
+      {modalImage && (
+      <div
+      style={{
+      position: "fixed",
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "100%",
+      backgroundColor: "rgba(0, 0, 0, 0.8)",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      zIndex: 1000,
+      flexDirection: "column",
+      }}
+      
+      >
+      <img
+      src={modalImage}
+      style={{ width: "90%", maxWidth: "700px", maxHeight: "70vh", borderRadius: "10px" }}
+      alt="Dog"
+      />
+      <button className="buttonPearl" style={{width:"120px", height:"50px", borderRadius:"20px", color:'white', marginTop: "20px"}} onClick={() => setModalImage(null)}>Cerrar</button>
+      </div>
+      )}
       </div>
     );
   };
