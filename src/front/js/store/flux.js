@@ -31,32 +31,34 @@ const getState = ({ getStore, getActions, setStore }) => {
             getAllUsers: async () => {
                 try {
                     const token = localStorage.getItem("token");
-                    const response = await fetch(process.env.BACKEND_URL + "api/users", {
+                    if (!token) throw new Error("No hay token de autenticación");
+
+                    const response = await fetch(`${process.env.BACKEND_URL}api/users_free`, {
                         method: "GET",
                         headers: {
                             "Content-Type": "application/json",
-                            Authorization: `Bearer ${token}`,
-                        },
+
+                        }
                     });
 
-                    if (!response.ok) {
-                        throw new Error('Error al obtener los usuarios');
+                    if (response.status === 401) {
+                        // Token inválido o expirado
+                        localStorage.removeItem("token");
+                        throw new Error("Sesión expirada. Por favor vuelve a iniciar sesión");
                     }
 
-                    const data = await response.json();
+                    if (!response.ok) {
+                        throw new Error(error || "Error al obtener usuarios");
+                    }
 
-                    // Puedes almacenar los usuarios en el store si lo necesitas
-                    setStore({
-                        ...getStore(),
-                        users: data  // Agrega esta propiedad al store si no existe
-                    });
-
-                    return data;
+                    return await response.json();
                 } catch (error) {
                     console.error("Error en getAllUsers:", error);
                     throw error;
                 }
             },
+
+
             forgotPassword: async (email) => {
                 try {
                     const response = await fetch(`${process.env.BACKEND_URL}api/forgot-password`, {
@@ -274,18 +276,18 @@ const getState = ({ getStore, getActions, setStore }) => {
                         },
                         body: JSON.stringify({ latitude, longitude, user_id })
                     });
-            
+
                     const data = await resp.json();
-            
+
                     if (!resp.ok) throw new Error(data.error || "Error al enviar alerta");
-            
+
                     return data; // contiene contacts_notified
                 } catch (error) {
                     console.error("Error al enviar alerta de Twilio:", error);
                     throw error;
                 }
             },
-            
+
 
             getMessage: async () => {
                 try {

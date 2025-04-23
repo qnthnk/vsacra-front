@@ -29,6 +29,7 @@ import ResetPassword from "./component/ResetPassword.jsx";
 import ForgotPassword from "./component/ForgotPassword.jsx";
 import PaypalBalance2 from "./pages/PaypalBalance2.jsx"
 import Complaint from "./pages/Complaint.jsx";
+import Expediente from "./pages/Expediente.jsx";
 
 const Layout = () => {
     const [token, setToken] = useState(localStorage.getItem("token"));
@@ -72,7 +73,7 @@ const Layout = () => {
                 {/* ) : ( */}
                 <Navbar />
                 <Routes>
-                    <Route path="/login" element={<Login  />} />
+                    <Route path="/login" element={<Login />} />
                     <Route path="/signup" element={<Register />} />
                     <Route path="/reset-password" element={<ResetPassword />} />
                     <Route path="/forgot-password" element={<ForgotPassword />} />
@@ -96,6 +97,7 @@ const Layout = () => {
                     <Route path="/admin-console" element={<AdminConsole />} />
                     <Route path="/complaint" element={<Complaint />} />
                     <Route path="/dashboard-edition" element={<DashboardEdition />} />
+                    <Route path="/expediente" element={<Expediente />} />
                     <Route path="*" element={<Navigate to="/login" replace />} />
                 </Routes>
                 {/* </div> */}
