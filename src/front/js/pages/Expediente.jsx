@@ -42,7 +42,7 @@ const Expediente = () => {
             {/* Selector de usuarios */}
             <div className="card mb-4">
                 <div className="card-body">
-                    <label className="form-label">Seleccione un usuario:</label>
+                    <label className="form-label">Seleccione un Usuario:</label>
                     <select
                         className="form-select"
                         onChange={(e) => handleSelectUser(parseInt(e.target.value))}

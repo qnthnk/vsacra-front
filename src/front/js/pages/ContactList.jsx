@@ -42,7 +42,7 @@ const ContactList = () => {
         {/* MODAL DEMO */}
 
         <div className="heroContact" >
-          <form action="" className="formContact">
+          <form className="formContact">
             <button
               type="button"
               className="inputContact submit"
