@@ -198,7 +198,7 @@ const ViewContact = () => {
                             </div>
                         ))
                     ) : (
-                        <p className="heading" style={{ fontSize: "110%" }}>No tienes contactos. Por favor, regístralos.<br /><FaArrowDown style={{ fontSize: "3em" }} /></p>
+                        <p className="heading" style={{ fontSize: "110%" }}>No tienes contactos. Por favor, regístralos.</p>
                     )}
                     </form>
                 </div>

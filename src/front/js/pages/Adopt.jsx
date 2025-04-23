@@ -37,45 +37,25 @@ const Adopt = () => {
     };
   
     return (
-      <div className='containerRMCs'>
-        <div className='containerHs'>
-          {/* MODAL DEMO */}
-          <button type="button" className="DemoButton" style={{ width: "50px", height: "50px", borderRadius: "50%" }} data-bs-toggle="modal" data-bs-target="#exampleModal">
-            <FaInfo className='DemoButton' />
-          </button>
-          <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-              <div className="modal-content demoContainer">
-                <div className="modal-body">
-                  <div className=''>Está pensado como un tríptico digital en el que se pueda brindar información de uso común a la ciudadanía. De igual manera, sirve de periódico mural para publicar las actualizaciones de las acciones de gobierno que se lleven a cabo.</div>
-                </div>
-                <div className="modal-content">
-                  <button type="button" className="btn btn-warning" data-bs-dismiss="modal">Cerrar</button>
-                </div>
-              </div>
+      <div className='containerRMCs' style={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "100vh" }}>
+      <div className='containerHs' style={{ textAlign: "center" }}>
+        <div className='heroContact'>
+        <form className="formContact">
+          <h2 className='heading'>Adopta</h2>
+          <div style={{ overflowY: "auto", maxHeight: "50vh", minWidth: "65vw", margin: "0 auto" }}>
+          {dogs.map((dog, index) => (
+            <div key={index} style={{ marginBottom: "20px" }}>
+            <div className='inputContact submit' style={{ width: "65vw", margin: "0 auto" }} onClick={() => toggleFAQ(index)}>
+              <img src={dog.image} style={{ width: "50vw", borderRadius: "20px" }} />
             </div>
-          </div>
-        {/* MODAL DEMO */}
-                  <div className='heroContact'>
-                  <form className="formContact">
-                    <h2 className='heading'>Adopta</h2>
-                    <div style={{ overflowY: "auto", maxHeight: "50vh", minWidth: "65vw" }}>
-                      {dogs.map((dog, index) => (
-                        <div key={index}>
-                          <div className='inputContact submit' style={{width:"65vw"}} onClick={() => toggleFAQ(index)} >
-                            <img src={dog.image} style={{width:"50vw" ,borderRadius:"20px"}} />
-                          </div>
-          
-                          {/* <div className={`collapse ${openIndex === index ? 'show' : ''}`} style={{ overflowY: "auto", maxHeight: "40vh", minWidth: "80vw" }}>
-                            <div className="inputContacts">{dog.answer}</div>
-                          </div> */}
-                </div>
-              ))}
             </div>
-            </form>
+          ))}
           </div>
+        </form>
         </div>
-      </div>);
+      </div>
+      </div>
+    );
   };
 
 export default Adopt;
