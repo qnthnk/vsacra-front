@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 import { FaInfo } from "react-icons/fa";
 
 
+
 const libraries = ["places"];
 const mapContainerStyle = { width: "100%", height: "350px" };
 

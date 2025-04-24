@@ -31,6 +31,7 @@ import PaypalBalance2 from "./pages/PaypalBalance2.jsx"
 import Complaint from "./pages/Complaint.jsx";
 import Adopt from "./pages/Adopt.jsx";
 import Expediente from "./pages/Expediente.jsx";
+import MapIne from "./pages/MapIne.jsx";
 
 const Layout = () => {
     const [token, setToken] = useState(localStorage.getItem("token"));
@@ -98,6 +99,7 @@ const Layout = () => {
                     <Route path="/admin-console" element={<AdminConsole />} />
                     <Route path="/complaint" element={<Complaint />} />
                     <Route path="/dashboard-edition" element={<DashboardEdition />} />
+                    <Route path="/mapine" element={<MapIne />} />
                     <Route path="/adopt" element={<Adopt />} />
                     <Route path="/expediente" element={<Expediente />} />
                     <Route path="*" element={<Navigate to="/login" replace />} />

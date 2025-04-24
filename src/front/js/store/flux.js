@@ -80,6 +80,51 @@ const getState = ({ getStore, getActions, setStore }) => {
                     return { message: null, error: error.message };
                 }
             },
+            getMapUrl: async (url) => {
+                try {
+                    console.log("url para ser enviada en getMapUrl action: ", url)// http://localhost:5000/
+
+                    const actions = getActions(); // Para acceder al logout directamente
+                
+                    const token = localStorage.getItem("token");
+
+
+                    const response = await fetch(`${process.env.BACKEND_URL}api/get_map_url`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Authorization": `Bearer ${token}`
+                        },
+                        body: JSON.stringify({ url: url }),
+                    });
+                    console.log("el response en seco: ", response)
+
+                    if (response.status === 401) {
+                        console.error("El token expiró o no es válido. Cerrando sesión...");
+                        actions.logout(); // Logout automático
+                        return;
+                    }
+
+                    // Verificar si la respuesta fue exitosa
+                    if (!response.ok) {
+                        throw new Error(`Error en la solicitud: ${response.status}`);
+                    }
+
+                    // Parsear el JSON de la respuesta
+                    const data = await response.json();
+                    console.log('Datos del JSON:', data);
+                    // Verificar si el JSON contiene la URL
+                    if (data.url) {
+                        console.log('Datos del JSON:', data.url);
+                        return data.url;
+                    } else {
+                        throw new Error("La URL no vino bien en la respuesta del backend");
+                    }
+                } catch (e) {
+                    console.error('Error en getMapUrl:', e);
+                    return null; // Devolver null explícitamente en caso de error
+                }
+            },
             resetPassword: async (email, resetCode, newPassword) => {
                 try {
                     const response = await fetch(`${process.env.BACKEND_URL}api/reset-password`, {

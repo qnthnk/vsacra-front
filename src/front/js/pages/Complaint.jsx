@@ -12,7 +12,7 @@ const Complaint = () => {
 
     const [complaintData, setComplaintData] = useState({
         cause: '',
-        url_image_complaint: '',
+        url_image_complaint: 'none',
         complaint_comment: '',
         status: 'new',
         latitude: '',
@@ -138,7 +138,7 @@ const Complaint = () => {
           <div className='heroContact'>
             <form className="formContact">
               <h2 className='heading'>Denuncia Ciudadana</h2>
-              <div style={{ overflowY: "auto", maxHeight: "50vh", minWidth: "50vw", textAlign: "center" }}>
+              <div style={{ overflowY: "auto", overflowX:"hidden", maxHeight: "50vh", width:"auto",  textAlign: "center" }}>
                         <div style={{ marginBottom: "20px" }}>
                             <select
                                 id="cause"
@@ -146,6 +146,7 @@ const Complaint = () => {
                                 className='inputContacts'
                                 value={complaintData.cause}
                                 onChange={handleChange}
+                                style={{ width: "55vw", borderRadius: "20px", padding: "10px",display: "flex", justifyContent: "center" }}
                             >
                                 <option value="">Seleccione el motivo de la denuncia</option>
                                 <option value="Bache">Bache</option>
@@ -167,6 +168,8 @@ const Complaint = () => {
                                 placeholder='Detalles de la denuncia'
                                 value={complaintData.complaint_comment}
                                 onChange={handleChange}
+                                style={{ width: "55vw", height:"20vh", borderRadius: "20px", padding: "10px",display: "flex", justifyContent: "center" }}
+
                             />
                         </div>
                         <div style={{ textAlign: "center" }}>
@@ -175,7 +178,7 @@ const Complaint = () => {
                                 {image ? (
                                     <img src={image}
                                         alt="Uploaded"
-                                        style={{width:"50vw" ,borderRadius:"20px"}}
+                                        style={{width:"45vw" ,borderRadius:"20px"}}
                                     />
                                 ) : (
                                     <div

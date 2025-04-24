@@ -64,7 +64,7 @@ const HomeAdmin = () => {
             )}
             {token && (
               <button className='buttonPearlAdmin'>
-                <Link className='wrap' to='/dashboard-edition'>
+                <Link className='wrap' to='/mapine'>
                   <p>
                     <span><LiaMapSolid style={{ fontSize: '3em' }} /></span>
                     <span> Mapas</span>
