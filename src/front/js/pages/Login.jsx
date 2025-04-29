@@ -108,31 +108,7 @@ const Login = () => {
          
             </form>
             </div>
-
-            
-
-        
         </div>
-        <br />
-        <button type="button" className="DemoButton firstClick" style={{ width: "200px", borderRadius: "20px" }} data-bs-toggle="modal" data-bs-target="#exampleModal">
-          Versión Demo CLICK
-        </button>
-        <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div className="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-            <div className="modal-content demoContainer">
-              <div className="modal-body">
-                <div className=''>Bienvenido al DEMO. En cada sección encontrarás un ícono de información, como el que se muestra a continuación. Puedes presionar sobre él para obtener referencias sobre cada función.
-                </div >
-                {/* Ajustar el tamaño del icono */}
-                <FaInfo className='DemoButton'  />
-              </div>
-              <div className="modal-content">
-                <button type="button" className="btn btn-warning" data-bs-dismiss="modal">Cerrar</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      
       </div>
     </div>
   );
